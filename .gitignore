@@ -1,0 +1,13 @@
+# Operating System
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Python / Tools
+__pycache__/
+*.pyc
+_data_backup/
+
+# Editor
+.vscode/
+.idea/
