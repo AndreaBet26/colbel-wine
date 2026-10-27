@@ -1,0 +1,37 @@
+{
+  "titolo_sezione": "Anatomia di un Millesimato",
+  "immagine_bottiglia": "assets/images/ColBel_Giusto_transparent.png",
+  "step": [
+    {
+      "badge": "01 / Le Origini",
+      "titolo": "Omaggio a Nonno Giusto",
+      "testo": "Giusto era il nonno che per primo lavorò i vigneti che oggi danno vita a questo vino. Il suo nome onora una storia di famiglia iniziata su queste colline.",
+      "meta_icona": "fa-solid fa-seedling",
+      "meta_testo": "Vigneti Storici a Solighetto"
+    },
+    {
+      "badge": "02 / Il Terroir",
+      "titolo": "Colline Eroiche di Solighetto",
+      "testo": "Pendenze scoscese baciate dal sole e rinfrescate dalla brezza serale che sale dalla Laguna Veneta, donando alle uve Glera acidità e sapidità uniche.",
+      "meta_icona": "fa-solid fa-mountain",
+      "meta_testo": "Conegliano Valdobbiadene DOCG"
+    },
+    {
+      "badge": "03 / I Sentori",
+      "titolo": "Perlage Fine & Minerale",
+      "testo": "Bollicina sottile e persistente. Al naso profuma di mela cotogna, pera croccante e fiori di glicine. Asciutto, elegante e straordinariamente armonioso.",
+      "meta_icona": "fa-solid fa-wine-glass",
+      "meta_testo": "Brut • Struttura Minerale"
+    },
+    {
+      "badge": "04 / Nel Bicchiere",
+      "titolo": "11,90 € / Bottiglia",
+      "testo": "Perfetto dall'aperitivo a tutto pasto, accompagnato dal nostro pane cotto a legna e dalla soppressa della cantina seicentesca."
+    }
+  ],
+  "ordine": {
+    "nome": "Giusto Prosecco Superiore DOCG Brut",
+    "prezzo": 11.9,
+    "testo_pulsante": "Ordina questa Bottiglia"
+  }
+}

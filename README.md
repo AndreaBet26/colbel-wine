@@ -70,3 +70,27 @@ Redesign moderno, immersivo e ad altissima fedeltà estetica per **ColBel Wine**
 ---
 
 © 2026 Azienda Agricola ColBel di Teo Gianni — Solighetto (TV).
+
+---
+
+## Gestione dei contenuti (modifica direttamente sul sito)
+
+1. Fai **doppio clic su `Avvia ColBel.command`** (oppure, da Terminale nella cartella del sito: `python3 server.py`).
+2. Si apre il browser sul sito in **modalità modifica** (`http://localhost:8080/admin/` → `http://localhost:8080/?modifica`).
+3. Si modifica direttamente la pagina:
+   - **Testi:** passa sopra un testo (compare un bordo tratteggiato), clicca e scrivi. Invio per confermare.
+   - **Foto:** passa sopra una foto e clicca *Cambia foto*.
+   - **Vini, esperienze, foto del rullino, numeri chiave:** passandoci sopra compare una barra per spostarli, nasconderli ai visitatori, eliminarli o cambiare i *Dettagli* che non si vedono in pagina (es. a chi arriva la prenotazione WhatsApp).
+   - **Aggiungere:** pulsanti *+ Aggiungi* sotto ogni elenco.
+   - **Contatti & avvisi** (barra in basso): numeri di telefono/WhatsApp, email, Google Maps, social, barra avvisi.
+   - **Anteprima:** mostra il sito esattamente come lo vedono i visitatori.
+4. Ogni modifica viene **salvata automaticamente** nei file `data/*.json` (lo stato è nella barra in basso).
+5. Il sito per i visitatori è `http://localhost:8080/`. Per fermare il server chiudi la finestra del Terminale.
+
+Esiste anche una **vista a elenco** con tutti i campi in forma di modulo: `http://localhost:8080/admin/elenco.html`.
+
+Note:
+- Le foto caricate finiscono in `assets/images/uploads/`.
+- Prima di ogni salvataggio viene fatta una copia del file precedente in `data/_backup/` (ultime 20 versioni per file).
+- Aprire `index.html` con doppio clic (senza server) mostra solo i contenuti statici di riserva scritti nell'HTML.
+- Il pulsante ENG traduce solo i testi fissi dell'interfaccia: i contenuti gestiti dalla dashboard restano in italiano.

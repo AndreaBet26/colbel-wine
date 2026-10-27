@@ -1,0 +1,24 @@
+{
+  "nome_cantina": "ColBel Vineyards and Winery",
+  "claim": "",
+  "hero_sottotitolo": "",
+  "hero_immagine": "assets/images/p9201811-2.jpg",
+  "minimo_bottiglie_ordine": 6,
+  "spedizione_italia_attiva": true,
+  "banner_annuncio": {
+    "attivo": false,
+    "testo": "Vendemmia 2026: Cantina aperta a Solighetto per visite ed acquisto diretto!",
+    "link": "#contatti",
+    "colore": "#d4af37"
+  },
+  "testo_footer": "© 2026 Azienda Agricola ColBel di Teo Gianni. Tutti i diritti riservati.",
+  "partita_iva": "03920950266",
+  "testi_sezioni": {
+    "vini_etichetta": "La Cantina ColBel",
+    "vini_titolo": "I Nostri Vini & Spumanti",
+    "vini_sottotitolo": "Spedizioni dirette dalla cantina a casa vostra in tutta Italia • IVA inclusa • Minimo 6 bottiglie",
+    "esperienze_etichetta": "Ospitalità & Degustazioni",
+    "esperienze_titolo": "Vivi il ColBel dal Vivo",
+    "esperienze_intro": "Dalla visita tra i filari al brindisi conviviale: scegli l'esperienza su misura per te a Solighetto."
+  }
+}

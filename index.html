@@ -7,7 +7,7 @@
   <meta name="description" content="Azienda Agricola e Agriturismo ColBel a Solighetto, Pieve di Soligo. Produzione artigianale di Conegliano Valdobbiadene Prosecco Superiore DOCG, ColFondo, degustazioni ed esperienze nei vigneti." />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/jpeg" href="assets/images/cropped-colbel_logo_smr_button_2021.jpg" />
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css" />
@@ -19,12 +19,8 @@
 
   <!-- ==================== HEADER & TOP NAVIGATION ==================== -->
   <header class="site-header">
-    <a href="#home" class="brand-wrapper">
-      <img src="assets/images/cropped-colbel_logo_smr_button_2021.jpg" alt="Logo ColBel" class="brand-logo-img" />
-      <div class="brand-title">
-        <span class="brand-name">COLBEL</span>
-        <span class="brand-tagline">Vineyards & Winery</span>
-      </div>
+    <a href="#home" class="brand-wrapper" aria-label="ColBel – Torna all'inizio">
+      <img src="assets/images/logo.png" alt="Logo ColBel" class="brand-logo-img" />
     </a>
 
     <!-- Overlay backdrop for mobile drawer -->
@@ -33,13 +29,6 @@
     <nav class="main-nav" id="mainNav">
       <!-- Mobile Drawer Header -->
       <div class="mobile-drawer-header">
-        <div class="brand-wrapper">
-          <img src="assets/images/cropped-colbel_logo_smr_button_2021.jpg" alt="Logo ColBel" class="brand-logo-img" />
-          <div class="brand-title">
-            <span class="brand-name">COLBEL</span>
-            <span class="brand-tagline">Vineyards & Winery</span>
-          </div>
-        </div>
         <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Chiudi menu">&times;</button>
       </div>
 
@@ -70,14 +59,17 @@
         </div>
 
         <div class="drawer-quick-actions">
-          <a href="tel:+393462443607" class="drawer-action-btn">
+          <a href="tel:+393462443607" class="drawer-action-btn" data-cb-tel="gianni">
             <i class="fa-solid fa-phone"></i> Chiama Gianni
           </a>
-          <a href="https://wa.me/393462443607" target="_blank" class="drawer-action-btn wa">
+          <a href="https://wa.me/393462443607" target="_blank" class="drawer-action-btn wa" data-cb-wa="gianni">
             <i class="fa-brands fa-whatsapp"></i> WhatsApp Gianni
           </a>
-          <a href="https://wa.me/393494356778" target="_blank" class="drawer-action-btn wa">
+          <a href="https://wa.me/393494356778" target="_blank" class="drawer-action-btn wa" data-cb-wa="lissa">
             <i class="fa-brands fa-whatsapp"></i> WhatsApp Lissa
+          </a>
+          <a href="admin/" class="drawer-action-btn" style="border-color: rgba(212,175,55,0.4); color: var(--color-gold);">
+            <i class="fa-solid fa-sliders"></i> Console Cantina
           </a>
         </div>
       </div>
@@ -113,15 +105,16 @@
     <!-- ==================== 1. HERO SECTION (FULL SCREEN) ==================== -->
     <section id="home" class="hero-section">
       <div class="hero-bg-container">
-        <img src="assets/images/p9201811-2.jpg" alt="Vigneti Colbel a Solighetto" class="hero-bg-image" />
+        <img src="assets/images/p9201811-2.jpg" alt="Vigneti Colbel a Solighetto" class="hero-bg-image" data-cb-src="impostazioni.hero_immagine" data-cb-label="Foto di apertura" />
       </div>
       <div class="hero-overlay"></div>
 
       <div class="hero-content">
-        <img src="assets/images/logo.jpg" alt="Colbel Stemma" class="hero-crest" />
-        <h1 class="hero-title">COLBEL</h1>
-        <img src="assets/images/Una-tradizione-unemozione.png" alt="Una tradizione, un'emozione" class="hero-tagline-img" />
-        <p class="hero-subtitle" data-i18n="hero_sub">
+        <h1 class="hero-title">
+          <img src="assets/images/logoesteso.png" alt="ColBel Vineyards and Winery" class="hero-logo" />
+        </h1>
+        <p class="hero-claim" data-cb="impostazioni.claim">Una tradizione, un'emozione</p>
+        <p class="hero-subtitle" data-cb="impostazioni.hero_sottotitolo">
           Coltiviamo la passione per il Conegliano Valdobbiadene Prosecco Superiore DOCG sulle storiche colline di Solighetto.
         </p>
 
@@ -149,31 +142,31 @@
     <!-- ==================== 2. CHI SIAMO (BORDERLESS EDITORIAL) ==================== -->
     <section id="chi-siamo" class="editorial-fullwidth">
       <div class="editorial-visual">
-        <img src="assets/images/p9201869_2-e1655489963356.jpg" alt="Gianni e Lissa Teo nella sala degustazione" />
+        <img src="assets/images/p9201869_2-e1655489963356.jpg" alt="Gianni e Lissa Teo nella sala degustazione" data-cb-src="chiSiamo.immagine" />
         <div class="editorial-visual-overlay"></div>
       </div>
 
       <div class="editorial-text">
-        <span class="section-label" data-i18n="about_label">La Nostra Storia</span>
-        <h2 class="editorial-heading" data-i18n="about_title">Radici Venete, Visione Globale</h2>
+        <span class="section-label" data-cb="chiSiamo.etichetta">La Nostra Storia</span>
+        <h2 class="editorial-heading" data-cb="chiSiamo.titolo">Radici Venete, Visione Globale</h2>
         
-        <p class="editorial-lead" data-i18n="about_lead">
+        <p class="editorial-lead" data-cb="chiSiamo.introduzione">
           «Col Bel» in dialetto veneto significa «bel colle». Il Colbel sorge a Solighetto, nel comune di Pieve di Soligo, e su di esso è sito il vigneto da cui, da generazioni, la famiglia di Gianni Teo produce prosecco.
         </p>
 
-        <p class="editorial-body" data-i18n="about_p1">
+        <p class="editorial-body" data-cb="chiSiamo.paragrafo_1">
           Crescendo fra le colline del prosecco, Gianni sviluppa una profonda passione per l'enologia, laureandosi all'Università di Padova. Durante un percorso di ricerca avanzata a Davis, in California, incontra Lissa, biologa texana.
         </p>
 
-        <p class="editorial-body" data-i18n="about_p2">
+        <p class="editorial-body" data-cb="chiSiamo.paragrafo_2">
           Il loro legame sboccia in amore autentico e nella scelta di costruire il loro futuro in Italia: nel 2004 nasce l'Azienda Agricola ColBel. Oggi, affiancando la produzione di bollicine d'eccellenza, ColBel accoglie gli ospiti nella nuova sala degustazione con i sapori genuini dell'agriturismo.
         </p>
 
-        <div class="editorial-quote-freestyle" data-i18n="about_quote">
+        <div class="editorial-quote-freestyle" data-cb="chiSiamo.citazione">
           «Un calice sincero che racchiude il rispetto per la terra, il calore della famiglia e la poesia delle nostre colline.»
         </div>
 
-        <div class="editorial-stats">
+        <div class="editorial-stats" id="csStats">
           <div class="stat-item">
             <span class="stat-num">2004</span>
             <span class="stat-desc" data-i18n="stat_founded">Anno di fondazione</span>
@@ -192,20 +185,20 @@
 
 
     <!-- ==================== 3. TERRITORIO (100% FULL-BLEED PANORAMIC, NO BOXES) ==================== -->
-    <section id="territorio" class="panorama-banner" style="background-image: url('assets/images/IMG-20180409-WA0003.jpg');">
+    <section id="territorio" class="panorama-banner" style="background-image: url('assets/images/IMG-20180409-WA0003.jpg');" data-cb-bg="territorio.immagine_sfondo">
       <div class="panorama-banner-overlay"></div>
       
       <div class="panorama-content">
-        <span class="section-label" style="margin-bottom: 1rem;" data-i18n="panorama_label">Patrimonio Unesco</span>
-        <h2 class="panorama-title" data-i18n="panorama_title">Le Colline del Prosecco DOCG</h2>
-        <div class="panorama-quote" data-i18n="panorama_quote">
+        <span class="section-label" style="margin-bottom: 1rem;" data-cb="territorio.etichetta">Patrimonio Unesco</span>
+        <h2 class="panorama-title" data-cb="territorio.titolo">Le Colline del Prosecco DOCG</h2>
+        <div class="panorama-quote" data-cb="territorio.citazione">
           «I vigneti si arrampicano sulle prime colline e creano un cuscinetto tra la fertile pianura trevigiana e le superfici boscate a monte.»
         </div>
-        <p class="panorama-desc" data-i18n="panorama_desc">
+        <p class="panorama-desc" data-cb="territorio.descrizione">
           Dal nostro agriturismo, nelle giornate terse, lo sguardo spazia fino alla romantica Laguna Veneta. Nelle ore serali, una brezza gentile risale la pianura donando alle nostre uve Glera un'acidità vibrante e aromi inconfondibili.
         </p>
         <a href="#contatti" class="btn-primary">
-          <span>Vieni a Trovarci a Solighetto</span>
+          <span data-cb="territorio.testo_pulsante">Vieni a Trovarci a Solighetto</span>
           <i class="fa-solid fa-location-dot"></i>
         </a>
       </div>
@@ -223,7 +216,7 @@
         <!-- Center Bottle Stage -->
         <div class="scrolly-bottle-core">
           <div class="scrolly-bottle-halo"></div>
-          <img src="assets/images/ColBel_Giusto_transparent.png" alt="Bottiglia Giusto Millesimato ColBel" class="scrolly-bottle-img" id="scrollyBottle" />
+          <img src="assets/images/ColBel_Giusto_transparent.png" alt="Bottiglia Giusto Millesimato ColBel" class="scrolly-bottle-img" id="scrollyBottle" data-cb-src="scrollytelling.immagine_bottiglia" />
           <div class="scrolly-bottle-reflection"></div>
         </div>
 
@@ -245,52 +238,52 @@
         <div class="scrolly-chapters-layer">
           <!-- Step 1: Origini -->
           <article class="scrolly-chapter step-1 active" id="scrollyStep1">
-            <span class="scrolly-badge" data-i18n="scrolly_step1_badge">01 / Le Origini</span>
-            <h3 class="scrolly-title" data-i18n="scrolly_step1_title">Omaggio a Nonno Giusto</h3>
-            <p class="scrolly-text" data-i18n="scrolly_step1_text">
+            <span class="scrolly-badge" data-cb="scrollytelling.step.0.badge">01 / Le Origini</span>
+            <h3 class="scrolly-title" data-cb="scrollytelling.step.0.titolo">Omaggio a Nonno Giusto</h3>
+            <p class="scrolly-text" data-cb="scrollytelling.step.0.testo">
               Giusto era il nonno che per primo lavorò i vigneti che oggi danno vita a questo vino. Il suo nome onora una storia di famiglia iniziata su queste colline.
             </p>
             <div class="scrolly-meta-tag">
               <i class="fa-solid fa-seedling"></i>
-              <span>Vigneti Storici a Solighetto</span>
+              <span data-cb="scrollytelling.step.0.meta_testo">Vigneti Storici a Solighetto</span>
             </div>
           </article>
 
           <!-- Step 2: Terroir -->
           <article class="scrolly-chapter step-2" id="scrollyStep2">
-            <span class="scrolly-badge" data-i18n="scrolly_step2_badge">02 / Il Terroir</span>
-            <h3 class="scrolly-title" data-i18n="scrolly_step2_title">Colline Eroiche di Solighetto</h3>
-            <p class="scrolly-text" data-i18n="scrolly_step2_text">
+            <span class="scrolly-badge" data-cb="scrollytelling.step.1.badge">02 / Il Terroir</span>
+            <h3 class="scrolly-title" data-cb="scrollytelling.step.1.titolo">Colline Eroiche di Solighetto</h3>
+            <p class="scrolly-text" data-cb="scrollytelling.step.1.testo">
               Pendenze scoscese baciate dal sole e rinfrescate dalla brezza serale che sale dalla Laguna Veneta, donando alle uve Glera acidità e sapidità uniche.
             </p>
             <div class="scrolly-meta-tag">
               <i class="fa-solid fa-mountain"></i>
-              <span>Conegliano Valdobbiadene DOCG</span>
+              <span data-cb="scrollytelling.step.1.meta_testo">Conegliano Valdobbiadene DOCG</span>
             </div>
           </article>
 
           <!-- Step 3: Sentori & Perlage -->
           <article class="scrolly-chapter step-3" id="scrollyStep3">
-            <span class="scrolly-badge" data-i18n="scrolly_step3_badge">03 / I Sentori</span>
-            <h3 class="scrolly-title" data-i18n="scrolly_step3_title">Perlage Fine & Minerale</h3>
-            <p class="scrolly-text" data-i18n="scrolly_step3_text">
+            <span class="scrolly-badge" data-cb="scrollytelling.step.2.badge">03 / I Sentori</span>
+            <h3 class="scrolly-title" data-cb="scrollytelling.step.2.titolo">Perlage Fine & Minerale</h3>
+            <p class="scrolly-text" data-cb="scrollytelling.step.2.testo">
               Bollicina sottile e persistente. Al naso profuma di mela cotogna, pera croccante e fiori di glicine. Asciutto, elegante e straordinariamente armonioso.
             </p>
             <div class="scrolly-meta-tag">
               <i class="fa-solid fa-wine-glass"></i>
-              <span>Brut • Struttura Minerale</span>
+              <span data-cb="scrollytelling.step.2.meta_testo">Brut • Struttura Minerale</span>
             </div>
           </article>
 
           <!-- Step 4: Nel Bicchiere & Ordine -->
-          <article class="scrolly-chapter step-4" id="scrollyStep4">
-            <span class="scrolly-badge" data-i18n="scrolly_step4_badge">04 / Nel Bicchiere</span>
-            <h3 class="scrolly-title" data-i18n="scrolly_step4_title">11,90 € / Bottiglia</h3>
-            <p class="scrolly-text" data-i18n="scrolly_step4_text">
+          <article class="scrolly-chapter step-4" id="scrollyStep4" data-cb-item="scrollytelling.ordine" data-cb-kind="ordine">
+            <span class="scrolly-badge" data-cb="scrollytelling.step.3.badge">04 / Nel Bicchiere</span>
+            <h3 class="scrolly-title" data-cb="scrollytelling.step.3.titolo">11,90 € / Bottiglia</h3>
+            <p class="scrolly-text" data-cb="scrollytelling.step.3.testo">
               Perfetto dall'aperitivo a tutto pasto, accompagnato dal nostro pane cotto a legna e dalla soppressa della cantina seicentesca.
             </p>
-            <button class="btn-primary" onclick="openOrderModal('Giusto Prosecco Superiore DOCG Brut', 11.90)">
-              <span data-i18n="scrolly_btn_order">Ordina questa Bottiglia</span>
+            <button class="btn-primary" id="scrollyOrderBtn" onclick="openOrderModal('Giusto Prosecco Superiore DOCG Brut', 11.90)">
+              <span data-cb="scrollytelling.ordine.testo_pulsante">Ordina questa Bottiglia</span>
               <i class="fa-brands fa-whatsapp"></i>
             </button>
           </article>
@@ -303,9 +296,9 @@
     <section id="prodotti" class="wines-showcase-section">
       <div class="section-header-wide">
         <div class="header-text-group">
-          <span class="section-label" data-i18n="wines_label">La Cantina ColBel</span>
-          <h2 class="wines-title" data-i18n="wines_title">I Nostri Vini & Spumanti</h2>
-          <p data-i18n="wines_sub">
+          <span class="section-label" data-cb="impostazioni.testi_sezioni.vini_etichetta">La Cantina ColBel</span>
+          <h2 class="wines-title" data-cb="impostazioni.testi_sezioni.vini_titolo">I Nostri Vini & Spumanti</h2>
+          <p data-cb="impostazioni.testi_sezioni.vini_sottotitolo">
             Spedizioni dirette dalla cantina a casa vostra in tutta Italia • IVA inclusa • Minimo 6 bottiglie
           </p>
         </div>
@@ -687,7 +680,6 @@
         </div>
       </div>
     </section>
-    </section>
 
 
     <!-- ==================== 5. ESPERIENZE (FULL-WIDTH CINEMATIC SLIDER) ==================== -->
@@ -695,9 +687,9 @@
     <section id="esperienze" class="experiences-mural-section">
       <div class="section-header-wide">
         <div class="header-text-group">
-          <span class="section-label" data-i18n="exp_label">Ospitalità & Degustazioni</span>
-          <h2 class="editorial-heading" data-i18n="exp_title">Vivi il ColBel dal Vivo</h2>
-          <p data-i18n="exp_intro">
+          <span class="section-label" data-cb="impostazioni.testi_sezioni.esperienze_etichetta">Ospitalità & Degustazioni</span>
+          <h2 class="editorial-heading" data-cb="impostazioni.testi_sezioni.esperienze_titolo">Vivi il ColBel dal Vivo</h2>
+          <p data-cb="impostazioni.testi_sezioni.esperienze_intro">
             Dalla visita tra i filari al brindisi conviviale: scegli l'esperienza su misura per te a Solighetto.
           </p>
         </div>
@@ -827,9 +819,9 @@
     <section id="agriturismo" class="agriturismo-filmstrip-section">
       <div class="section-header-wide">
         <div class="header-text-group">
-          <span class="section-label" data-i18n="agri_label">La Terra e la Cucina</span>
-          <h2 class="editorial-heading" data-i18n="agri_title">L'Agriturismo & La Cucina di Lissa</h2>
-          <p data-i18n="agri_desc" style="max-width: 900px;">
+          <span class="section-label" data-cb="agriturismo.etichetta">La Terra e la Cucina</span>
+          <h2 class="editorial-heading" data-cb="agriturismo.titolo">L'Agriturismo & La Cucina di Lissa</h2>
+          <p data-cb="agriturismo.descrizione" style="max-width: 900px;">
             Nella cucina di Lissa i frutti della terra diventano conserve, composte e verdure in agrodolce. I salumi stagionano nell'antica cantina seicentesca di Casa Teo rinfrescata dai gelsi secolari, e il pane è sfornato caldo con farina di grano antico "Giorgione". Nel weekend è aperta la spuntineria su prenotazione.
           </p>
         </div>
@@ -898,13 +890,13 @@
       <div class="contact-container">
         <!-- Left: Direct contacts -->
         <div class="contact-info-col">
-          <span class="section-label" data-i18n="contact_label">Contatti Diretti</span>
-          <h2 class="editorial-heading" data-i18n="contact_title">Vieni a Trovarci o Ordina</h2>
-          <p class="contact-lead-sub" data-i18n="contact_sub">
+          <span class="section-label" data-cb="contatti.etichetta">Contatti Diretti</span>
+          <h2 class="editorial-heading" data-cb="contatti.titolo">Vieni a Trovarci o Ordina</h2>
+          <p class="contact-lead-sub" data-cb="contatti.sottotitolo">
             Siamo sempre felici di accoglierti in cantina o spedirti le nostre bottiglie comodamente a casa in tutta Italia.
           </p>
 
-          <div class="contact-freestyle-list">
+          <div class="contact-freestyle-list" id="contactList">
             <!-- Gianni -->
             <div class="contact-freestyle-item">
               <div class="contact-freestyle-meta">
@@ -1002,17 +994,17 @@
     <div class="footer-top">
       <div class="footer-brand">
         <h3 class="footer-logo-title">COLBEL</h3>
-        <p class="footer-desc" data-i18n="about_quote">
+        <p class="footer-desc" data-cb="chiSiamo.citazione">
           «Un calice sincero che racchiude il rispetto per la terra, il calore della famiglia e la poesia delle nostre colline.»
         </p>
         <div class="footer-socials">
-          <a href="https://www.facebook.com" target="_blank" class="social-link" title="Facebook">
+          <a href="https://www.facebook.com" target="_blank" class="social-link" title="Facebook" data-cb-social="facebook">
             <i class="fa-brands fa-facebook-f"></i>
           </a>
-          <a href="https://www.instagram.com" target="_blank" class="social-link" title="Instagram">
+          <a href="https://www.instagram.com" target="_blank" class="social-link" title="Instagram" data-cb-social="instagram">
             <i class="fa-brands fa-instagram"></i>
           </a>
-          <a href="https://wa.me/393462443607" target="_blank" class="social-link" title="WhatsApp Gianni">
+          <a href="https://wa.me/393462443607" target="_blank" class="social-link" title="WhatsApp Gianni" data-cb-wa="gianni">
             <i class="fa-brands fa-whatsapp"></i>
           </a>
         </div>
@@ -1030,7 +1022,7 @@
 
       <div class="footer-links-col">
         <h4 data-i18n="nav_wines">VINI & DEGUSTAZIONI</h4>
-        <ul class="footer-nav-list">
+        <ul class="footer-nav-list" id="footerWineList">
           <li><a href="#prodotti">Giusto DOCG Brut</a></li>
           <li><a href="#prodotti">Angelo DOCG Extra Dry</a></li>
           <li><a href="#prodotti">DOC Treviso Frizzante</a></li>
@@ -1041,7 +1033,7 @@
 
       <div class="footer-links-col">
         <h4 data-i18n="nav_contacts">CONTATTI</h4>
-        <ul class="footer-nav-list">
+        <ul class="footer-nav-list" id="footerContactList">
           <li><span>Gianni Teo: +39 346 2443607</span></li>
           <li><span>Lissa Teo: +39 349 4356778</span></li>
           <li><span>Via Drio Cisa, 2 – Solighetto (TV)</span></li>
@@ -1051,8 +1043,9 @@
     </div>
 
     <div class="footer-bottom">
-      <p data-i18n="footer_rights">© 2026 Azienda Agricola ColBel di Teo Gianni. Tutti i diritti riservati.</p>
-      <p>Partita IVA: 03920950266 • Solighetto, Pieve di Soligo (Treviso)</p>
+      <p data-cb="impostazioni.testo_footer">© 2026 Azienda Agricola ColBel di Teo Gianni. Tutti i diritti riservati.</p>
+      <p>Partita IVA: <span data-cb="impostazioni.partita_iva" data-cb-label="Partita IVA">03920950266</span> • Solighetto, Pieve di Soligo (Treviso)</p>
+      <p style="margin-top: 0.5rem;"><a href="admin/" style="color: var(--color-gold); font-size: 0.76rem; text-decoration: none; opacity: 0.75;"><i class="fa-solid fa-lock"></i> Console Gestione Cantina</a></p>
     </div>
   </footer>
 
@@ -1108,15 +1101,15 @@
 
   <!-- ==================== MOBILE FLOATING BOTTOM DOCK ==================== -->
   <aside class="mobile-bottom-bar" aria-label="Azioni rapide mobile">
-    <a href="tel:+393462443607" class="bottom-bar-action" title="Chiama la Cantina">
+    <a href="tel:+393462443607" class="bottom-bar-action" title="Chiama la Cantina" data-cb-tel="gianni">
       <i class="fa-solid fa-phone"></i>
       <span data-i18n="mob_call">Chiama</span>
     </a>
-    <a href="https://wa.me/393462443607?text=Buongiorno%20ColBel,%20vorrei%20informazioni" target="_blank" class="bottom-bar-action wa" title="Scrivi su WhatsApp">
+    <a href="https://wa.me/393462443607?text=Buongiorno%20ColBel,%20vorrei%20informazioni" target="_blank" class="bottom-bar-action wa" title="Scrivi su WhatsApp" data-cb-wa="gianni" data-cb-wa-msg="Buongiorno ColBel, vorrei informazioni">
       <i class="fa-brands fa-whatsapp"></i>
       <span>WhatsApp</span>
     </a>
-    <button type="button" class="bottom-bar-action cta" onclick="openOrderModal('Giusto Prosecco Superiore DOCG Brut', 11.90)" title="Ordina subito">
+    <button type="button" class="bottom-bar-action cta" id="dockOrderBtn" onclick="openOrderModal('Giusto Prosecco Superiore DOCG Brut', 11.90)" title="Ordina subito">
       <i class="fa-solid fa-wine-bottle"></i>
       <span data-i18n="mob_order">Ordina Vini</span>
     </button>
@@ -1131,6 +1124,7 @@
   <script src="assets/js/vendor/gsap.min.js"></script>
   <script src="assets/js/vendor/ScrollTrigger.min.js"></script>
   <!-- Scripts -->
+  <script src="assets/js/content.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

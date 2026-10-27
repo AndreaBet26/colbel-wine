@@ -1,0 +1,23 @@
+{
+  "etichetta": "La Nostra Storia",
+  "titolo": "Radici Venete, Visione Globale",
+  "introduzione": "«Col Bel» in dialetto veneto significa «bel colle». Il Colbel sorge a Solighetto, nel comune di Pieve di Soligo, e su di esso è sito il vigneto da cui, da generazioni, la famiglia di Gianni Teo produce prosecco.",
+  "paragrafo_1": "Crescendo fra le colline del prosecco, Gianni sviluppa una profonda passione per l'enologia, laureandosi all'Università di Padova. Durante un percorso di ricerca avanzata a Davis, in California, incontra Lissa, biologa texana.",
+  "paragrafo_2": "Il loro legame sboccia in amore autentico e nella scelta di costruire il loro futuro in Italia: nel 2004 nasce l'Azienda Agricola ColBel. Oggi, affiancando la produzione di bollicine d'eccellenza, ColBel accoglie gli ospiti nella nuova sala degustazione con i sapori genuini dell'agriturismo.",
+  "citazione": "«Un calice sincero che racchiude il rispetto per la terra, il calore della famiglia e la poesia delle nostre colline.»",
+  "immagine": "assets/images/p9201869_2-e1655489963356.jpg",
+  "statistiche": [
+    {
+      "valore": "2004",
+      "etichetta": "Anno di fondazione"
+    },
+    {
+      "valore": "DOCG",
+      "etichetta": "Conegliano Valdobbiadene"
+    },
+    {
+      "valore": "100%",
+      "etichetta": "Tradizione di famiglia"
+    }
+  ]
+}

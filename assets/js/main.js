@@ -6,7 +6,17 @@
  * Wine Order Modal with Touch Steppers & WhatsApp / Email dispatch.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Attende che content.js abbia inserito i contenuti da data/*.json
+  try { await window.colbelContentReady; } catch (e) { /* contenuti statici */ }
+
+  // Contatti dinamici (dashboard) con fallback ai valori storici
+  const CB = window.COLBEL_DATA || {};
+  const cbContatti = CB.contatti || {};
+  const waGianni = String((cbContatti.gianni && cbContatti.gianni.wa_numero) || '393462443607').replace(/\D/g, '');
+  const waLissa = String((cbContatti.lissa && cbContatti.lissa.wa_numero) || '393494356778').replace(/\D/g, '');
+  const mailCantina = (cbContatti.azienda && cbContatti.azienda.email) || 'colbelwine@gmail.com';
+
   // --- 1. Sticky Navigation Header & Back to Top ---
   const header = document.querySelector('.site-header');
   const backToTopBtn = document.getElementById('backToTop');
@@ -426,6 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nav_order_now: "Ordina Vini",
 
       hero_title: "Una Tradizione, Un'Emozione",
+      hero_claim: "Una tradizione, un'emozione",
       hero_sub: "Coltiviamo la passione per il Conegliano Valdobbiadene Prosecco Superiore DOCG sulle storiche colline di Solighetto.",
       hero_btn_wines: "Scopri i Vini",
       hero_btn_exp: "Prenota Esperienza",
@@ -534,6 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nav_order_now: "Order Wine",
 
       hero_title: "A Tradition, An Emotion",
+      hero_claim: "A tradition, an emotion",
       hero_sub: "Cultivating genuine passion for Conegliano Valdobbiadene Prosecco Superiore DOCG across the historical hills of Solighetto.",
       hero_btn_wines: "Explore Wines",
       hero_btn_exp: "Book Experience",
@@ -686,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openOrderModal = function(name, price) {
     activeWine = { name, price: parseFloat(price) };
     if (modalWineTitle) modalWineTitle.textContent = name;
-    if (modalWinePrice) modalWinePrice.textContent = `${price.toFixed(2)} € / bottiglia`;
+    if (modalWinePrice) modalWinePrice.textContent = `${parseFloat(price).toFixed(2).replace('.', ',')} € / bottiglia`;
     if (bottleQtyInput) bottleQtyInput.value = 6;
     setActivePreset(6);
     updateModalTotal();
@@ -725,13 +737,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const message = currentLang === 'ita' ? msgIta : msgEng;
 
     if (btnWaGianni) {
-      btnWaGianni.href = `https://wa.me/393462443607?text=${encodeURIComponent(message)}`;
+      btnWaGianni.href = `https://wa.me/${waGianni}?text=${encodeURIComponent(message)}`;
     }
     if (btnWaLissa) {
-      btnWaLissa.href = `https://wa.me/393494356778?text=${encodeURIComponent(message)}`;
+      btnWaLissa.href = `https://wa.me/${waLissa}?text=${encodeURIComponent(message)}`;
     }
     if (btnEmailOrder) {
-      btnEmailOrder.href = `mailto:colbelwine@gmail.com?subject=${encodeURIComponent("Richiesta Ordine: " + activeWine.name)}&body=${encodeURIComponent(message)}`;
+      btnEmailOrder.href = `mailto:${mailCantina}?subject=${encodeURIComponent("Richiesta Ordine: " + activeWine.name)}&body=${encodeURIComponent(message)}`;
     }
   }
 
@@ -796,7 +808,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sendFormWa.addEventListener('click', (e) => {
       e.preventDefault();
       const data = getFormData();
-      const url = `https://wa.me/393462443607?text=${encodeURIComponent(data.text)}`;
+      const url = `https://wa.me/${waGianni}?text=${encodeURIComponent(data.text)}`;
       window.open(url, '_blank');
     });
   }
@@ -805,7 +817,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sendFormMail.addEventListener('click', (e) => {
       e.preventDefault();
       const data = getFormData();
-      const mailUrl = `mailto:colbelwine@gmail.com?subject=Richiesta ColBel da ${encodeURIComponent(data.name || 'Cliente')}&body=${encodeURIComponent(data.text)}`;
+      const mailUrl = `mailto:${mailCantina}?subject=Richiesta ColBel da ${encodeURIComponent(data.name || 'Cliente')}&body=${encodeURIComponent(data.text)}`;
       window.location.href = mailUrl;
     });
   }
@@ -854,4 +866,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initThemeSwitcher();
+
+  // --- 11. Contenuti dinamici: gestiti da assets/js/content.js (data/*.json) ---
 });

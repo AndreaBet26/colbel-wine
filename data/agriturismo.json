@@ -1,0 +1,43 @@
+{
+  "etichetta": "La Terra e la Cucina",
+  "titolo": "L'Agriturismo & La Cucina di Lissa",
+  "descrizione": "Nella cucina di Lissa i frutti della terra diventano conserve, composte e verdure in agrodolce. I salumi stagionano nell'antica cantina seicentesca di Casa Teo rinfrescata dai gelsi secolari, e il pane è sfornato caldo con farina di grano antico \"Giorgione\". Nel weekend è aperta la spuntineria su prenotazione.",
+  "galleria": [
+    {
+      "id": "foto-1",
+      "immagine": "assets/images/foccacce-e1785184768894.jpeg",
+      "didascalia": "Pane a legna con farina di grano antico 'Giorgione'",
+      "ordine": 1
+    },
+    {
+      "id": "foto-2",
+      "immagine": "assets/images/IMG20220127145122.jpg",
+      "didascalia": "Soppressa & salumi stagionati nella cantina seicentesca",
+      "ordine": 2
+    },
+    {
+      "id": "foto-3",
+      "immagine": "assets/images/IMG20200731193140.jpg",
+      "didascalia": "Verdure in agrodolce e conserve dell'orto di Lissa",
+      "ordine": 3
+    },
+    {
+      "id": "foto-4",
+      "immagine": "assets/images/IMG20200921114903.jpg",
+      "didascalia": "I vigneti affacciati sul Quartier del Piave",
+      "ordine": 4
+    },
+    {
+      "id": "foto-5",
+      "immagine": "assets/images/p9201850-2.jpg",
+      "didascalia": "Momenti in famiglia e brindisi al tramonto",
+      "ordine": 5
+    },
+    {
+      "id": "foto-6",
+      "immagine": "assets/images/cantina-2.jpeg",
+      "didascalia": "La nuova sala degustazione aperta nel 2020",
+      "ordine": 6
+    }
+  ]
+}

@@ -130,12 +130,16 @@ img {
 }
 
 .brand-logo-img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--color-gold);
-  box-shadow: 0 0 15px var(--color-gold-glow);
+  width: auto;
+  height: 52px;
+  object-fit: contain;
+  /* Logo nero su sfondo trasparente: reso bianco sull'header scuro */
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(0, 0, 0, 0.35));
+  transition: var(--transition-smooth);
+}
+
+.site-header.scrolled .brand-logo-img {
+  height: 42px;
 }
 
 .brand-name {
@@ -417,29 +421,27 @@ img {
   align-items: center;
 }
 
-.hero-crest {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
-}
-
 .hero-title {
-  font-size: clamp(2.5rem, 6.5vw, 5.2rem);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: #ffffff;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-  margin-bottom: 0.8rem;
+  margin: 0 0 1.4rem;
+  line-height: 0;
 }
 
-.hero-tagline-img {
-  max-width: 420px;
-  width: 85%;
+.hero-logo {
+  width: clamp(170px, 20vw, 270px);
   height: auto;
-  filter: brightness(1.2) drop-shadow(0 4px 15px rgba(0,0,0,0.8));
-  margin: 0.5rem auto 1.5rem;
+  margin: 0 auto;
+  /* Logo nero su trasparente: reso bianco sopra la fotografia */
+  filter: brightness(0) invert(1) drop-shadow(0 4px 24px rgba(0, 0, 0, 0.65));
+}
+
+.hero-claim {
+  font-family: var(--font-serif-body);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  color: var(--color-gold);
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
+  margin-bottom: 1rem;
 }
 
 .hero-subtitle {
@@ -2058,10 +2060,10 @@ textarea.form-control {
   .mobile-drawer-header {
     display: flex;
     width: 100%;
-    padding: 1.5rem 1.8rem;
+    padding: 1.1rem 1.8rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   .drawer-close-btn {
@@ -2231,14 +2233,16 @@ textarea.form-control {
     padding-top: 60px;
   }
 
-  .hero-crest {
-    width: 60px;
-    height: 60px;
+  .hero-title {
     margin-bottom: 1rem;
   }
 
-  .hero-title {
-    font-size: 2.8rem;
+  .hero-logo {
+    width: 150px;
+  }
+
+  .brand-logo-img {
+    height: 40px;
   }
 
   .hero-subtitle {
@@ -2596,8 +2600,9 @@ html[data-theme="light"] .site-header.scrolled {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
-html[data-theme="light"] .brand-name {
-  color: #161715;
+html[data-theme="light"] .brand-logo-img {
+  /* Tema chiaro: header chiaro, logo nel suo nero originale */
+  filter: none;
 }
 
 html[data-theme="light"] .nav-link {
@@ -2864,3 +2869,31 @@ html[data-theme="light"] .bottom-bar-action:hover,
 html[data-theme="light"] .bottom-bar-action.active {
   color: var(--color-gold);
 }
+
+/* ==========================================================================
+   BANNER AVVISO (gestito da dashboard → impostazioni.banner_annuncio)
+   ========================================================================== */
+.colbel-top-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  background: #8b1e2e;
+  color: #ffffff;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+}
+.colbel-top-banner i,
+.colbel-top-banner a { color: #d4af37; }
+.colbel-top-banner a { text-decoration: underline; }
+body.has-top-banner .site-header { top: var(--banner-h, 36px); }
+.exp-features-tags .cb-tag-text { font-weight: inherit; }

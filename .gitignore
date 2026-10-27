@@ -11,3 +11,9 @@ _data_backup/
 # Editor
 .vscode/
 .idea/
+
+# Backup automatici della dashboard
+data/_backup/
+
+# File di sistema macOS su dischi esterni
+._*
