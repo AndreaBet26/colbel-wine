@@ -85,7 +85,11 @@ class ColBelHandler(SimpleHTTPRequestHandler):
         length = int(self.headers.get("Content-Length") or 0)
         if length <= 0 or length > limit:
             raise ValueError("Richiesta vuota o troppo grande")
-        return json.loads(self.rfile.read(length).decode("utf-8"))
+        raw = self.rfile.read(length)
+        try:
+            return json.loads(raw.decode("utf-8"))
+        except UnicodeDecodeError:
+            return json.loads(raw.decode("latin-1"))
 
     def _same_origin(self):
         origin = self.headers.get("Origin")

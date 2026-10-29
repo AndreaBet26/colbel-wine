@@ -3,6 +3,11 @@
   "claim": "Una tradizione, un’emozione",
   "hero_sottotitolo": "",
   "hero_immagine": "assets/images/p9201811-2.jpg",
+  "hero_immagine_pos": "50% 50%",
+  "porte_esperienze_img": "assets/images/stock/tagliere-salumi.jpg",
+  "porte_esperienze_img_pos": "50% 50%",
+  "porte_agriturismo_img": "assets/images/stock/pane-olive.jpg",
+  "porte_agriturismo_img_pos": "50% 50%",
   "minimo_bottiglie_ordine": 6,
   "spedizione_italia_attiva": true,
   "banner_annuncio": {
@@ -17,8 +22,14 @@
     "vini_etichetta": "",
     "vini_titolo": "Prodotti",
     "vini_sottotitolo": "I prezzi sono IVA inclusa con spedizione a casa qui in Italia.",
+    "vini_immagine": "assets/images/stock/alba-filari.jpg",
+    "vini_immagine_pos": "50% 50%",
+    "vini_chiusura_immagine": "assets/images/stock/botti-cantina.jpg",
+    "vini_chiusura_immagine_pos": "50% 50%",
     "esperienze_etichetta": "",
     "esperienze_titolo": "Esperienze",
-    "esperienze_intro": "Ci sono vari modi in cui potete venire a trovarci, passando per una degustazione veloce quando siete in zona visitando le nostre colline in vacanza o i vostri giorni festivi, o prendendo un momento di relax per godere i nostri vini e prodotti tipici oppure per un pranzo o cena, semplice ma autentica in buona compagnia! Godete tutto nella nostra sala con una bella vista della Quartiere di Piave e in un ambiante che speriamo trovate accogliente è di famiglia."
+    "esperienze_intro": "Ci sono vari modi in cui potete venire a trovarci, passando per una degustazione veloce quando siete in zona visitando le nostre colline in vacanza o i vostri giorni festivi, o prendendo un momento di relax per godere i nostri vini e prodotti tipici oppure per un pranzo o cena, semplice ma autentica in buona compagnia! Godete tutto nella nostra sala con una bella vista della Quartiere di Piave e in un ambiante che speriamo trovate accogliente è di famiglia.",
+    "esperienze_immagine": "assets/images/stock/tavola-brindisi.jpg",
+    "esperienze_immagine_pos": "50% 40%"
   }
 }

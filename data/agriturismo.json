@@ -2,34 +2,41 @@
   "etichetta": "",
   "titolo": "Agriturismo",
   "descrizione": "Il cuore dell’agriturismo è la cucina dove Lissa trasforma i prodotti della terra del ColBel. Zucchine in agrodolce, composte di frutta, sottaceti. Sono solo alcune delle specialità artigianali che accompagnano l’esperienza di degustazione.",
+  "immagine": "assets/images/stock/pane-olive.jpg",
+  "immagine_pos": "50% 50%",
   "galleria": [
     {
       "id": "foto-2",
       "immagine": "assets/images/stock/tagliere-salumi.jpg",
+      "immagine_pos": "50% 50%",
       "didascalia": "La produzione di salumi, è un’altra passione di Gianni. Quando in inverno le viti riposano, salami, soppresse e altri insaccati, stagionano in un’antica cantina seicentesca di Casa Teo raffrescata dai secolari gelsi. È possibile assaggiarli sia il loco, che acquistarle per il consumo domestico.",
       "ordine": 1
     },
     {
       "id": "foto-1",
       "immagine": "assets/images/stock/mani-pane.jpg",
+      "immagine_pos": "50% 50%",
       "didascalia": "Il pane di Lissa è il compagno perfetto per tutti questi prodotti. Viene prodotto con una varietà di frumento antica “Giorgione”, seguendo tempi e metodi tramandati da generazioni, e cotto nel forno alimentato dalla legna dei nostri boschi.",
       "ordine": 2
     },
     {
       "id": "foto-5",
       "immagine": "assets/images/stock/alba-filari.jpg",
+      "immagine_pos": "50% 50%",
       "didascalia": "Nello stesso forno e con la stessa legna durante le festività Lissa come da tradizione riscopre le ricette antiche per impastare e cucinare i gustosi panettoni natalizi, le soffici focacce pasquali e gli immancabili biscotti e crostate che ci ricordano i bei momenti passati con i nostri genitori e i nostri nonni.",
       "ordine": 3
     },
     {
       "id": "foto-3",
       "immagine": "assets/images/IMG20200731193140.jpg",
+      "immagine_pos": "50% 50%",
       "didascalia": "Durante la bella stagione Lissa raccoglie i prodotti dell’orto per produrre passate di pomodoro, conserve in agrodolce, sottolio e sottaceto e marmellate di prugne, pesche e albicocche che allieteranno tutti i momenti dell’anno, anche quelle fredde giornate in cui le ore di luce sono poche e l’immancabile compagno sarà il crepitio del caminetto.",
       "ordine": 4
     },
     {
       "id": "foto-6",
       "immagine": "assets/images/cantina-2.jpeg",
+      "immagine_pos": "50% 50%",
       "didascalia": "Ma la cucina di Lissa è sempre calda e spazia dai piatti del nostro pollame, alla selvaggina, al vegano.",
       "ordine": 5
     }

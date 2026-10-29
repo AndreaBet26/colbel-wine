@@ -114,12 +114,26 @@
       if (v !== undefined && v !== null) el.textContent = formatValue(el, v);
     });
     document.querySelectorAll('[data-cb-src]').forEach((el) => {
-      const v = get(data, el.getAttribute('data-cb-src'));
+      const srcPath = el.getAttribute('data-cb-src');
+      const v = get(data, srcPath);
       if (v) el.setAttribute('src', v);
+      const posPath = el.getAttribute('data-cb-pos') || (srcPath + '_pos');
+      const pos = get(data, posPath);
+      if (pos) {
+        el.style.objectPosition = pos;
+        el.setAttribute('data-cb-pos', posPath);
+      }
     });
     document.querySelectorAll('[data-cb-bg]').forEach((el) => {
-      const v = get(data, el.getAttribute('data-cb-bg'));
+      const bgPath = el.getAttribute('data-cb-bg');
+      const v = get(data, bgPath);
       if (v) el.style.backgroundImage = `url('${String(v).replace(/'/g, '%27')}')`;
+      const posPath = el.getAttribute('data-cb-pos') || (bgPath + '_pos');
+      const pos = get(data, posPath);
+      if (pos) {
+        el.style.backgroundPosition = pos;
+        el.setAttribute('data-cb-pos', posPath);
+      }
     });
   }
 
@@ -189,8 +203,11 @@
   }
 
 
-  const photoFig = (src, fades, bind, label, alt) =>
-    `<figure class="photo ${fades}" data-photo><img src="${esc(src)}" alt="${esc(alt || '')}" loading="lazy"${bind ? ` data-cb-src="${bind}" data-cb-label="${label}"` : ''} /></figure>`;
+  const photoFig = (src, fades, bind, label, alt, pos) => {
+    const posAttr = bind ? ` data-cb-pos="${bind}_pos"` : '';
+    const posStyle = pos ? ` style="object-position:${esc(pos)}"` : '';
+    return `<figure class="photo ${fades}" data-photo><img src="${esc(src)}" alt="${esc(alt || '')}" loading="lazy"${bind ? ` data-cb-src="${bind}" data-cb-label="${label}"` : ''}${posAttr}${posStyle} /></figure>`;
+  };
 
   function renderWines(vini) {
     const list = visibleList(vini);
@@ -233,7 +250,7 @@
     const media = document.getElementById('expMedia');
     if (!track || !Array.isArray(esperienze)) return;
     const list = visibleList(esperienze);
-    if (media) media.innerHTML = list.map((e) => photoFig(e.immagine, '', 'esperienze#' + e.id + '.immagine', 'Foto', e.titolo)).join('');
+    if (media) media.innerHTML = list.map((e) => photoFig(e.immagine, '', 'esperienze#' + e.id + '.immagine', 'Foto', e.titolo, e.immagine_pos)).join('');
     track.innerHTML = list.map((e, i) => {
       const p = 'esperienze#' + e.id;
       const refC = (contatti && e.referente && contatti[e.referente]) || {};
@@ -266,7 +283,7 @@
       const left = i % 2 === 0;
       return `
         <div class="photo-row grid" data-cb-item="${p}" data-cb-kind="foto">
-          ${photoFig(f.immagine, (left ? 'fade-r' : 'fade-l') + ' fade-t fade-b', p + '.immagine', 'Foto', f.didascalia)}
+          ${photoFig(f.immagine, (left ? 'fade-r' : 'fade-l') + ' fade-t fade-b', p + '.immagine', 'Foto', f.didascalia, f.immagine_pos)}
           <div class="copy">
             <span class="photo-num">${pad2(i + 1)}</span>
             <p class="caption" data-cb="${p}.didascalia" data-cb-label="Didascalia">${esc(f.didascalia)}</p>

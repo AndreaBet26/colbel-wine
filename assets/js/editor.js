@@ -121,7 +121,7 @@
     dirty.clear();
     try {
       for (const key of keys) {
-        const res = await fetch('api/save', {
+        const res = await fetch('/api/save', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ file: FILE_OF[key], data: data[key] })
@@ -150,7 +150,7 @@
       r.onerror = () => reject(new Error('lettura non riuscita'));
       r.readAsDataURL(file);
     });
-    const res = await fetch('api/upload', {
+    const res = await fetch('/api/upload', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: file.name, data: dataUrl })
@@ -182,20 +182,85 @@
   ui.innerHTML = `
     <div id="cbBar" role="toolbar" aria-label="Modifica del sito">
       <span class="cb-bar-brand"><i class="fa-solid fa-pen-nib"></i> Modifica sito</span>
+      <div class="cb-page-switcher" id="cbPageSwitcher">
+        <button type="button" class="cb-page-current" id="cbPageCurrent" aria-expanded="false" title="Cambia pagina">
+          <i class="fa-solid fa-file-lines"></i>
+          <span id="cbPageLabel">Home</span>
+          <i class="fa-solid fa-chevron-down cb-chevron"></i>
+        </button>
+        <div class="cb-page-menu" id="cbPageMenu" hidden>
+          <a href="index.html?modifica" class="cb-page-link" data-page="index"><i class="fa-solid fa-house"></i> <span>Home</span></a>
+          <a href="storia.html?modifica" class="cb-page-link" data-page="storia"><i class="fa-solid fa-book-open"></i> <span>Chi siamo & Storia</span></a>
+          <a href="vini.html?modifica" class="cb-page-link" data-page="vini"><i class="fa-solid fa-wine-bottle"></i> <span>Prodotti & Vini</span></a>
+          <a href="esperienze.html?modifica" class="cb-page-link" data-page="esperienze"><i class="fa-solid fa-wine-glass"></i> <span>Esperienze & Degustazioni</span></a>
+          <a href="agriturismo.html?modifica" class="cb-page-link" data-page="agriturismo"><i class="fa-solid fa-utensils"></i> <span>Agriturismo & Cucina</span></a>
+          <a href="contatti.html?modifica" class="cb-page-link" data-page="contatti"><i class="fa-solid fa-envelope"></i> <span>Contatti</span></a>
+        </div>
+      </div>
       <span class="cb-status" id="cbStatus" data-kind=""><span class="cb-dot"></span><span id="cbStatusText">Caricamento…</span></span>
       <button type="button" class="cb-btn" id="cbBtnSettings"><i class="fa-solid fa-sliders"></i><span>Contatti & avvisi</span></button>
       <button type="button" class="cb-btn" id="cbBtnPreview"><i class="fa-solid fa-eye"></i><span>Anteprima</span></button>
       <button type="button" class="cb-btn cb-btn-ghost" id="cbBtnHelp" title="Come funziona"><i class="fa-solid fa-circle-question"></i></button>
-      <a class="cb-btn cb-btn-ghost" href="./" title="Esci dalla modifica"><i class="fa-solid fa-xmark"></i><span>Esci</span></a>
+      <a class="cb-btn cb-btn-ghost" id="cbBtnExit" href="./" title="Esci dalla modifica"><i class="fa-solid fa-xmark"></i><span>Esci</span></a>
     </div>
     <div id="cbOffline" hidden>
       <i class="fa-solid fa-triangle-exclamation"></i>
       <span><strong>Il server locale non è attivo:</strong> puoi provare le modifiche ma non verranno salvate. Avvia <code>Avvia ColBel.bat</code> (Windows) o <code>Avvia ColBel.command</code> (Mac) e ricarica questa pagina.</span>
     </div>
     <div id="cbLabel" hidden></div>
-    <button type="button" id="cbImgBtn" hidden><i class="fa-solid fa-camera"></i> <span>Cambia foto</span></button>
+    <div id="cbImgBar" hidden>
+      <button type="button" id="cbImgBtn" class="cb-img-action"><i class="fa-solid fa-camera"></i> <span>Cambia foto</span></button>
+      <button type="button" id="cbCropBtn" class="cb-img-action" title="Regola inquadratura e centratura"><i class="fa-solid fa-arrows-up-down-left-right"></i> <span>Centra foto</span></button>
+    </div>
     <div id="cbItemBar" hidden></div>
     <div id="cbPop" hidden></div>
+    <div id="cbCropModal" class="cb-modal" hidden>
+      <div class="cb-modal-backdrop" id="cbCropBackdrop"></div>
+      <div class="cb-modal-box">
+        <div class="cb-modal-head">
+          <h3><i class="fa-solid fa-arrows-up-down-left-right"></i> Inquadratura e centratura foto</h3>
+          <button type="button" class="cb-icon cb-modal-close" id="cbCropClose" aria-label="Chiudi">&times;</button>
+        </div>
+        <div class="cb-modal-body">
+          <p class="cb-crop-intro">Trascina o clicca sull'anteprima per scegliere il punto focale, oppure usa i pulsanti rapidi.</p>
+          <div class="cb-crop-preview-wrap">
+            <div class="cb-crop-preview" id="cbCropPreview">
+              <img id="cbCropImg" src="" alt="Anteprima" draggable="false" />
+              <div class="cb-crop-reticle" id="cbCropReticle">
+                <span class="cb-reticle-circle"></span>
+                <span class="cb-reticle-cross-h"></span>
+                <span class="cb-reticle-cross-v"></span>
+              </div>
+            </div>
+          </div>
+          <div class="cb-crop-presets">
+            <span class="cb-crop-label">Posizioni rapide:</span>
+            <div class="cb-preset-grid">
+              <button type="button" class="cb-preset-btn" data-x="50" data-y="15"><i class="fa-solid fa-arrow-up"></i> In alto</button>
+              <button type="button" class="cb-preset-btn active" data-x="50" data-y="50"><i class="fa-solid fa-bullseye"></i> Al centro</button>
+              <button type="button" class="cb-preset-btn" data-x="50" data-y="85"><i class="fa-solid fa-arrow-down"></i> In basso</button>
+              <button type="button" class="cb-preset-btn" data-x="15" data-y="50"><i class="fa-solid fa-arrow-left"></i> A sinistra</button>
+              <button type="button" class="cb-preset-btn" data-x="85" data-y="50"><i class="fa-solid fa-arrow-right"></i> A destra</button>
+              <button type="button" class="cb-preset-btn" data-x="50" data-y="30"><i class="fa-solid fa-user"></i> Ritratto (30%)</button>
+            </div>
+          </div>
+          <div class="cb-crop-sliders">
+            <div class="cb-slider-row">
+              <label for="cbCropRangeX">Orizzontale (X): <strong id="cbCropValX">50%</strong></label>
+              <input type="range" id="cbCropRangeX" min="0" max="100" value="50" step="1">
+            </div>
+            <div class="cb-slider-row">
+              <label for="cbCropRangeY">Verticale (Y): <strong id="cbCropValY">50%</strong></label>
+              <input type="range" id="cbCropRangeY" min="0" max="100" value="50" step="1">
+            </div>
+          </div>
+        </div>
+        <div class="cb-modal-foot">
+          <button type="button" class="cb-btn cb-btn-ghost" id="cbCropCancel">Annulla</button>
+          <button type="button" class="cb-btn cb-btn-primary" id="cbCropSave"><i class="fa-solid fa-check"></i> Salva inquadratura</button>
+        </div>
+      </div>
+    </div>
     <aside id="cbPanel" aria-hidden="true">
       <div class="cb-panel-head">
         <h3>Contatti & avvisi</h3>
@@ -415,9 +480,11 @@
   }, true);
 
   // ---------------------------------------------------------------------------
-  // Pulsanti flottanti: foto e barra del blocco
+  // Pulsanti flottanti: foto (cambia + centra) e barra del blocco
   // ---------------------------------------------------------------------------
+  const imgBar = $('#cbImgBar');
   const imgBtn = $('#cbImgBtn');
+  const cropBtn = $('#cbCropBtn');
   const itemBar = $('#cbItemBar');
   let pointer = { x: -1, y: -1 };
   let currentImg = null;
@@ -453,13 +520,17 @@
 
     const img = smallestContaining('[data-cb-src], [data-cb-bg]', x, y);
     currentImg = img;
-    if (img) {
+    if (img && imgBar) {
       const r = img.getBoundingClientRect();
-      imgBtn.hidden = false;
-      imgBtn.style.left = Math.max(8, r.left + 12) + 'px';
-      imgBtn.style.top = Math.min(window.innerHeight - 60, Math.max(top0, r.top + 12)) + 'px';
-      imgBtn.querySelector('span').textContent = 'Cambia ' + (img.getAttribute('data-cb-label') || 'foto').toLowerCase();
-    } else imgBtn.hidden = true;
+      imgBar.hidden = false;
+      imgBar.style.left = Math.max(8, r.left + 12) + 'px';
+      imgBar.style.top = Math.min(window.innerHeight - 60, Math.max(top0, r.top + 12)) + 'px';
+      const lbl = img.getAttribute('data-cb-label') || 'foto';
+      const span = imgBtn ? imgBtn.querySelector('span') : null;
+      if (span) span.textContent = 'Cambia ' + lbl.toLowerCase();
+    } else if (imgBar) {
+      imgBar.hidden = true;
+    }
 
     const item = smallestContaining('[data-cb-item]', x, y);
     if (item !== currentItem) {
@@ -472,8 +543,8 @@
       const w = itemBar.getBoundingClientRect().width;
       itemBar.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.right - w - 12)) + 'px';
       let top = Math.min(window.innerHeight - 60, Math.max(top0, r.top + 12));
-      // evita di coprire il pulsante foto se sono allineati
-      if (!imgBtn.hidden && Math.abs(parseFloat(imgBtn.style.top) - top) < 40 && parseFloat(imgBtn.style.left) + imgBtn.offsetWidth > parseFloat(itemBar.style.left)) top += 46;
+      // evita di coprire la barra foto se sono allineate
+      if (imgBar && !imgBar.hidden && Math.abs(parseFloat(imgBar.style.top) - top) < 40 && parseFloat(imgBar.style.left) + imgBar.offsetWidth > parseFloat(itemBar.style.left)) top += 46;
       itemBar.style.top = top + 'px';
     } else itemBar.hidden = true;
   }
@@ -483,15 +554,17 @@
   }
   document.addEventListener('mousemove', (e) => { pointer = { x: e.clientX, y: e.clientY }; scheduleFloating(); }, { passive: true });
   window.addEventListener('scroll', scheduleFloating, { passive: true });
-  document.addEventListener('mouseleave', () => { imgBtn.hidden = true; if (!barLocked) itemBar.hidden = true; });
+  document.addEventListener('mouseleave', () => { if (imgBar) imgBar.hidden = true; if (!barLocked) itemBar.hidden = true; });
 
   // Cambio foto
   let imgTargetPath = null;
-  imgBtn.addEventListener('click', () => {
-    if (!currentImg) return;
-    imgTargetPath = currentImg.getAttribute('data-cb-src') || currentImg.getAttribute('data-cb-bg');
-    $('#cbFile').click();
-  });
+  if (imgBtn) {
+    imgBtn.addEventListener('click', () => {
+      if (!currentImg) return;
+      imgTargetPath = currentImg.getAttribute('data-cb-src') || currentImg.getAttribute('data-cb-bg');
+      $('#cbFile').click();
+    });
+  }
   $('#cbFile').addEventListener('change', async (e) => {
     const file = e.target.files[0];
     e.target.value = '';
@@ -507,6 +580,13 @@
       toast('Foto non caricata: ' + err.message, 'error');
     }
   });
+
+  // Regola Inquadratura & Centratura foto
+  if (cropBtn) {
+    cropBtn.addEventListener('click', () => {
+      if (currentImg) openCropModal(currentImg);
+    });
+  }
 
   // Barra del blocco (sposta / nascondi / dettagli / elimina)
   function itemInfo(item) {
@@ -804,6 +884,235 @@
   panel.addEventListener('change', (e) => { if (e.target.type === 'checkbox') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
 
   // ---------------------------------------------------------------------------
+  // Gestione Pagine (Selettore rapido e mantenimento ?modifica)
+  // ---------------------------------------------------------------------------
+  function initPageSwitcher() {
+    const rawPath = location.pathname.split('/').pop() || 'index.html';
+    const curPage = rawPath.replace(/\.html$/, '') || 'index';
+    const pageNames = {
+      index: 'Home',
+      storia: 'Chi siamo & Storia',
+      vini: 'Prodotti & Vini',
+      esperienze: 'Esperienze',
+      agriturismo: 'Agriturismo',
+      contatti: 'Contatti'
+    };
+    const pageLabel = pageNames[curPage] || 'Pagina';
+    const lbl = $('#cbPageLabel');
+    if (lbl) lbl.textContent = pageLabel;
+
+    const btnCurrent = $('#cbPageCurrent');
+    const menu = $('#cbPageMenu');
+    if (btnCurrent && menu) {
+      btnCurrent.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = !menu.hidden;
+        menu.hidden = open;
+        btnCurrent.setAttribute('aria-expanded', String(!open));
+      });
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#cbPageSwitcher')) {
+          menu.hidden = true;
+          btnCurrent.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    document.querySelectorAll('.cb-page-link').forEach((a) => {
+      if (a.getAttribute('data-page') === curPage) a.classList.add('active');
+    });
+
+    const exitBtn = $('#cbBtnExit');
+    if (exitBtn) {
+      exitBtn.href = rawPath.split('?')[0];
+    }
+
+    // Assicura che i link di navigazione nell'header e nei menu portino a ?modifica
+    document.querySelectorAll('.site-header a, .menu-overlay a').forEach((a) => {
+      const h = a.getAttribute('href');
+      if (h && (h.endsWith('.html') || h.includes('.html#')) && !h.includes('modifica')) {
+        const parts = h.split('#');
+        const file = parts[0];
+        const hash = parts[1] ? '#' + parts[1] : '';
+        a.href = file + '?modifica' + hash;
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Regolazione Inquadratura & Centratura Foto
+  // ---------------------------------------------------------------------------
+  let cropTargetEl = null;
+  let cropPosPath = null;
+  let cropInitialPos = '50% 50%';
+  let currentCropX = 50;
+  let currentCropY = 50;
+  let isDraggingCrop = false;
+
+  function parsePos(posStr) {
+    if (!posStr) return { x: 50, y: 50 };
+    const parts = String(posStr).trim().split(/\s+/);
+    const x = parseFloat(parts[0]) || 50;
+    const y = parseFloat(parts[1] || parts[0]) || 50;
+    return { x: Math.max(0, Math.min(100, x)), y: Math.max(0, Math.min(100, y)) };
+  }
+
+  function getElementPos(el, posPath) {
+    if (posPath) {
+      const v = C.get(data, posPath);
+      if (v) return String(v);
+    }
+    if (el) {
+      if (el.style.objectPosition) return el.style.objectPosition;
+      if (el.style.backgroundPosition) return el.style.backgroundPosition;
+    }
+    return '50% 50%';
+  }
+
+  function applyCrop(x, y) {
+    currentCropX = Math.round(x);
+    currentCropY = Math.round(y);
+    const posStr = `${currentCropX}% ${currentCropY}%`;
+
+    const reticle = $('#cbCropReticle');
+    if (reticle) {
+      reticle.style.left = currentCropX + '%';
+      reticle.style.top = currentCropY + '%';
+    }
+
+    const cropImg = $('#cbCropImg');
+    if (cropImg) cropImg.style.objectPosition = posStr;
+
+    const rx = $('#cbCropRangeX');
+    const ry = $('#cbCropRangeY');
+    const vx = $('#cbCropValX');
+    const vy = $('#cbCropValY');
+    if (rx) rx.value = currentCropX;
+    if (ry) ry.value = currentCropY;
+    if (vx) vx.textContent = currentCropX + '%';
+    if (vy) vy.textContent = currentCropY + '%';
+
+    document.querySelectorAll('.cb-preset-btn').forEach((b) => {
+      const bx = parseInt(b.getAttribute('data-x'), 10);
+      const by = parseInt(b.getAttribute('data-y'), 10);
+      b.classList.toggle('active', Math.abs(bx - currentCropX) < 4 && Math.abs(by - currentCropY) < 4);
+    });
+
+    if (cropTargetEl) {
+      if (cropTargetEl.tagName === 'IMG') cropTargetEl.style.objectPosition = posStr;
+      else cropTargetEl.style.backgroundPosition = posStr;
+    }
+  }
+
+  function openCropModal(el) {
+    if (!el) return;
+    cropTargetEl = el;
+
+    const directPos = el.getAttribute('data-cb-pos');
+    const srcPath = el.getAttribute('data-cb-src');
+    const bgPath = el.getAttribute('data-cb-bg');
+    cropPosPath = directPos || (srcPath ? srcPath + '_pos' : (bgPath ? bgPath + '_pos' : null));
+
+    let imgUrl = el.tagName === 'IMG' ? el.src : '';
+    if (!imgUrl && el.style.backgroundImage) {
+      const m = el.style.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/);
+      if (m) imgUrl = m[1];
+    }
+    if (!imgUrl && srcPath) imgUrl = C.get(data, srcPath) || '';
+    if (!imgUrl && bgPath) imgUrl = C.get(data, bgPath) || '';
+
+    cropInitialPos = getElementPos(el, cropPosPath);
+    const { x, y } = parsePos(cropInitialPos);
+
+    const cropImg = $('#cbCropImg');
+    if (cropImg) cropImg.src = imgUrl;
+
+    applyCrop(x, y);
+
+    const modal = $('#cbCropModal');
+    if (modal) modal.hidden = false;
+  }
+
+  function closeCropModal(save = false) {
+    const modal = $('#cbCropModal');
+    if (!modal) return;
+    modal.hidden = true;
+
+    if (!save && cropTargetEl) {
+      if (cropTargetEl.tagName === 'IMG') cropTargetEl.style.objectPosition = cropInitialPos;
+      else cropTargetEl.style.backgroundPosition = cropInitialPos;
+    }
+    cropTargetEl = null;
+  }
+
+  function saveCrop() {
+    if (!cropTargetEl || !cropPosPath) {
+      closeCropModal(true);
+      return;
+    }
+    const finalPos = `${currentCropX}% ${currentCropY}%`;
+    cropTargetEl.setAttribute('data-cb-pos', cropPosPath);
+    cropTargetEl.style.objectPosition = finalPos;
+    C.set(data, cropPosPath, finalPos);
+    markDirty(cropPosPath);
+    toast(`Inquadratura salvata (${finalPos})`, 'ok');
+    closeCropModal(true);
+  }
+
+  function initCropEvents() {
+    const previewBox = $('#cbCropPreview');
+    function updateFromPointer(e) {
+      if (!previewBox) return;
+      const rect = previewBox.getBoundingClientRect();
+      const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+      applyCrop(x, y);
+    }
+
+    if (previewBox) {
+      previewBox.addEventListener('mousedown', (e) => {
+        isDraggingCrop = true;
+        updateFromPointer(e);
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (isDraggingCrop) updateFromPointer(e);
+      });
+      window.addEventListener('mouseup', () => {
+        isDraggingCrop = false;
+      });
+    }
+
+    const rx = $('#cbCropRangeX');
+    const ry = $('#cbCropRangeY');
+    if (rx) rx.addEventListener('input', () => applyCrop(parseFloat(rx.value), currentCropY));
+    if (ry) ry.addEventListener('input', () => applyCrop(currentCropX, parseFloat(ry.value)));
+
+    document.querySelectorAll('.cb-preset-btn').forEach((b) => {
+      b.addEventListener('click', () => {
+        const x = parseFloat(b.getAttribute('data-x'));
+        const y = parseFloat(b.getAttribute('data-y'));
+        applyCrop(x, y);
+      });
+    });
+
+    const btnSave = $('#cbCropSave');
+    const btnCancel = $('#cbCropCancel');
+    const btnClose = $('#cbCropClose');
+    const backdrop = $('#cbCropBackdrop');
+    if (btnSave) btnSave.addEventListener('click', saveCrop);
+    if (btnCancel) btnCancel.addEventListener('click', () => closeCropModal(false));
+    if (btnClose) btnClose.addEventListener('click', () => closeCropModal(false));
+    if (backdrop) backdrop.addEventListener('click', () => closeCropModal(false));
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = $('#cbCropModal');
+        if (modal && !modal.hidden) closeCropModal(false);
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------------------
   // Anteprima, aiuto, avvio
   // ---------------------------------------------------------------------------
   function setPreview(on) {
@@ -812,7 +1121,9 @@
     const btn = $('#cbBtnPreview');
     btn.innerHTML = on ? '<i class="fa-solid fa-pen"></i><span>Torna a modificare</span>' : '<i class="fa-solid fa-eye"></i><span>Anteprima</span>';
     btn.classList.toggle('cb-btn-gold', on);
-    imgBtn.hidden = true; itemBar.hidden = true; closePop(); closePanel();
+    if (imgBar) imgBar.hidden = true;
+    if (itemBar) itemBar.hidden = true;
+    closePop(); closePanel(); closeCropModal(false);
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     rerender();
     if (on) toast('Anteprima: così vedono il sito i visitatori');
@@ -842,12 +1153,14 @@
 
   (async function init() {
     try {
-      const res = await fetch('api/ping', { cache: 'no-store' });
+      const res = await fetch('/api/ping', { cache: 'no-store' });
       serverOnline = res.ok && (await res.json()).ok;
     } catch (e) { serverOnline = false; }
     $('#cbOffline').hidden = serverOnline;
     setStatus(serverOnline ? 'Tutto salvato' : 'Server spento', serverOnline ? 'ok' : 'error');
     decorate();
+    initPageSwitcher();
+    initCropEvents();
     let seen = false;
     try { seen = localStorage.getItem('colbel_editor_help') === '1'; } catch (e) {}
     if (!seen) showHelp();

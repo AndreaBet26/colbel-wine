@@ -661,6 +661,16 @@
     document.addEventListener('input', onBoundChange);
     document.addEventListener('change', (e) => { if (e.target.type === 'checkbox') onBoundChange(e); });
 
+    const dropBtn = $('btnVisualEditMenu');
+    const dropMenu = $('dashVisualMenu');
+    if (dropBtn && dropMenu) {
+      dropBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropMenu.hidden = !dropMenu.hidden;
+      });
+      document.addEventListener('click', () => { dropMenu.hidden = true; });
+    }
+
     $('btnSaveHeader').addEventListener('click', async () => {
       if (await saveDirty()) showToast('Tutto salvato', 'success');
     });

@@ -47,9 +47,19 @@
         <i class="fa-solid fa-download"></i> <span>Backup</span>
       </button>
 
-      <a href="../?modifica" class="btn btn-outline-gold btn-sm" title="Modifica direttamente sulla pagina">
-        <i class="fa-solid fa-pen-nib"></i> <span>Modifica visuale</span>
-      </a>
+      <div class="dash-dropdown">
+        <button type="button" class="btn btn-outline-gold btn-sm" id="btnVisualEditMenu" title="Modifica direttamente sulle pagine">
+          <i class="fa-solid fa-pen-nib"></i> <span>Modifica visuale</span> <i class="fa-solid fa-chevron-down" style="font-size:10px;margin-left:3px"></i>
+        </button>
+        <div class="dash-dropdown-menu" id="dashVisualMenu" hidden>
+          <a href="../index.html?modifica" target="_blank"><i class="fa-solid fa-house"></i> Home</a>
+          <a href="../storia.html?modifica" target="_blank"><i class="fa-solid fa-book-open"></i> Chi siamo &amp; Storia</a>
+          <a href="../vini.html?modifica" target="_blank"><i class="fa-solid fa-wine-bottle"></i> Prodotti &amp; Vini</a>
+          <a href="../esperienze.html?modifica" target="_blank"><i class="fa-solid fa-wine-glass"></i> Esperienze</a>
+          <a href="../agriturismo.html?modifica" target="_blank"><i class="fa-solid fa-utensils"></i> Agriturismo</a>
+          <a href="../contatti.html?modifica" target="_blank"><i class="fa-solid fa-envelope"></i> Contatti</a>
+        </div>
+      </div>
 
       <a href="../" target="_blank" class="btn btn-secondary btn-sm" title="Guarda il sito">
         <i class="fa-solid fa-globe"></i> <span>Vedi sito</span>

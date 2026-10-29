@@ -18,6 +18,8 @@
   },
   "azienda": {
     "nome": "Azienda Agricola ColBel di Teo Gianni",
+    "immagine": "assets/images/web/sala-degustazione.jpg",
+    "immagine_pos": "50% 50%",
     "indirizzo": "Via Drio Cisa, 2, Località Solighetto – 31053 Pieve di Soligo (TV)",
     "mappa_url": "https://maps.google.com/?q=Via+Drio+Cisa+2+Solighetto+Pieve+di+Soligo",
     "email": "lissa@colbelwine.com",
