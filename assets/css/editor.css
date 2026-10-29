@@ -181,26 +181,25 @@ html.cb-preview .cb-add { display: none; }
 }
 #cbLabel[hidden] { display: none; }
 
-/* ---------- Pulsante foto e barra del blocco ---------- */
-#cbImgBtn, #cbItemBar {
-  position: fixed; z-index: 4990;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+/* ---------- Barre flottanti: foto e blocco ---------- */
+#cbImgBar, #cbItemBar {
+  position: fixed;
+  z-index: 4995;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: auto;
 }
-#cbImgBtn {
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  padding: 0.55rem 0.9rem; border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(18, 19, 16, 0.92); color: #fff;
-  font: 600 0.78rem var(--cb-font); cursor: pointer;
-}
-#cbImgBtn:hover { background: var(--cb-gold); color: #17140a; }
-#cbImgBtn[hidden], #cbItemBar[hidden] { display: none; }
+#cbImgBar[hidden], #cbItemBar[hidden] { display: none !important; }
 
 #cbItemBar {
-  display: flex; align-items: center; gap: 0.2rem;
-  padding: 0.25rem; border-radius: 10px;
-  background: rgba(18, 19, 16, 0.94);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 10px;
+  background: rgba(16, 17, 14, 0.95);
+  border: 1px solid rgba(212, 175, 55, 0.45);
 }
 .cb-ib-name {
   font: 700 0.65rem var(--cb-font); text-transform: uppercase; letter-spacing: 0.08em;
@@ -362,15 +361,17 @@ html.cb-preview #cbLabel { display: none !important; }
 /* ---------- Barra Azioni Foto Flottante ---------- */
 #cbImgBar {
   position: fixed;
-  z-index: 4990;
+  z-index: 4995;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   padding: 0.25rem 0.35rem;
   border-radius: 999px;
-  background: rgba(18, 19, 16, 0.94);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  background: rgba(16, 17, 14, 0.95);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 #cbImgBar[hidden] { display: none !important; }
 .cb-img-action {
@@ -384,6 +385,7 @@ html.cb-preview #cbLabel { display: none !important; }
   color: #fff;
   font: 600 0.76rem var(--cb-font);
   cursor: pointer;
+  white-space: nowrap;
   transition: background 0.15s, color 0.15s;
 }
 .cb-img-action i { color: var(--cb-gold); }

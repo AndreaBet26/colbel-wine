@@ -516,15 +516,37 @@
     rafPending = false;
     if (preview || barLocked) return;
     const { x, y } = pointer;
-    const top0 = headerBottom() + 8;
+    if (x < 0 || y < 0) return;
+
+    // Se il mouse è sopra la barra comandi inferiore (#cbBar), nascondiamo le barre flottanti
+    const hoveredEl = document.elementFromPoint(x, y);
+    if (hoveredEl && hoveredEl.closest('#cbBar')) {
+      if (imgBar) imgBar.hidden = true;
+      if (itemBar) itemBar.hidden = true;
+      currentImg = null;
+      currentItem = null;
+      return;
+    }
+
+    // Se il puntatore è sopra una delle due barre flottanti o dentro un popover/modale,
+    // manteniamo la visualizzazione corrente ed evitiamo sfarfallii mentre l'utente clicca
+    if (hoveredEl && hoveredEl.closest('#cbImgBar, #cbItemBar, #cbPop, #cbCropModal')) {
+      if ((!currentImg || currentImg.isConnected) && (!currentItem || currentItem.isConnected)) {
+        return;
+      }
+    }
+
+    const top0 = headerBottom() + 10;
+    const bottomLimit = window.innerHeight - 76;
+    const minLeft = 10;
+    const maxRight = window.innerWidth - 10;
 
     const img = smallestContaining('[data-cb-src], [data-cb-bg]', x, y);
+    const item = smallestContaining('[data-cb-item]', x, y);
+
     currentImg = img;
     if (img && imgBar) {
-      const r = img.getBoundingClientRect();
       imgBar.hidden = false;
-      imgBar.style.left = Math.max(8, r.left + 12) + 'px';
-      imgBar.style.top = Math.min(window.innerHeight - 60, Math.max(top0, r.top + 12)) + 'px';
       const lbl = img.getAttribute('data-cb-label') || 'foto';
       const span = imgBtn ? imgBtn.querySelector('span') : null;
       if (span) span.textContent = 'Cambia ' + lbl.toLowerCase();
@@ -532,21 +554,75 @@
       imgBar.hidden = true;
     }
 
-    const item = smallestContaining('[data-cb-item]', x, y);
     if (item !== currentItem) {
       currentItem = item;
-      if (item) buildItemBar(item);
+      if (item && itemBar) buildItemBar(item);
     }
-    if (item) {
-      const r = item.getBoundingClientRect();
+    if (item && itemBar) {
       itemBar.hidden = false;
-      const w = itemBar.getBoundingClientRect().width;
-      itemBar.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.right - w - 12)) + 'px';
-      let top = Math.min(window.innerHeight - 60, Math.max(top0, r.top + 12));
-      // evita di coprire la barra foto se sono allineate
-      if (imgBar && !imgBar.hidden && Math.abs(parseFloat(imgBar.style.top) - top) < 40 && parseFloat(imgBar.style.left) + imgBar.offsetWidth > parseFloat(itemBar.style.left)) top += 46;
-      itemBar.style.top = top + 'px';
-    } else itemBar.hidden = true;
+    } else if (itemBar) {
+      itemBar.hidden = true;
+    }
+
+    // Calcolo posizione Item Bar (in alto a destra del blocco)
+    let itemRect = null;
+    if (item && itemBar && !itemBar.hidden) {
+      const rItem = item.getBoundingClientRect();
+      const w = itemBar.offsetWidth || 260;
+      const h = itemBar.offsetHeight || 38;
+      const left = Math.max(minLeft, Math.min(maxRight - w, rItem.right - w - 12));
+      const top = Math.max(top0, Math.min(bottomLimit - h, rItem.top + 10));
+      itemRect = { left, top, right: left + w, bottom: top + h, w, h };
+    }
+
+    // Calcolo posizione Image Bar (in basso a sinistra della foto)
+    let imgRect = null;
+    if (img && imgBar && !imgBar.hidden) {
+      const rImg = img.getBoundingClientRect();
+      const w = imgBar.offsetWidth || 240;
+      const h = imgBar.offsetHeight || 38;
+      const visibleTop = Math.max(top0, rImg.top);
+      const visibleBottom = Math.min(bottomLimit, rImg.bottom);
+
+      const left = Math.max(minLeft, Math.min(maxRight - w, rImg.left + 12));
+      let top = visibleBottom - h - 10;
+      top = Math.max(visibleTop, Math.min(bottomLimit - h, top));
+      imgRect = { left, top, right: left + w, bottom: top + h, w, h };
+    }
+
+    // Controllo collisione 2D: prevenzione sovrapposizione garantita
+    if (itemRect && imgRect) {
+      const gap = 10;
+      const overlapX = !(itemRect.right + gap <= imgRect.left || imgRect.right + gap <= itemRect.left);
+      const overlapY = !(itemRect.bottom + gap <= imgRect.top || imgRect.bottom + gap <= itemRect.top);
+
+      if (overlapX && overlapY) {
+        // Se si sovrappongono, separiamo verticalmente:
+        if (itemRect.bottom + gap + imgRect.h <= bottomLimit) {
+          imgRect.top = itemRect.bottom + gap;
+          imgRect.bottom = imgRect.top + imgRect.h;
+        } else if (itemRect.top - gap - imgRect.h >= top0) {
+          imgRect.top = itemRect.top - gap - imgRect.h;
+          imgRect.bottom = imgRect.top + imgRect.h;
+        } else if (itemRect.left - gap - imgRect.w >= minLeft) {
+          imgRect.left = itemRect.left - gap - imgRect.w;
+          imgRect.right = imgRect.left + imgRect.w;
+        } else {
+          itemRect.left = Math.min(maxRight - itemRect.w, imgRect.right + gap);
+          itemRect.right = itemRect.left + itemRect.w;
+        }
+      }
+    }
+
+    // Applicazione coordinate a schermo
+    if (itemRect && itemBar) {
+      itemBar.style.left = Math.round(itemRect.left) + 'px';
+      itemBar.style.top = Math.round(itemRect.top) + 'px';
+    }
+    if (imgRect && imgBar) {
+      imgBar.style.left = Math.round(imgRect.left) + 'px';
+      imgBar.style.top = Math.round(imgRect.top) + 'px';
+    }
   }
 
   function scheduleFloating() {
