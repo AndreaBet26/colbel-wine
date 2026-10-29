@@ -404,7 +404,7 @@
     const el = e.target.closest('a, button');
     if (!el) return;
     if (e.target.closest('.cb-editable')) { e.preventDefault(); return; }
-    if (el.closest('.site-header, .slider-nav-arrows, .stage-nav-arrow, .scrolly-indicators, #backToTop, .theme-toggle-btn')) return;
+    if (el.closest('.site-header, .menu-overlay, .wine-index, .story-progress')) return;
     const href = el.getAttribute('href') || '';
     if (el.tagName === 'A' && href.startsWith('#')) return;
     e.preventDefault(); e.stopImmediatePropagation();
@@ -835,7 +835,7 @@
   const runway = document.getElementById('winesRunwayView');
   if (runway) runway.style.display = '';
   if (window.gsap) {
-    document.querySelectorAll('.runway-bottle-stage, .runway-info-col, .runway-info-col > *').forEach((el) => {
+    document.querySelectorAll('.wine-bottle img, .wine-info > *, .exp-scene .col > *, .caption-row').forEach((el) => {
       window.gsap.set(el, { clearProps: 'all' });
     });
   }

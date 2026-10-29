@@ -1,8 +1,9 @@
 {
-  "etichetta": "Patrimonio Unesco",
-  "titolo": "Le Colline del Prosecco DOCG",
-  "citazione": "«I vigneti si arrampicano sulle prime colline e creano un cuscinetto tra la fertile pianura trevigiana e le superfici boscate a monte.»",
-  "descrizione": "Dal nostro agriturismo, nelle giornate terse, lo sguardo spazia fino alla romantica Laguna Veneta. Nelle ore serali, una brezza gentile risale la pianura donando alle nostre uve Glera un'acidità vibrante e aromi inconfondibili.",
-  "testo_pulsante": "Vieni a Trovarci a Solighetto",
-  "immagine_sfondo": "assets/images/IMG-20180409-WA0003.jpg"
+  "etichetta": "",
+  "titolo": "Territorio",
+  "citazione": "“Colbel” si trova a Solighetto, nel cuore della rinomata zona di produzione del Prosecco di Conegliano Valdobbiadene DOCG.",
+  "descrizione": "I vigneti si arrampicano sulle prime colline e creano un cuscinetto tra la fertile pianura trevigiana a sud e le superfici boscate a monte.",
+  "testo_pulsante": "Contatti",
+  "immagine_sfondo": "assets/images/IMG-20180409-WA0003.jpg",
+  "descrizione_2": "Dal nostro agriturismo, se siete fortunati, sarà possibile intravedere la romantica laguna veneta, dalla quale nelle ore serali spira una brezza che conferisce al nostro vino un aroma unico."
 }

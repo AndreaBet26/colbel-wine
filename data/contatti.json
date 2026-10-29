@@ -1,30 +1,32 @@
 {
-  "etichetta": "Contatti Diretti",
-  "titolo": "Vieni a Trovarci o Ordina",
-  "sottotitolo": "Siamo sempre felici di accoglierti in cantina o spedirti le nostre bottiglie comodamente a casa in tutta Italia.",
+  "etichetta": "",
+  "titolo": "Contatti",
+  "sottotitolo": "Azienda Agricola ColBel di Teo Gianni",
   "gianni": {
-    "nome": "Gianni Teo",
-    "ruolo": "Enologia & Vigneti",
-    "telefono": "+39 346 2443607",
-    "wa_numero": "393462443607"
+    "nome": "Gianni",
+    "ruolo": "",
+    "telefono": "346 2443607",
+    "wa_numero": "393462443607",
+    "email": "gianniteo@libero.it"
   },
   "lissa": {
-    "nome": "Lissa Teo",
-    "ruolo": "Agriturismo & Cucina",
-    "telefono": "+39 349 4356778",
-    "wa_numero": "393494356778"
+    "nome": "Lissa",
+    "ruolo": "",
+    "telefono": "349 4356778",
+    "wa_numero": "393494356778",
+    "email": "lmveilleux@gmail.com"
   },
   "azienda": {
     "nome": "Azienda Agricola ColBel di Teo Gianni",
-    "indirizzo": "Via Drio Cisa, 2, Loc. Solighetto – 31053 Pieve di Soligo (TV)",
-    "mappa_url": "https://maps.google.com/?q=Via+Drio+Cisa+2+Pieve+di+Soligo",
-    "email": "colbelwine@gmail.com",
-    "orari": "Cantina aperta su appuntamento per degustazioni, visite e acquisto bottiglie. Agriturismo aperto nel weekend su prenotazione.",
-    "indirizzo_breve": "Via Drio Cisa, 2 – Solighetto (TV)"
+    "indirizzo": "Via Drio Cisa, 2, Località Solighetto – 31053 Pieve di Soligo (TV)",
+    "mappa_url": "https://maps.google.com/?q=Via+Drio+Cisa+2+Solighetto+Pieve+di+Soligo",
+    "email": "lissa@colbelwine.com",
+    "orari": "",
+    "indirizzo_breve": "Via Drio Cisa, 2, Località Solighetto – 31053 Pieve di Soligo (TV)"
   },
   "social": {
-    "facebook": "https://www.facebook.com",
-    "instagram": "https://www.instagram.com"
+    "facebook": "https://www.facebook.com/people/AA-Colbel-C-V-Prosecco-DOCG/100054377224427/",
+    "instagram": "https://www.instagram.com/colbel_wine/?hl=it"
   },
   "whatsapp_messaggio_generico": "Buongiorno ColBel, vorrei informazioni"
 }

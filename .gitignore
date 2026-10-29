@@ -17,3 +17,8 @@ data/_backup/
 
 # File di sistema macOS su dischi esterni
 ._*
+
+# Backup e preview temporanee
+_vecchia_versione/
+originale/
+Claude outputs/

@@ -19,10 +19,10 @@ html.cb-edit-mode .lang-toggle,
 html.cb-edit-mode .drawer-lang-toggle,
 html.cb-edit-mode .mobile-bottom-bar { display: none !important; }
 
-/* in modifica si lavora sulla "sfilata": il palcoscenico è solo per i visitatori */
-html.cb-edit-mode .wines-view-switcher,
-html.cb-edit-mode #winesStageView { display: none !important; }
-html.cb-edit-mode #winesRunwayView { display: flex !important; }
+/* in modifica le scene non si sovrappongono: si vedono tutte, una sotto l'altra */
+html.cb-edit-mode .stacking > .scene { position: relative !important; }
+html.cb-edit-mode .wine-index { display: none !important; }
+html.cb-edit-mode .menu-overlay { display: none; }
 
 /* ---------- Testi modificabili ---------- */
 html.cb-editor-on:not(.cb-preview) .cb-editable {

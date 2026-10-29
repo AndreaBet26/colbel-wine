@@ -49,7 +49,7 @@ class ColBelHandler(SimpleHTTPRequestHandler):
 
     # I JSON non devono mai essere presi dalla cache del browser
     def end_headers(self):
-        if self.path.split("?")[0].endswith(".json") or self.path.startswith("/api/"):
+        if self.path.split("?")[0].endswith((".json", ".js", ".css", ".html", "/")) or self.path.startswith("/api/"):
             self.send_header("Cache-Control", "no-store")
         super().end_headers()
 

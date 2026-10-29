@@ -10,12 +10,16 @@
 - Nessun contenitore stretto al centro con margini laterali vuoti a meno che non si tratti del corpo di lettura di un singolo paragrafo editoriale.
 - Le immagini devono occupare l'intero spazio visivo (*full-bleed*, a tutta parete o a tutto schermo).
 
-## 3. IMMAGINI IMMERSIVE & TIPOGRAFIA SOVRAPPOSTA
-- Le immagini fotografiche ad alta risoluzione devono fare da sfondo/ambiente, non essere miniature intrappolate in cornici.
-- I testi (titoli, descrizioni, prezzi) devono fluttuare direttamente sulle immagini a tutta larghezza.
-- Per garantire una leggibilità perfetta, usare sfumature e gradienti cinematografici scuri (*vignette*) o fondali in vetro satinato a piena estensione, mai box opachi rettangolari chiusi.
-- Tipografia: Serif di lusso (`Cinzel`, `Cormorant Garamond`) in bianco puro `#ffffff` con accenti dorati `#d4af37`.
-
+## 3. IMMAGINI GRANDI NEL LAYOUT (NON CARTA DA PARATI)
+- Fondo scuro unico e continuo per tutto il sito: niente sezioni con una foto diversa a tutto schermo una dopo l'altra.
+- Le foto sono grandi, toccano almeno un bordo della pagina e sul lato interno sfumano nel fondo; il testo si sovrappone solo in parte, sul lato sfumato.
+- Stesso trattamento colore per tutte le foto (`--grade`), così combaciano.
+- Scorrimento fluido; l'unico momento in cui la pagina si ferma è la bottiglia che ruota in home.
+- Tipografia: solo `Cormorant Garamond` (titoli) e `Plus Jakarta Sans` (testo). Testo avorio `#f2ebdf`, oro `#d4af37` solo per piccoli accenti. Solo tema scuro. Un bottone pieno (`.btn`) e un link con linea (`.link`).
 ## 4. DESKTOP VS MOBILE
-- **Desktop (>= 1025px)**: Layout maestosi a tutta larghezza (murali fotografici a tutta parete, colonne architettoniche continue senza gap, sezioni a tutto schermo). Nessuna freccia di slider su desktop.
-- **Mobile (<= 1024px)**: Slider orizzontali a scorrimento fluido da bordo a bordo (`scroll-snap`), dock di navigazione inferiore per il pollice, drawer laterale per il menu.
+- **Desktop (>= 901px)**: foto che sbordano a destra o a sinistra, testo affiancato che entra sulla sfumatura, scrollytelling della bottiglia.
+- **Mobile (<= 900px)**: foto a tutta larghezza con sfumatura in basso, il testo sale sulla sfumatura. Menu a schermo intero e barra rapida in basso (Chiama, WhatsApp, Ordina).
+
+## 5. STRUTTURA
+- Home (`index.html`) con le informazioni generali; una pagina dedicata per ogni categoria: `storia.html`, `vini.html`, `esperienze.html`, `agriturismo.html`, `contatti.html`.
+- In home dei vini compare solo la bottiglia del Giusto che ruota con i testi; tutte le altre bottiglie stanno in `vini.html`.

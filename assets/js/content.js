@@ -188,127 +188,72 @@
     return `openOrderModal(${jsStr(v.nome_ordine || v.nome)}, ${num(v.prezzo) || 0})`;
   }
 
+
+  const photoFig = (src, fades, bind, label, alt) =>
+    `<figure class="photo ${fades}" data-photo><img src="${esc(src)}" alt="${esc(alt || '')}" loading="lazy"${bind ? ` data-cb-src="${bind}" data-cb-label="${label}"` : ''} /></figure>`;
+
   function renderWines(vini) {
     const list = visibleList(vini);
     const P = (v) => 'vini#' + v.id;
 
-    const runway = document.getElementById('winesRunwayView');
-    if (runway) {
-      runway.innerHTML = list.map((v, i) => {
-        const right = i % 2 === 1;
+    const box = document.getElementById('winesRunwayView');
+    if (box) {
+      box.innerHTML = list.map((v, i) => {
         const p = P(v);
-        const bottle = `
-            <div class="runway-bottle-stage">
-              <div class="runway-bottle-aura"></div>
-              <img src="${esc(v.immagine)}" alt="${esc(v.nome)}" class="runway-bottle-img" loading="lazy" data-cb-src="${p}.immagine" data-cb-label="Bottiglia (PNG trasparente)" />
-              <div class="runway-bottle-shadow"></div>
-            </div>`;
-        const info = `
-            <div class="runway-info-col">
-              <span class="runway-tag-pill" data-cb="${p}.tag" data-cb-label="Etichetta">${esc(v.tag)}</span>
-              <span class="runway-appellation" data-cb="${p}.denominazione" data-cb-label="Denominazione">${esc(v.denominazione)}</span>
-              <h3 class="runway-wine-title" data-cb="${p}.nome" data-cb-label="Nome del vino">${esc(v.nome)}</h3>
-              <div class="runway-wine-type" data-cb="${p}.tipo" data-cb-label="Tipologia">${esc(v.tipo)}</div>
-              <p class="runway-wine-desc" data-cb="${p}.descrizione" data-cb-label="Descrizione">${esc(v.descrizione)}</p>
-              <div class="runway-pricing-row">
-                <div class="runway-price-group">
-                  <span class="runway-price"><span data-cb="${p}.prezzo" data-cb-type="price" data-cb-label="Prezzo a bottiglia">${fmtPrice(v.prezzo)}</span> €</span>
-                  <span class="runway-price-note" data-cb="${p}.note_prezzo" data-cb-label="Nota sotto il prezzo">${esc(v.note_prezzo)}</span>
-                </div>
-                <button class="btn-primary" onclick="${esc(wineOrderCall(v))}">
-                  <span>Ordina Bottiglia</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>`;
+        const left = i % 2 === 0;
         return `
-        <article class="wine-runway-strip ${right ? 'align-right' : 'align-left'}${hiddenCls(v)}" data-category="${esc(v.categoria)}" data-cb-item="${p}" data-cb-kind="vino">
-          <div class="runway-ambient-halo"></div>
-          <div class="runway-inner">${right ? info + bottle : bottle + info}
+      <article class="wine-row grid ${left ? 'is-left' : 'is-right'}${hiddenCls(v)}" id="vino-${esc(v.id)}" data-category="${esc(v.categoria)}" data-cb-item="${p}" data-cb-kind="vino">
+        <div class="wine-bottle"><div class="wine-halo"></div><img src="${esc(v.immagine)}" alt="${esc(v.nome)}" loading="lazy" data-cb-src="${p}.immagine" data-cb-label="Bottiglia (PNG trasparente)" /></div>
+        <div class="wine-info">
+          <span class="eyebrow" data-cb="${p}.tag" data-cb-label="Etichetta">${esc(v.tag)}</span>
+          <span class="denominazione" data-cb="${p}.denominazione" data-cb-label="Denominazione">${esc(v.denominazione)}</span>
+          <h2 class="h2" data-cb="${p}.nome" data-cb-label="Nome del vino">${esc(v.nome)}</h2>
+          <div class="tipo" data-cb="${p}.tipo" data-cb-label="Tipologia">${esc(v.tipo)}</div>
+          <p class="text" data-cb="${p}.descrizione" data-cb-label="Descrizione">${esc(v.descrizione)}</p>
+          <div class="price-row">
+            <div>
+              <span class="price"><span data-cb="${p}.prezzo" data-cb-type="price" data-cb-label="Prezzo a bottiglia">${fmtPrice(v.prezzo)}</span></span>
+              <span class="price-note" data-cb="${p}.note_prezzo" data-cb-label="Nota sotto il prezzo">${esc(v.note_prezzo)}</span>
+            </div>
           </div>
-        </article>`;
+        </div>
+      </article>`;
       }).join('');
     }
 
-    // Palcoscenico unico (solo vini visibili: in modifica si usa la sfilata)
-    const stageList = list.filter((v) => v.attivo !== false);
-    const tabs = document.querySelector('.stage-tabs-nav');
-    if (tabs) {
-      tabs.innerHTML = stageList.map((v, i) =>
-        `<button class="stage-tab-btn${i === 0 ? ' active' : ''}" data-index="${i}">${pad2(i + 1)} ${esc(v.nome_breve || v.nome)}</button>`
-      ).join('');
-    }
-    const arena = document.querySelector('.stage-showcase-arena');
-    if (arena) {
-      arena.querySelectorAll('.stage-wine-slide').forEach((s) => s.remove());
-      const next = document.getElementById('stageNextBtn');
-      const html = stageList.map((v, i) => `
-          <div class="stage-wine-slide${i === 0 ? ' active' : ''}" data-index="${i}">
-            <div class="stage-bottle-stage">
-              <div class="stage-bottle-halo"></div>
-              <img src="${esc(v.immagine)}" alt="${esc(v.nome)}" class="stage-bottle-img" loading="lazy" />
-            </div>
-            <div class="stage-info-col">
-              <span class="stage-badge">${esc(v.tag)}</span>
-              <h3 class="stage-title">${esc(v.nome)}</h3>
-              <div class="stage-appellation">${esc(v.denominazione)}</div>
-              <p class="stage-desc">${esc(v.descrizione_breve || v.descrizione)}</p>
-              <div class="stage-action-row">
-                <span class="stage-price">${fmtPrice(v.prezzo)} € <small>IVA incl.</small></span>
-                <button class="btn-primary" onclick="${esc(wineOrderCall(v))}">
-                  <span>Ordina con WhatsApp</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>`).join('');
-      if (next) next.insertAdjacentHTML('beforebegin', html);
-      else arena.insertAdjacentHTML('beforeend', html);
-    }
-
+    const visible = list.filter((v) => v.attivo !== false);
     const fl = document.getElementById('footerWineList');
-    if (fl) {
-      fl.innerHTML = stageList.map((v) => `<li><a href="#prodotti">${esc(v.nome)}</a></li>`).join('') +
-        '<li><a href="#esperienze">Degustazioni & Tour</a></li>';
-    }
+    if (fl) fl.innerHTML = visible.map((v) => `<li><a href="vini.html#vino-${esc(v.id)}">${esc(v.nome)}</a></li>`).join('');
     const dockOrder = document.getElementById('dockOrderBtn');
-    if (dockOrder && stageList[0]) dockOrder.setAttribute('onclick', wineOrderCall(stageList[0]));
+    if (dockOrder && visible[0]) dockOrder.setAttribute('onclick', wineOrderCall(visible[0]));
   }
 
   function renderExperiences(esperienze, contatti) {
     const track = document.getElementById('expTrack');
+    const media = document.getElementById('expMedia');
     if (!track || !Array.isArray(esperienze)) return;
     const list = visibleList(esperienze);
+    if (media) media.innerHTML = list.map((e) => photoFig(e.immagine, '', 'esperienze#' + e.id + '.immagine', 'Foto', e.titolo)).join('');
     track.innerHTML = list.map((e, i) => {
       const p = 'esperienze#' + e.id;
       const refC = (contatti && e.referente && contatti[e.referente]) || {};
       const wa = waDigits(refC.wa_numero) || waDigits(e.referente_wa) || waDigits(contatti && contatti.gianni && contatti.gianni.wa_numero);
       const msg = e.messaggio_whatsapp || `Buongiorno, vorrei prenotare: ${e.titolo}`;
       const tags = (e.tags || []).map((t, ti) =>
-        `<span><i class="${esc(t.icona || 'fa-solid fa-check')}"></i> <b class="cb-tag-text" data-cb="${p}.tags.${ti}.testo" data-cb-label="Caratteristica">${esc(t.testo)}</b></span>`).join('');
+        `<span><i class="${esc(t.icona || 'fa-solid fa-check')}"></i><b class="cb-tag-text" data-cb="${p}.tags.${ti}.testo" data-cb-label="Caratteristica">${esc(t.testo)}</b></span>`).join('');
       return `
-          <article class="exp-mural-pillar${hiddenCls(e)}" data-exp="${i + 1}" data-cb-item="${p}" data-cb-kind="esperienza">
-            <div class="exp-mural-bg" style="background-image: url('${esc(e.immagine)}');" data-cb-bg="${p}.immagine" data-cb-label="Foto di sfondo"></div>
-            <div class="exp-mural-overlay"></div>
-            <div class="exp-mural-top">
-              <span class="exp-pill-badge" data-cb="${p}.badge" data-cb-label="Etichetta">${esc(e.badge)}</span>
-              <span class="exp-card-number">${pad2(i + 1)}</span>
+          <div class="story-chapter${hiddenCls(e)}" id="esperienza-${esc(e.id)}" data-cb-item="${p}" data-cb-kind="esperienza">
+            <span class="eyebrow"><span class="exp-num">${pad2(i + 1)}</span><span data-cb="${p}.badge" data-cb-label="Etichetta">${esc(e.badge)}</span></span>
+            <h2 class="h1" data-cb="${p}.titolo" data-cb-label="Titolo">${esc(e.titolo)}</h2>
+            <div class="exp-price"><span data-cb="${p}.prezzo" data-cb-type="price-short" data-cb-label="Prezzo">${fmtPriceShort(e.prezzo)}</span> <span class="unit" data-cb="${p}.unita_prezzo" data-cb-label="Unità di prezzo">${esc(e.unita_prezzo)}</span></div>
+            <p class="text" data-cb="${p}.descrizione" data-cb-label="Descrizione">${esc(e.descrizione)}</p>
+            <div class="feature-list">${tags}</div>
+            <div class="actions">
+              <a href="https://wa.me/${wa}?text=${encodeURIComponent(msg)}" class="btn" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i> <span data-cb="${p}.testo_pulsante" data-cb-label="Testo del pulsante">${esc(e.testo_pulsante || ('Prenota con ' + (e.referente_nome || 'noi')))}</span>
+              </a>
             </div>
-            <div class="exp-mural-content">
-              <div class="exp-price-hero">
-                <span data-cb="${p}.prezzo" data-cb-type="price-short" data-cb-label="Prezzo">${fmtPriceShort(e.prezzo)}</span> €<span class="exp-price-unit" data-cb="${p}.unita_prezzo" data-cb-label="Unità di prezzo">${esc(e.unita_prezzo)}</span>
-              </div>
-              <h3 class="exp-slide-title" data-cb="${p}.titolo" data-cb-label="Titolo">${esc(e.titolo)}</h3>
-              <p class="exp-slide-desc" data-cb="${p}.descrizione" data-cb-label="Descrizione">${esc(e.descrizione)}</p>
-              <div class="exp-features-tags">${tags}</div>
-              <div class="exp-mural-action">
-                <a href="https://wa.me/${wa}?text=${encodeURIComponent(msg)}" class="btn-primary exp-btn" target="_blank" rel="noopener">
-                  <span data-cb="${p}.testo_pulsante" data-cb-label="Testo del pulsante">${esc(e.testo_pulsante || ('Prenota con ' + (e.referente_nome || 'noi')))}</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </a>
-              </div>
-            </div>
-          </article>`;
+          </div>`;
     }).join('');
   }
 
@@ -316,15 +261,17 @@
     const track = document.getElementById('galleryTrack');
     if (!track || !agri || !Array.isArray(agri.galleria)) return;
     const items = agri.galleria.slice().sort((a, b) => (a.ordine || 0) - (b.ordine || 0));
-    track.innerHTML = items.map((f) => {
+    track.innerHTML = items.map((f, i) => {
       const p = 'agriturismo.galleria#' + f.id;
+      const left = i % 2 === 0;
       return `
-          <div class="filmstrip-item" data-cb-item="${p}" data-cb-kind="foto">
-            <img src="${esc(f.immagine)}" alt="${esc(f.didascalia)}" loading="lazy" data-cb-src="${p}.immagine" data-cb-label="Foto" />
-            <div class="filmstrip-overlay">
-              <span class="filmstrip-caption" data-cb="${p}.didascalia" data-cb-label="Didascalia">${esc(f.didascalia)}</span>
-            </div>
-          </div>`;
+        <div class="photo-row grid" data-cb-item="${p}" data-cb-kind="foto">
+          ${photoFig(f.immagine, (left ? 'fade-r' : 'fade-l') + ' fade-t fade-b', p + '.immagine', 'Foto', f.didascalia)}
+          <div class="copy">
+            <span class="photo-num">${pad2(i + 1)}</span>
+            <p class="caption" data-cb="${p}.didascalia" data-cb-label="Didascalia">${esc(f.didascalia)}</p>
+          </div>
+        </div>`;
     }).join('');
   }
 
@@ -337,7 +284,7 @@
             <div class="contact-freestyle-item" data-cb-item="contatti.${key}" data-cb-kind="persona">
               <div class="contact-freestyle-meta">
                 <h4 data-cb="contatti.${key}.nome" data-cb-label="Nome">${esc(p.nome)}</h4>
-                <p><span data-cb="contatti.${key}.ruolo" data-cb-label="Ruolo">${esc(p.ruolo)}</span> • <strong data-cb="contatti.${key}.telefono" data-cb-label="Telefono">${esc(p.telefono)}</strong></p>
+                <p>Cell. ${esc(p.nome)}: <strong data-cb="contatti.${key}.telefono" data-cb-label="Telefono">${esc(p.telefono)}</strong></p>${p.email ? `<p><a href="mailto:${esc(p.email)}" data-cb="contatti.${key}.email" data-cb-label="Email">${esc(p.email)}</a></p>` : ''}
               </div>
               <div class="contact-actions-pair">
                 ${p.telefono ? `<a href="tel:${esc(digits(p.telefono))}" class="btn-icon-action" title="Chiama ${esc(p.nome)}"><i class="fa-solid fa-phone"></i></a>` : ''}
@@ -348,7 +295,7 @@
       list.innerHTML = person(c.gianni, 'gianni') + person(c.lissa, 'lissa') + `
             <div class="contact-freestyle-item" data-cb-item="contatti.azienda" data-cb-kind="sede">
               <div class="contact-freestyle-meta">
-                <h4>Sede Azienda Agricola</h4>
+                <h4>Azienda Agricola ColBel di Teo Gianni</h4>
                 <p data-cb="contatti.azienda.indirizzo" data-cb-label="Indirizzo">${esc(az.indirizzo)}</p>
               </div>
               <div class="contact-actions-pair">

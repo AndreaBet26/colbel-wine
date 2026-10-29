@@ -1,1130 +1,285 @@
 <!DOCTYPE html>
-<html lang="it" data-theme="light">
+<html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ColBel Vineyards and Winery – Una tradizione, un'emozione | Solighetto Conegliano Valdobbiadene</title>
-  <meta name="description" content="Azienda Agricola e Agriturismo ColBel a Solighetto, Pieve di Soligo. Produzione artigianale di Conegliano Valdobbiadene Prosecco Superiore DOCG, ColFondo, degustazioni ed esperienze nei vigneti." />
-
-  <!-- Favicon -->
+  <title>ColBel Vineyards and Winery – Una tradizione, un’emozione</title>
+  <meta name="description" content="ColBel Vineyards and Winery – Una tradizione, un’emozione. Via Drio Cisa, 2 – Loc. Solighetto, 31053 Pieve di Soligo (TV)." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ColBel Vineyards and Winery" />
+  <meta property="og:title" content="ColBel Vineyards and Winery – Una tradizione, un’emozione" />
+  <meta property="og:description" content="ColBel Vineyards and Winery – Una tradizione, un’emozione. Via Drio Cisa, 2 – Loc. Solighetto, 31053 Pieve di Soligo (TV)." />
+  <meta property="og:locale" content="it_IT" />
+  <meta name="theme-color" content="#0a0908" />
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
-
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css" />
-
-  <!-- Icons (FontAwesome CDN) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css?v=25" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Winery","name":"ColBel Vineyards and Winery","legalName":"Azienda Agricola ColBel di Teo Gianni","slogan":"Una tradizione, un’emozione","url":"https://colbelwine.com/","logo":"https://colbelwine.com/assets/images/logo.png","email":"lissa@colbelwine.com","telephone":["+39 346 2443607","+39 349 4356778"],"vatID":"IT03920950266","address":{"@type":"PostalAddress","streetAddress":"Via Drio Cisa, 2, Località Solighetto","postalCode":"31053","addressLocality":"Pieve di Soligo","addressRegion":"TV","addressCountry":"IT"},"sameAs":["https://www.facebook.com/people/AA-Colbel-C-V-Prosecco-DOCG/100054377224427/","https://www.instagram.com/colbel_wine/"]}</script>
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-  <!-- ==================== HEADER & TOP NAVIGATION ==================== -->
+  <!-- ==================== HEADER ==================== -->
   <header class="site-header">
-    <a href="#home" class="brand-wrapper" aria-label="ColBel – Torna all'inizio">
-      <img src="assets/images/logo.png" alt="Logo ColBel" class="brand-logo-img" />
+    <a href="index.html" class="brand" aria-label="ColBel – Home">
+      <img src="assets/images/logo.png" alt="ColBel" />
     </a>
-
-    <!-- Overlay backdrop for mobile drawer -->
-    <div class="nav-overlay" id="navOverlay"></div>
-
-    <nav class="main-nav" id="mainNav">
-      <!-- Mobile Drawer Header -->
-      <div class="mobile-drawer-header">
-        <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Chiudi menu">&times;</button>
-      </div>
-
-      <div class="nav-links-list">
-        <a href="#home" class="nav-link active" data-i18n="nav_home"><i class="fa-solid fa-house nav-icon"></i> Home</a>
-        <a href="#chi-siamo" class="nav-link" data-i18n="nav_about"><i class="fa-solid fa-landmark nav-icon"></i> Chi Siamo</a>
-        <a href="#territorio" class="nav-link" data-i18n="nav_territory"><i class="fa-solid fa-mountain-sun nav-icon"></i> Territorio</a>
-        <a href="#prodotti" class="nav-link" data-i18n="nav_wines"><i class="fa-solid fa-wine-bottle nav-icon"></i> Vini & Prodotti</a>
-        <a href="#esperienze" class="nav-link" data-i18n="nav_experiences"><i class="fa-solid fa-glass-cheers nav-icon"></i> Esperienze</a>
-        <a href="#agriturismo" class="nav-link" data-i18n="nav_agriturismo"><i class="fa-solid fa-wheat-awn nav-icon"></i> Agriturismo</a>
-        <a href="#contatti" class="nav-link" data-i18n="nav_contacts"><i class="fa-solid fa-envelope-open-text nav-icon"></i> Contatti</a>
-      </div>
-
-      <!-- Mobile Drawer Footer with Quick Contacts & Language -->
-      <div class="mobile-drawer-footer">
-        <div class="drawer-toggles-row">
-          <div class="drawer-lang-toggle">
-            <span style="font-size: 0.72rem; letter-spacing: 0.15em; color: var(--color-gold); text-transform: uppercase;">Lingua:</span>
-            <div class="lang-toggle">
-              <button class="lang-btn active" data-lang="ita">ITA</button>
-              <button class="lang-btn" data-lang="eng">ENG</button>
-            </div>
-          </div>
-          <button class="theme-toggle-btn mobile-theme-btn" id="mobileThemeToggleBtn" aria-label="Cambia tema">
-            <i class="fa-solid fa-moon"></i>
-            <span class="theme-label">Tema Scuro</span>
-          </button>
-        </div>
-
-        <div class="drawer-quick-actions">
-          <a href="tel:+393462443607" class="drawer-action-btn" data-cb-tel="gianni">
-            <i class="fa-solid fa-phone"></i> Chiama Gianni
-          </a>
-          <a href="https://wa.me/393462443607" target="_blank" class="drawer-action-btn wa" data-cb-wa="gianni">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp Gianni
-          </a>
-          <a href="https://wa.me/393494356778" target="_blank" class="drawer-action-btn wa" data-cb-wa="lissa">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp Lissa
-          </a>
-          <a href="admin/" class="drawer-action-btn" style="border-color: rgba(212,175,55,0.4); color: var(--color-gold);">
-            <i class="fa-solid fa-sliders"></i> Console Cantina
-          </a>
-        </div>
-      </div>
+    <nav class="main-nav" id="mainNav" aria-label="Menu principale">
+      <a href="index.html" class="nav-link active"><span data-i18n="nav_home">Home</span></a>
+      <a href="index.html#chi-siamo" class="nav-link"><span data-i18n="nav_about">Chi siamo</span></a>
+      <a href="index.html#territorio" class="nav-link"><span data-i18n="nav_territory">Territorio</span></a>
+      <a href="vini.html" class="nav-link"><span data-i18n="nav_wines">Prodotti</span></a>
+      <a href="esperienze.html" class="nav-link"><span data-i18n="nav_experiences">Esperienze</span></a>
+      <a href="agriturismo.html" class="nav-link"><span data-i18n="nav_agriturismo">Agriturismo</span></a>
+      <a href="contatti.html" class="nav-link"><span data-i18n="nav_contacts">Contatti</span></a>
     </nav>
-
-    <div class="nav-actions">
-      <!-- Theme Switcher (Chiaro / Scuro) -->
-      <button class="theme-toggle-btn desktop-only" id="themeToggleBtn" aria-label="Cambia tema chiaro/scuro" title="Passa tra Tema Chiaro e Scuro">
-        <i class="fa-solid fa-moon"></i>
-        <span class="theme-label">Scuro</span>
-      </button>
-
-      <!-- Language Switcher (Desktop) -->
-      <div class="lang-toggle desktop-only" title="Seleziona lingua / Select language">
-        <button class="lang-btn active" data-lang="ita">ITA</button>
-        <button class="lang-btn" data-lang="eng">ENG</button>
+    <div class="header-tools">
+      <div class="lang-menu" id="langMenu">
+        <button type="button" class="lang-current" id="langCurrent" aria-haspopup="true" aria-expanded="false"><span id="langCurrentLabel">ITA</span> <i class="fa-solid fa-chevron-down"></i></button>
+        <div class="lang-list" role="menu">
+          <button class="lang-btn active" data-lang="ita" role="menuitem">Italiano</button>
+          <button class="lang-btn" data-lang="eng" role="menuitem">English</button>
+        </div>
       </div>
-
-      <a href="#prodotti" class="btn-header-cta" data-i18n="nav_order_now">
-        <i class="fa-solid fa-wine-bottle"></i> Ordina Vini
-      </a>
-
-      <!-- Mobile Hamburger Button -->
-      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" id="mobileNavToggle" aria-label="Apri il menu"><span></span><span></span></button>
     </div>
   </header>
 
-  <main>
-    <!-- ==================== 1. HERO SECTION (FULL SCREEN) ==================== -->
-    <section id="home" class="hero-section">
-      <div class="hero-bg-container">
-        <img src="assets/images/p9201811-2.jpg" alt="Vigneti Colbel a Solighetto" class="hero-bg-image" data-cb-src="impostazioni.hero_immagine" data-cb-label="Foto di apertura" />
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <nav aria-label="Menu">
+        <a href="index.html" class="active" data-i18n="nav_home">Home</a>
+        <a href="index.html#chi-siamo" data-i18n="nav_about">Chi siamo</a>
+        <a href="index.html#territorio" data-i18n="nav_territory">Territorio</a>
+        <a href="vini.html" data-i18n="nav_wines">Prodotti</a>
+        <a href="esperienze.html" data-i18n="nav_experiences">Esperienze</a>
+        <a href="agriturismo.html" data-i18n="nav_agriturismo">Agriturismo</a>
+        <a href="contatti.html" data-i18n="nav_contacts">Contatti</a>
+    </nav>
+    <div class="menu-foot">
+      <div class="lang-toggle drawer-lang-toggle">
+        <button class="lang-btn active" data-lang="ita">ITA</button>
+        <button class="lang-btn" data-lang="eng">ENG</button>
       </div>
-      <div class="hero-overlay"></div>
+      <a href="https://wa.me/393462443607" class="link" target="_blank" rel="noopener" data-cb-wa="gianni"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </div>
 
-      <div class="hero-content">
-        <h1 class="hero-title">
-          <img src="assets/images/logoesteso.png" alt="ColBel Vineyards and Winery" class="hero-logo" />
-        </h1>
-        <p class="hero-claim" data-cb="impostazioni.claim">Una tradizione, un'emozione</p>
-        <p class="hero-subtitle" data-cb="impostazioni.hero_sottotitolo">
-          Coltiviamo la passione per il Conegliano Valdobbiadene Prosecco Superiore DOCG sulle storiche colline di Solighetto.
-        </p>
+  <main id="top" data-page="index">
 
-        <div class="hero-buttons">
-          <a href="#prodotti" class="btn-primary">
-            <span data-i18n="hero_btn_wines">Scopri i Vini</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="#esperienze" class="btn-outline">
-            <span data-i18n="hero_btn_exp">Prenota Esperienza</span>
-            <i class="fa-solid fa-glass-cheers"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="hero-scroll-indicator">
-        <div class="mouse-scroll">
-          <div class="mouse-wheel"></div>
-        </div>
-        <span data-i18n="hero_scroll">Scorri per esplorare</span>
+    <!-- 1. Apertura: foto a tutto schermo che respira lentamente, logo al centro -->
+    <section class="hero-full" id="home">
+      <div class="hero-full__bg"><img src="assets/images/p9201811-2.jpg" alt="Vendemmia sulle colline di ColBel" data-cb-src="impostazioni.hero_immagine" data-cb-label="Foto di apertura" fetchpriority="high" /></div>
+      <div class="hero-full__shade"></div>
+      <div class="hero-full__content">
+        <h1 class="hero-full__title"><img src="assets/images/logoesteso.png" alt="ColBel Vineyards and Winery" class="hero-logo" /></h1>
       </div>
     </section>
 
-
-    <!-- ==================== 2. CHI SIAMO (BORDERLESS EDITORIAL) ==================== -->
-    <section id="chi-siamo" class="editorial-fullwidth">
-      <div class="editorial-visual">
-        <img src="assets/images/p9201869_2-e1655489963356.jpg" alt="Gianni e Lissa Teo nella sala degustazione" data-cb-src="chiSiamo.immagine" />
-        <div class="editorial-visual-overlay"></div>
-      </div>
-
-      <div class="editorial-text">
-        <span class="section-label" data-cb="chiSiamo.etichetta">La Nostra Storia</span>
-        <h2 class="editorial-heading" data-cb="chiSiamo.titolo">Radici Venete, Visione Globale</h2>
-        
-        <p class="editorial-lead" data-cb="chiSiamo.introduzione">
-          «Col Bel» in dialetto veneto significa «bel colle». Il Colbel sorge a Solighetto, nel comune di Pieve di Soligo, e su di esso è sito il vigneto da cui, da generazioni, la famiglia di Gianni Teo produce prosecco.
-        </p>
-
-        <p class="editorial-body" data-cb="chiSiamo.paragrafo_1">
-          Crescendo fra le colline del prosecco, Gianni sviluppa una profonda passione per l'enologia, laureandosi all'Università di Padova. Durante un percorso di ricerca avanzata a Davis, in California, incontra Lissa, biologa texana.
-        </p>
-
-        <p class="editorial-body" data-cb="chiSiamo.paragrafo_2">
-          Il loro legame sboccia in amore autentico e nella scelta di costruire il loro futuro in Italia: nel 2004 nasce l'Azienda Agricola ColBel. Oggi, affiancando la produzione di bollicine d'eccellenza, ColBel accoglie gli ospiti nella nuova sala degustazione con i sapori genuini dell'agriturismo.
-        </p>
-
-        <div class="editorial-quote-freestyle" data-cb="chiSiamo.citazione">
-          «Un calice sincero che racchiude il rispetto per la terra, il calore della famiglia e la poesia delle nostre colline.»
+    
+    <div class="chapter-mark grid" data-mark><div class="cm-inner"><span class="cm-num">01</span><span class="cm-line"></span><span class="cm-label" data-i18n="nav_about">Chi siamo</span></div></div>
+    
+    <section class="about-head" id="chi-siamo">
+      <div class="grid">
+        <div class="about-head__copy" data-reveal>
+          <h2 class="wide-title about-title" data-cb="chiSiamo.titolo">Chi siamo</h2>
+          <p class="lead about-lead" data-cb="chiSiamo.introduzione">“Col Bel” in dialetto veneto significa “bel colle”.</p>
         </div>
-
-        <div class="editorial-stats" id="csStats">
-          <div class="stat-item">
-            <span class="stat-num">2004</span>
-            <span class="stat-desc" data-i18n="stat_founded">Anno di fondazione</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">DOCG</span>
-            <span class="stat-desc" data-i18n="stat_altitude">Conegliano Valdobbiadene</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">100%</span>
-            <span class="stat-desc" data-i18n="stat_heritage">Tradizione di famiglia</span>
-          </div>
+      </div>
+    </section>
+    <section class="section about" data-about>
+      <div class="grid">
+        <div class="about-moments">
+          <div class="about-line" aria-hidden="true"><span></span></div>
+          <article class="about-moment">
+            <span class="about-dot" aria-hidden="true"></span>
+            <span class="about-big">Solighetto</span>
+            <p class="text" data-cb="chiSiamo.paragrafo_0">Il Colbel sorge a Solighetto, nel comune di Pieve di Soligo, e su di esso è sito il vigneto da cui, da generazioni, la famiglia di Gianni Teo produce prosecco.</p>
+          </article>
+          <article class="about-moment">
+            <span class="about-dot" aria-hidden="true"></span>
+            <span class="about-big">2004</span>
+            <p class="text" data-cb="chiSiamo.paragrafo_1">Crescendo fra le colline del prosecco, Gianni sviluppa una grande passione per il mondo dei vini, e frequenterà l’università di Padova nell’ambito dell’enologia. Durante un percorso di ricerca in California, incontra Lissa, che, nata in Texas, si trova a Davis per studiare biologia. Il loro incontro diventa presto amore, e Gianni tornerà con Lissa in Italia, per fondare, nel 2004, l’azienda agricola “Colbel”.</p>
+          </article>
+          <article class="about-moment">
+            <span class="about-dot" aria-hidden="true"></span>
+            <span class="about-big">2020</span>
+            <p class="text" data-cb="chiSiamo.paragrafo_2">Ad oggi, tra rinnovi e trasformazioni, Colbel, oltre a produrre prosecco e vini frizzanti, è anche agriturismo: nel 2020 i due coniugi aprono le porte della nuova sala di degustazione. Qui è possibile assaggiare i loro vini, accompagnati da pane, affettati, verdure di loro produzione e altri prodotti locali.</p>
+          </article>
         </div>
       </div>
     </section>
 
-
-    <!-- ==================== 3. TERRITORIO (100% FULL-BLEED PANORAMIC, NO BOXES) ==================== -->
-    <section id="territorio" class="panorama-banner" style="background-image: url('assets/images/IMG-20180409-WA0003.jpg');" data-cb-bg="territorio.immagine_sfondo">
-      <div class="panorama-banner-overlay"></div>
-      
-      <div class="panorama-content">
-        <span class="section-label" style="margin-bottom: 1rem;" data-cb="territorio.etichetta">Patrimonio Unesco</span>
-        <h2 class="panorama-title" data-cb="territorio.titolo">Le Colline del Prosecco DOCG</h2>
-        <div class="panorama-quote" data-cb="territorio.citazione">
-          «I vigneti si arrampicano sulle prime colline e creano un cuscinetto tra la fertile pianura trevigiana e le superfici boscate a monte.»
+    
+    <div class="chapter-mark grid" data-mark><div class="cm-inner"><span class="cm-num">02</span><span class="cm-line"></span><span class="cm-label" data-i18n="nav_territory">Territorio</span></div></div>
+    
+    <section class="land" id="territorio">
+      <div class="land-bg" aria-hidden="true"><img src="assets/images/IMG-20180409-WA0003.jpg" alt="" data-cb-src="territorio.immagine_sfondo" data-cb-label="Foto del territorio" /></div>
+      <div class="land-copy">
+        <h2 class="wide-title" data-cb="territorio.titolo">Territorio</h2>
+        <div class="land-cols">
+          <p class="lead" data-cb="territorio.citazione">“Colbel” si trova a Solighetto, nel cuore della rinomata zona di produzione del Prosecco di Conegliano Valdobbiadene DOCG.</p>
+          <div class="stack">
+            <p class="text" data-cb="territorio.descrizione">I vigneti si arrampicano sulle prime colline e creano un cuscinetto tra la fertile pianura trevigiana a sud e le superfici boscate a monte.</p>
+            <p class="text" data-cb="territorio.descrizione_2">Dal nostro agriturismo, se siete fortunati, sarà possibile intravedere la romantica laguna veneta, dalla quale nelle ore serali spira una brezza che conferisce al nostro vino un aroma unico.</p>
+            <div class="actions"><a href="contatti.html" class="link"><span data-i18n="nav_contacts">Contatti</span></a></div>
+          </div>
         </div>
-        <p class="panorama-desc" data-cb="territorio.descrizione">
-          Dal nostro agriturismo, nelle giornate terse, lo sguardo spazia fino alla romantica Laguna Veneta. Nelle ore serali, una brezza gentile risale la pianura donando alle nostre uve Glera un'acidità vibrante e aromi inconfondibili.
-        </p>
-        <a href="#contatti" class="btn-primary">
-          <span data-cb="territorio.testo_pulsante">Vieni a Trovarci a Solighetto</span>
-          <i class="fa-solid fa-location-dot"></i>
-        </a>
       </div>
     </section>
 
+    <div class="marquee" data-dir="left" aria-hidden="true"><div class="marquee-track"><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span><span>Conegliano Valdobbiadene · Prosecco Superiore DOCG · Solighetto ·</span></div></div>
+    
+    <div class="chapter-mark grid" data-mark><div class="cm-inner"><span class="cm-num">03</span><span class="cm-line"></span><span class="cm-label" data-i18n="mark_bottle">Giusto</span></div></div>
 
-    <!-- ==================== SCROLLYTELLING: ANATOMIA DI UN MILLESIMATO ==================== -->
-    <section id="scrollytelling-showcase" class="scrolly-container">
-      <div class="scrolly-sticky-stage">
-        <!-- Background Ambient Lighting -->
-        <div class="scrolly-ambient-bg">
-          <div class="scrolly-glow-orb"></div>
-        </div>
-
-        <!-- Center Bottle Stage -->
-        <div class="scrolly-bottle-core">
-          <div class="scrolly-bottle-halo"></div>
-          <img src="assets/images/ColBel_Giusto_transparent.png" alt="Bottiglia Giusto Millesimato ColBel" class="scrolly-bottle-img" id="scrollyBottle" data-cb-src="scrollytelling.immagine_bottiglia" />
-          <div class="scrolly-bottle-reflection"></div>
-        </div>
-
-        <!-- Progress Indicator -->
-        <div class="scrolly-indicators">
-          <div class="scrolly-dot active" data-step="1"><span>01</span></div>
-          <div class="scrolly-dot" data-step="2"><span>02</span></div>
-          <div class="scrolly-dot" data-step="3"><span>03</span></div>
-          <div class="scrolly-dot" data-step="4"><span>04</span></div>
-        </div>
-
-        <!-- Scroll Prompt Hint -->
-        <div class="scrolly-scroll-hint">
-          <span>Scroll per esplorare</span>
-          <i class="fa-solid fa-chevron-down"></i>
-        </div>
-
-        <!-- Story Chapter Cards (Overlaying around the bottle) -->
-        <div class="scrolly-chapters-layer">
-          <!-- Step 1: Origini -->
-          <article class="scrolly-chapter step-1 active" id="scrollyStep1">
-            <span class="scrolly-badge" data-cb="scrollytelling.step.0.badge">01 / Le Origini</span>
-            <h3 class="scrolly-title" data-cb="scrollytelling.step.0.titolo">Omaggio a Nonno Giusto</h3>
-            <p class="scrolly-text" data-cb="scrollytelling.step.0.testo">
-              Giusto era il nonno che per primo lavorò i vigneti che oggi danno vita a questo vino. Il suo nome onora una storia di famiglia iniziata su queste colline.
-            </p>
-            <div class="scrolly-meta-tag">
-              <i class="fa-solid fa-seedling"></i>
-              <span data-cb="scrollytelling.step.0.meta_testo">Vigneti Storici a Solighetto</span>
-            </div>
-          </article>
-
-          <!-- Step 2: Terroir -->
-          <article class="scrolly-chapter step-2" id="scrollyStep2">
-            <span class="scrolly-badge" data-cb="scrollytelling.step.1.badge">02 / Il Terroir</span>
-            <h3 class="scrolly-title" data-cb="scrollytelling.step.1.titolo">Colline Eroiche di Solighetto</h3>
-            <p class="scrolly-text" data-cb="scrollytelling.step.1.testo">
-              Pendenze scoscese baciate dal sole e rinfrescate dalla brezza serale che sale dalla Laguna Veneta, donando alle uve Glera acidità e sapidità uniche.
-            </p>
-            <div class="scrolly-meta-tag">
-              <i class="fa-solid fa-mountain"></i>
-              <span data-cb="scrollytelling.step.1.meta_testo">Conegliano Valdobbiadene DOCG</span>
-            </div>
-          </article>
-
-          <!-- Step 3: Sentori & Perlage -->
-          <article class="scrolly-chapter step-3" id="scrollyStep3">
-            <span class="scrolly-badge" data-cb="scrollytelling.step.2.badge">03 / I Sentori</span>
-            <h3 class="scrolly-title" data-cb="scrollytelling.step.2.titolo">Perlage Fine & Minerale</h3>
-            <p class="scrolly-text" data-cb="scrollytelling.step.2.testo">
-              Bollicina sottile e persistente. Al naso profuma di mela cotogna, pera croccante e fiori di glicine. Asciutto, elegante e straordinariamente armonioso.
-            </p>
-            <div class="scrolly-meta-tag">
-              <i class="fa-solid fa-wine-glass"></i>
-              <span data-cb="scrollytelling.step.2.meta_testo">Brut • Struttura Minerale</span>
-            </div>
-          </article>
-
-          <!-- Step 4: Nel Bicchiere & Ordine -->
-          <article class="scrolly-chapter step-4" id="scrollyStep4" data-cb-item="scrollytelling.ordine" data-cb-kind="ordine">
-            <span class="scrolly-badge" data-cb="scrollytelling.step.3.badge">04 / Nel Bicchiere</span>
-            <h3 class="scrolly-title" data-cb="scrollytelling.step.3.titolo">11,90 € / Bottiglia</h3>
-            <p class="scrolly-text" data-cb="scrollytelling.step.3.testo">
-              Perfetto dall'aperitivo a tutto pasto, accompagnato dal nostro pane cotto a legna e dalla soppressa della cantina seicentesca.
-            </p>
-            <button class="btn-primary" id="scrollyOrderBtn" onclick="openOrderModal('Giusto Prosecco Superiore DOCG Brut', 11.90)">
-              <span data-cb="scrollytelling.ordine.testo_pulsante">Ordina questa Bottiglia</span>
-              <i class="fa-brands fa-whatsapp"></i>
+    <!-- 4. Momento fermo: la bottiglia che ruota -->
+    <section class="bottle-scroll" id="bottiglia" aria-label="Giusto">
+     <div class="bottle-story">
+      <span class="eyebrow story-title" data-cb="scrollytelling.titolo_sezione" data-cb-label="Titolo della sezione">Conegliano Valdobbiadene Prosecco Superiore DOCG</span>
+      <span class="story-word" aria-hidden="true">Giusto</span>
+      <!--
+        BOTTIGLIA — oggi PNG trasparente con rotazione simulata.
+        Con il video senza sfondo: esporta i fotogrammi in assets/bottiglia/giusto-0001.webp, giusto-0002.webp, …
+        e imposta data-frames con il loro numero (es. data-frames="120"). Vedi README → "Video della bottiglia".
+      -->
+      <div class="bottle-stage" id="bottleStage" data-frames="0" data-frames-src="assets/bottiglia/giusto-{n}.webp" data-frames-pad="4">
+        <img class="bottle-img" src="assets/images/bottiglie/giusto.png" alt="Giusto Millesimato Prosecco Superiore DOCG" data-cb-src="scrollytelling.immagine_bottiglia" data-cb-label="Bottiglia (PNG trasparente)" />
+        <div class="bottle-sheen"></div>
+        <div class="bottle-shadow"></div>
+      </div>
+      <div class="story-steps">
+        <article class="story-step is-first" data-step="0">
+          <span class="eyebrow" data-cb="scrollytelling.step.0.badge" data-cb-label="Etichetta">01 / Millesimato</span>
+          <h3 class="h2" data-cb="scrollytelling.step.0.titolo" data-cb-label="Titolo">Giusto</h3>
+          <p class="text" data-cb="scrollytelling.step.0.testo" data-cb-label="Testo">Giusto era il nonno che lavorò per primo i vigneti che producono questo vino.</p>
+          
+        </article>
+        <article class="story-step" data-step="1">
+          <span class="eyebrow" data-cb="scrollytelling.step.1.badge" data-cb-label="Etichetta">02 / Millesimato</span>
+          <h3 class="h2" data-cb="scrollytelling.step.1.titolo" data-cb-label="Titolo">Il nostro primo “Millesimato”</h3>
+          <p class="text" data-cb="scrollytelling.step.1.testo" data-cb-label="Testo">Il suo nome ci sembrava adatto per il nostro primo “Millesimato”, il Prosecco che più di ogni altro riporta nel bicchiere quelle caratteristiche che sono tipiche del vitigno e dell’annata.</p>
+          
+        </article>
+        <article class="story-step" data-step="2">
+          <span class="eyebrow" data-cb="scrollytelling.step.2.badge" data-cb-label="Etichetta">03 / Vino Spumante Brut</span>
+          <h3 class="h2" data-cb="scrollytelling.step.2.titolo" data-cb-label="Titolo">Vino Spumante Brut</h3>
+          <p class="text" data-cb="scrollytelling.step.2.testo" data-cb-label="Testo">Equilibrato ed elegante con una struttura molto definita e profumi delicati e fruttati, può accompagnare l’intero pasto o essere servito come aperitivo o per un brindisi.</p>
+          
+        </article>
+        <article class="story-step" data-step="3">
+          <span class="eyebrow" data-cb="scrollytelling.step.3.badge" data-cb-label="Etichetta">04 / Vino Spumante Brut</span>
+          <h3 class="h2" data-cb="scrollytelling.step.3.titolo" data-cb-label="Titolo">11, 90 Euro/bottiglia</h3>
+          <p class="text" data-cb="scrollytelling.step.3.testo" data-cb-label="Testo">(ordine minimo di 6 bottiglie) I prezzi sono IVA inclusa con spedizione a casa qui in Italia.</p>
+          
+          <div class="actions">
+            <a href="vini.html" class="btn"><span data-i18n="scrolly_all_wines">Scopri i nostri vini</span> <i class="fa-solid fa-arrow-right"></i></a>
+            <button class="link" id="scrollyOrderBtn" onclick="openOrderModal('Giusto – Prosecco Superiore DOCG Millesimato Brut', 11.90)">
+              <span data-cb="scrollytelling.ordine.testo_pulsante" data-cb-label="Testo del pulsante">Ordina questa bottiglia</span>
             </button>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
+      <div class="story-progress" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
+    </div>
     </section>
 
+    <div class="marquee" data-dir="right" aria-hidden="true"><div class="marquee-track"><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span><span>Una tradizione, un’emozione ·</span></div></div>
+    
+    <div class="chapter-mark grid" data-mark><div class="cm-inner"><span class="cm-num">04</span><span class="cm-line"></span><span class="cm-label" data-i18n="mark_discover">ColBel Vineyards and Winery</span></div></div>
 
-    <!-- ==================== 4. PRODOTTI & VINI (SFILATA ALTERNATA & PALCOSCENICO) ==================== -->
-    <section id="prodotti" class="wines-showcase-section">
-      <div class="section-header-wide">
-        <div class="header-text-group">
-          <span class="section-label" data-cb="impostazioni.testi_sezioni.vini_etichetta">La Cantina ColBel</span>
-          <h2 class="wines-title" data-cb="impostazioni.testi_sezioni.vini_titolo">I Nostri Vini & Spumanti</h2>
-          <p data-cb="impostazioni.testi_sezioni.vini_sottotitolo">
-            Spedizioni dirette dalla cantina a casa vostra in tutta Italia • IVA inclusa • Minimo 6 bottiglie
-          </p>
-        </div>
-
-        <!-- VIEW SWITCHER: Permette di provare e scegliere tra le due modalità -->
-        <div class="wines-view-switcher" role="radiogroup" aria-label="Modalità di visualizzazione vini">
-          <span class="switcher-hint">Scegli la visuale:</span>
-          <button class="view-switch-btn active" data-view="runway" id="viewRunwayBtn">
-            <i class="fa-solid fa-arrows-split-up-and-left"></i>
-            <span>Sfilata Alternata</span>
-          </button>
-          <button class="view-switch-btn" data-view="stage" id="viewStageBtn">
-            <i class="fa-solid fa-film"></i>
-            <span>Palcoscenico Unico</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- ==========================================================================
-           MODALITÀ 1: SFILATA MONOGRAFICA ALTERNATA A TUTTA LARGHEZZA (RUNWAY)
-           Zero Schede, 100% Full-Bleed, Bottiglie entrano da Sinistra e Destra allo Scroll
-           ========================================================================== -->
-      <div class="wines-runway-container" id="winesRunwayView">
-
-        <!-- VINO 1: GIUSTO DOCG BRUT (BOTTIGLIA DA SINISTRA) -->
-        <article class="wine-runway-strip align-left" data-category="docg">
-          <div class="runway-ambient-halo"></div>
-          <div class="runway-inner">
-            <div class="runway-bottle-stage">
-              <div class="runway-bottle-aura"></div>
-              <img src="assets/images/ColBel_Giusto_transparent.png" alt="Prosecco Superiore DOCG Millesimato Giusto Brut" class="runway-bottle-img" />
-              <div class="runway-bottle-shadow"></div>
-            </div>
-            <div class="runway-info-col">
-              <span class="runway-tag-pill">01 / Millesimato Brut</span>
-              <span class="runway-appellation">Conegliano Valdobbiadene Prosecco Superiore DOCG</span>
-              <h3 class="runway-wine-title">Giusto Millesimato</h3>
-              <div class="runway-wine-type">Vino Spumante Brut</div>
-              <p class="runway-wine-desc">
-                Giusto era il nonno che per primo lavorò questi vigneti con passione instancabile. Riporta nel calice le tipicità più pure del vitigno e dell’annata: straordinariamente equilibrato ed elegante, con profumi delicati di mela cotogna, fiori di campo e crosta di pane.
-              </p>
-              <div class="runway-pricing-row">
-                <div class="runway-price-group">
-                  <span class="runway-price">11,90 €</span>
-                  <span class="runway-price-note">IVA incl. (min. 6 bott.)</span>
-                </div>
-                <button class="btn-primary" onclick="openOrderModal('Giusto Prosecco Superiore DOCG Brut', 11.90)">
-                  <span data-i18n="btn_order">Ordina Bottiglia</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- VINO 2: ANGELO DOCG EXTRA DRY (BOTTIGLIA DA DESTRA) -->
-        <article class="wine-runway-strip align-right" data-category="docg">
-          <div class="runway-ambient-halo"></div>
-          <div class="runway-inner">
-            <div class="runway-info-col">
-              <span class="runway-tag-pill">02 / Millesimato Extra Dry</span>
-              <span class="runway-appellation">Conegliano Valdobbiadene Prosecco Superiore DOCG</span>
-              <h3 class="runway-wine-title">Angelo Millesimato</h3>
-              <div class="runway-wine-type">Vino Spumante Extra Dry</div>
-              <p class="runway-wine-desc">
-                Dedicato ad Angelo, custode delle tradizioni di famiglia. Combina l’aroma caratteristico della varietà Glera con una sapidità vellutata e un perlage finissimo. Al palato è fresco, morbido ed equilibrato, con profumi avvolgenti di pera Williams, mela Golden e fiori di glicine.
-              </p>
-              <div class="runway-pricing-row">
-                <div class="runway-price-group">
-                  <span class="runway-price">11,90 €</span>
-                  <span class="runway-price-note">IVA incl. (min. 6 bott.)</span>
-                </div>
-                <button class="btn-primary" onclick="openOrderModal('Angelo Prosecco Superiore DOCG Extra Dry', 11.90)">
-                  <span data-i18n="btn_order">Ordina Bottiglia</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-            <div class="runway-bottle-stage">
-              <div class="runway-bottle-aura"></div>
-              <img src="assets/images/ColBel_Angelo_transparent.png" alt="Prosecco Superiore DOCG Millesimato Angelo Extra Dry" class="runway-bottle-img" />
-              <div class="runway-bottle-shadow"></div>
-            </div>
-          </div>
-        </article>
-
-        <!-- VINO 3: PROSECCO DOC TREVISO FRIZZANTE (BOTTIGLIA DA SINISTRA) -->
-        <article class="wine-runway-strip align-left" data-category="frizzante">
-          <div class="runway-ambient-halo"></div>
-          <div class="runway-inner">
-            <div class="runway-bottle-stage">
-              <div class="runway-bottle-aura"></div>
-              <img src="assets/images/doc-frizz_transparent.png" alt="Prosecco DOC Treviso Frizzante" class="runway-bottle-img" />
-              <div class="runway-bottle-shadow"></div>
-            </div>
-            <div class="runway-info-col">
-              <span class="runway-tag-pill">03 / Tradizione Veneta</span>
-              <span class="runway-appellation">Prosecco DOC Treviso</span>
-              <h3 class="runway-wine-title">DOC Treviso Frizzante</h3>
-              <div class="runway-wine-type">Vino Frizzante Tradizionale</div>
-              <p class="runway-wine-desc">
-                Gradevole freschezza e vivacità immediata. Profumi fragranti di pera fresca e mela renetta accompagnati da sfumature floreali di acacia. Secco, beverino ma morbido grazie alla sua acidità bilanciata: il compagno ideale per aperitivi informali e convivialità.
-              </p>
-              <div class="runway-pricing-row">
-                <div class="runway-price-group">
-                  <span class="runway-price">8,90 €</span>
-                  <span class="runway-price-note">IVA incl. (min. 6 bott.)</span>
-                </div>
-                <button class="btn-primary" onclick="openOrderModal('Prosecco DOC Treviso Frizzante', 8.90)">
-                  <span data-i18n="btn_order">Ordina Bottiglia</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- VINO 4: CASA NOVA BRUT (BOTTIGLIA DA DESTRA) -->
-        <article class="wine-runway-strip align-right" data-category="frizzante">
-          <div class="runway-ambient-halo"></div>
-          <div class="runway-inner">
-            <div class="runway-info-col">
-              <span class="runway-tag-pill">04 / Casa Nova Spumante</span>
-              <span class="runway-appellation">Vino Spumante di Qualità</span>
-              <h3 class="runway-wine-title">Casa Nova Brut</h3>
-              <div class="runway-wine-type">Vino Spumante Brut</div>
-              <p class="runway-wine-desc">
-                La versione spumantizzata dell'iconico Casa Nova. Fresco, vivace e contemporaneo: profumo floreale fragrante con accenti di mela verde e scorza di cedro. Ottimo sia per aperitivi di carattere sia per accompagnare risotti di terra, crostacei e piatti di mare.
-              </p>
-              <div class="runway-pricing-row">
-                <div class="runway-price-group">
-                  <span class="runway-price">8,40 €</span>
-                  <span class="runway-price-note">IVA incl. (min. 6 bott.)</span>
-                </div>
-                <button class="btn-primary" onclick="openOrderModal('Casa Nova Spumante Brut', 8.40)">
-                  <span data-i18n="btn_order">Ordina Bottiglia</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-            <div class="runway-bottle-stage">
-              <div class="runway-bottle-aura"></div>
-              <img src="assets/images/colbel-casanova_transparent.png" alt="Casa Nova Spumante Brut" class="runway-bottle-img" />
-              <div class="runway-bottle-shadow"></div>
-            </div>
-          </div>
-        </article>
-
-        <!-- VINO 5: CASA NOVA BIANCO FRIZZANTE (BOTTIGLIA DA SINISTRA) -->
-        <article class="wine-runway-strip align-left" data-category="frizzante">
-          <div class="runway-ambient-halo"></div>
-          <div class="runway-inner">
-            <div class="runway-bottle-stage">
-              <div class="runway-bottle-aura"></div>
-              <img src="assets/images/colbel-casanova-corona_transparent.png" alt="Casa Nova Vino Bianco Frizzante" class="runway-bottle-img" />
-              <div class="runway-bottle-shadow"></div>
-            </div>
-            <div class="runway-info-col">
-              <span class="runway-tag-pill">05 / Spritz & Convivio</span>
-              <span class="runway-appellation">Vino Bianco Frizzante (Tappo Corona)</span>
-              <h3 class="runway-wine-title">Casa Nova Frizzante</h3>
-              <div class="runway-wine-type">Chiusura Tradizionale con Tappo Corona</div>
-              <p class="runway-wine-desc">
-                Il più immediato, sincero e conviviale dei nostri vini. Rifermentato in autoclave per esaltare i profumi varietali dell'uva fresca. Base d'elezione per l'autentico spritz veneto o servito ben fresco in abbinamento ad antipasti rustici e focacce calde.
-              </p>
-              <div class="runway-pricing-row">
-                <div class="runway-price-group">
-                  <span class="runway-price">7,90 €</span>
-                  <span class="runway-price-note">IVA incl. (min. 6 bott.)</span>
-                </div>
-                <button class="btn-primary" onclick="openOrderModal('Casa Nova Bianco Frizzante', 7.90)">
-                  <span data-i18n="btn_order">Ordina Bottiglia</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- VINO 6: COLBEL COLFONDO (BOTTIGLIA DA DESTRA) -->
-        <article class="wine-runway-strip align-right" data-category="frizzante">
-          <div class="runway-ambient-halo"></div>
-          <div class="runway-inner">
-            <div class="runway-info-col">
-              <span class="runway-tag-pill">06 / Metodo Ancestrale</span>
-              <span class="runway-appellation">Metodo Ancestrale Rifermentato sui Lieviti</span>
-              <h3 class="runway-wine-title">ColBel ColFondo</h3>
-              <div class="runway-wine-type">Rifermentato con Lieviti Naturali in Bottiglia</div>
-              <p class="runway-wine-desc">
-                L’autentico ambasciatore dei vecchi vignaioli trevigiani. Il vino riposa e matura sui propri lieviti indigeni direttamente in bottiglia, creando un profilo minerale, secco e straordinariamente gastronomico. Tradizionalmente scaraffato o servito velato con pane caldo e soppressa.
-              </p>
-              <div class="runway-pricing-row">
-                <div class="runway-price-group">
-                  <span class="runway-price">7,90 €</span>
-                  <span class="runway-price-note">IVA incl. (min. 6 bott.)</span>
-                </div>
-                <button class="btn-primary" onclick="openOrderModal('ColBel ColFondo Metodo Ancestrale', 7.90)">
-                  <span data-i18n="btn_order">Ordina Bottiglia</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-            <div class="runway-bottle-stage">
-              <div class="runway-bottle-aura"></div>
-              <img src="assets/images/colbel-colfondo_transparent.png" alt="ColBel ColFondo Metodo Ancestrale" class="runway-bottle-img" />
-              <div class="runway-bottle-shadow"></div>
-            </div>
-          </div>
-        </article>
-
-      </div>
-
-
-      <!-- ==========================================================================
-           MODALITÀ 2: PALCOSCENICO UNICO INTERATTIVO A SCHERMO INTERO (STAGE)
-           Zero Schede, 100% Full-Bleed, Selettore Vini, Cambio Dinamico con Bottiglie
-           ========================================================================== -->
-      <div class="wines-stage-container" id="winesStageView">
-        
-        <!-- Tab di selezione rapida del vino -->
-        <nav class="stage-tabs-nav" aria-label="Seleziona vino sul palcoscenico">
-          <button class="stage-tab-btn active" data-index="0">01 Giusto DOCG</button>
-          <button class="stage-tab-btn" data-index="1">02 Angelo DOCG</button>
-          <button class="stage-tab-btn" data-index="2">03 Treviso DOC</button>
-          <button class="stage-tab-btn" data-index="3">04 Casa Nova Brut</button>
-          <button class="stage-tab-btn" data-index="4">05 Casa Nova Frizz.</button>
-          <button class="stage-tab-btn" data-index="5">06 ColFondo</button>
-        </nav>
-
-        <!-- Arena centrale del vino attivo -->
-        <div class="stage-showcase-arena">
-          <!-- Freccia precedente -->
-          <button class="stage-nav-arrow prev" id="stagePrevBtn" aria-label="Vino precedente">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-
-          <!-- Slide 1: Giusto -->
-          <div class="stage-wine-slide active" data-index="0">
-            <div class="stage-bottle-stage">
-              <div class="stage-bottle-halo"></div>
-              <img src="assets/images/ColBel_Giusto_transparent.png" alt="Giusto DOCG Brut" class="stage-bottle-img" />
-            </div>
-            <div class="stage-info-col">
-              <span class="stage-badge">01 / Millesimato Brut DOCG</span>
-              <h3 class="stage-title">Giusto Millesimato</h3>
-              <div class="stage-appellation">Conegliano Valdobbiadene Prosecco Superiore DOCG</div>
-              <p class="stage-desc">
-                Omaggio a nonno Giusto. Esprime la quintessenza del terroir di Solighetto con perlage fine e persistente, profumi di mela cotogna e una sapidità fresca e asciutta.
-              </p>
-              <div class="stage-action-row">
-                <span class="stage-price">11,90 € <small>IVA incl.</small></span>
-                <button class="btn-primary" onclick="openOrderModal('Giusto Prosecco Superiore DOCG Brut', 11.90)">
-                  <span>Ordina con WhatsApp</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 2: Angelo -->
-          <div class="stage-wine-slide" data-index="1">
-            <div class="stage-bottle-stage">
-              <div class="stage-bottle-halo"></div>
-              <img src="assets/images/ColBel_Angelo_transparent.png" alt="Angelo DOCG Extra Dry" class="stage-bottle-img" />
-            </div>
-            <div class="stage-info-col">
-              <span class="stage-badge">02 / Millesimato Extra Dry DOCG</span>
-              <h3 class="stage-title">Angelo Millesimato</h3>
-              <div class="stage-appellation">Conegliano Valdobbiadene Prosecco Superiore DOCG</div>
-              <p class="stage-desc">
-                Dedicato ad Angelo. Morbido, aromatico ed elegante: profuma di pera matura, pesca bianca e fiori di glicine. Freschezza equilibrata dalla tipica nota morbida dell'Extra Dry.
-              </p>
-              <div class="stage-action-row">
-                <span class="stage-price">11,90 € <small>IVA incl.</small></span>
-                <button class="btn-primary" onclick="openOrderModal('Angelo Prosecco Superiore DOCG Extra Dry', 11.90)">
-                  <span>Ordina con WhatsApp</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 3: DOC Treviso -->
-          <div class="stage-wine-slide" data-index="2">
-            <div class="stage-bottle-stage">
-              <div class="stage-bottle-halo"></div>
-              <img src="assets/images/doc-frizz_transparent.png" alt="DOC Treviso Frizzante" class="stage-bottle-img" />
-            </div>
-            <div class="stage-info-col">
-              <span class="stage-badge">03 / Tradizione Veneta</span>
-              <h3 class="stage-title">DOC Treviso Frizzante</h3>
-              <div class="stage-appellation">Prosecco DOC Treviso Frizzante Tradizionale</div>
-              <p class="stage-desc">
-                Gradevole freschezza e beva disinvolta. Profumi di pera croccante e mela con tocchi di acacia. Secco ma morbido, l'anima autentica delle colline trevigiane.
-              </p>
-              <div class="stage-action-row">
-                <span class="stage-price">8,90 € <small>IVA incl.</small></span>
-                <button class="btn-primary" onclick="openOrderModal('Prosecco DOC Treviso Frizzante', 8.90)">
-                  <span>Ordina con WhatsApp</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 4: Casa Nova Brut -->
-          <div class="stage-wine-slide" data-index="3">
-            <div class="stage-bottle-stage">
-              <div class="stage-bottle-halo"></div>
-              <img src="assets/images/colbel-casanova_transparent.png" alt="Casa Nova Spumante Brut" class="stage-bottle-img" />
-            </div>
-            <div class="stage-info-col">
-              <span class="stage-badge">04 / Casa Nova Spumante</span>
-              <h3 class="stage-title">Casa Nova Brut</h3>
-              <div class="stage-appellation">Vino Spumante di Qualità Brut</div>
-              <p class="stage-desc">
-                Spumante vivace, moderno e profumato: note floreali di campo, mela verde e scorzetta di limone. Perfetto dall'aperitivo a risotti e secondi di mare.
-              </p>
-              <div class="stage-action-row">
-                <span class="stage-price">8,40 € <small>IVA incl.</small></span>
-                <button class="btn-primary" onclick="openOrderModal('Casa Nova Spumante Brut', 8.40)">
-                  <span>Ordina con WhatsApp</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 5: Casa Nova Frizzante -->
-          <div class="stage-wine-slide" data-index="4">
-            <div class="stage-bottle-stage">
-              <div class="stage-bottle-halo"></div>
-              <img src="assets/images/colbel-casanova-corona_transparent.png" alt="Casa Nova Frizzante" class="stage-bottle-img" />
-            </div>
-            <div class="stage-info-col">
-              <span class="stage-badge">05 / Tappo Corona Conviviale</span>
-              <h3 class="stage-title">Casa Nova Frizzante</h3>
-              <div class="stage-appellation">Vino Bianco Frizzante Tradizionale</div>
-              <p class="stage-desc">
-                Immediato, profumato ed esuberante. Rifermentato per preservare tutti gli aromi dell'uva. Ideale per lo spritz veneto o servito freddo con pane cotto a legna e soppressa.
-              </p>
-              <div class="stage-action-row">
-                <span class="stage-price">7,90 € <small>IVA incl.</small></span>
-                <button class="btn-primary" onclick="openOrderModal('Casa Nova Bianco Frizzante', 7.90)">
-                  <span>Ordina con WhatsApp</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 6: ColBel ColFondo -->
-          <div class="stage-wine-slide" data-index="5">
-            <div class="stage-bottle-stage">
-              <div class="stage-bottle-halo"></div>
-              <img src="assets/images/colbel-colfondo_transparent.png" alt="ColBel ColFondo Metodo Ancestrale" class="stage-bottle-img" />
-            </div>
-            <div class="stage-info-col">
-              <span class="stage-badge">06 / Metodo Ancestrale</span>
-              <h3 class="stage-title">ColBel ColFondo</h3>
-              <div class="stage-appellation">Rifermentato con Lieviti Naturali in Bottiglia</div>
-              <p class="stage-desc">
-                L’anima antica dei vignaioli trevigiani. Rifermentato sui propri lieviti in bottiglia: asciutto, minerale, autentico. Perfetto compagno del pane antico "Giorgione".
-              </p>
-              <div class="stage-action-row">
-                <span class="stage-price">7,90 € <small>IVA incl.</small></span>
-                <button class="btn-primary" onclick="openOrderModal('ColBel ColFondo Metodo Ancestrale', 7.90)">
-                  <span>Ordina con WhatsApp</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Freccia successiva -->
-          <button class="stage-nav-arrow next" id="stageNextBtn" aria-label="Vino successivo">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
+    <!-- 5. Indice: i titoli delle pagine, la foto cambia passando sopra -->
+    
+    <section class="doors" id="scopri">
+      
+        <a href="vini.html" class="door door--wines">
+          <span class="door-bottles"><img src="assets/images/bottiglie/giusto.png" alt="" loading="lazy" /><img src="assets/images/bottiglie/angelo.png" alt="" loading="lazy" /><img src="assets/images/bottiglie/treviso-doc.png" alt="" loading="lazy" /><img src="assets/images/bottiglie/casanova-brut.png" alt="" loading="lazy" /><img src="assets/images/bottiglie/colfondo.png" alt="" loading="lazy" /></span>
+          <span class="door-shade"></span>
+          <span class="door-title"><span data-i18n="nav_wines">Prodotti</span> <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+      
+        <a href="esperienze.html" class="door ">
+          <img class="door-img" src="assets/images/stock/tagliere-salumi.jpg" alt="" loading="lazy" />
+          <span class="door-shade"></span>
+          <span class="door-title"><span data-i18n="nav_experiences">Esperienze</span> <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+      
+        <a href="agriturismo.html" class="door ">
+          <img class="door-img" src="assets/images/stock/pane-olive.jpg" alt="" loading="lazy" />
+          <span class="door-shade"></span>
+          <span class="door-title"><span data-i18n="nav_agriturismo">Agriturismo</span> <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
     </section>
 
-
-    <!-- ==================== 5. ESPERIENZE (FULL-WIDTH CINEMATIC SLIDER) ==================== -->
-    <!-- ==================== 5. ESPERIENZE & DEGUSTAZIONI (SEAMLESS 100% FULL-WIDTH MURAL) ==================== -->
-    <section id="esperienze" class="experiences-mural-section">
-      <div class="section-header-wide">
-        <div class="header-text-group">
-          <span class="section-label" data-cb="impostazioni.testi_sezioni.esperienze_etichetta">Ospitalità & Degustazioni</span>
-          <h2 class="editorial-heading" data-cb="impostazioni.testi_sezioni.esperienze_titolo">Vivi il ColBel dal Vivo</h2>
-          <p data-cb="impostazioni.testi_sezioni.esperienze_intro">
-            Dalla visita tra i filari al brindisi conviviale: scegli l'esperienza su misura per te a Solighetto.
-          </p>
-        </div>
-
-        <div class="slider-nav-arrows">
-          <button class="slider-arrow-btn" id="expSliderPrev" aria-label="Esperienza precedente">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <button class="slider-arrow-btn" id="expSliderNext" aria-label="Esperienza successiva">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- SEAMLESS 100% FULL-WIDTH ARCHITECTURAL MURAL (ZERO CARDS, EDGE-TO-EDGE) -->
-      <div class="experiences-mural-stage" id="expViewport">
-        <div class="experiences-mural-track" id="expTrack">
-          <!-- PILASTRO 1: CLASSICO -->
-          <article class="exp-mural-pillar" data-exp="1">
-            <div class="exp-mural-bg" style="background-image: url('assets/images/p9201773.jpg');"></div>
-            <div class="exp-mural-overlay"></div>
-            
-            <div class="exp-mural-top">
-              <span class="exp-pill-badge" data-i18n="exp1_badge">01 / Degustazione Essenziale</span>
-              <span class="exp-card-number">01</span>
-            </div>
-
-            <div class="exp-mural-content">
-              <div class="exp-price-hero">
-                15 €<span class="exp-price-unit" data-i18n="per_person">/ persona</span>
-              </div>
-              <h3 class="exp-slide-title" data-i18n="exp1_title">Degustazione Classico</h3>
-              <p class="exp-slide-desc" data-i18n="exp1_desc">
-                Assaggio di 3 calici dei nostri vini (tra cui 2 Conegliano Valdobbiadene Prosecco Superiore DOCG), accompagnati da un piatto di sopressa nostrana e cestino di pane fragrante di nostra produzione.
-              </p>
-              
-              <div class="exp-features-tags">
-                <span><i class="fa-solid fa-wine-glass"></i> 3 Calici (2 DOCG)</span>
-                <span><i class="fa-solid fa-bread-slice"></i> Pane a Legna</span>
-                <span><i class="fa-solid fa-drumstick-bite"></i> Soppressa Nostrana</span>
-              </div>
-
-              <div class="exp-mural-action">
-                <a href="https://wa.me/393462443607?text=Buongiorno,%20vorrei%20prenotare%20la%20Degustazione%20Classico" class="btn-primary exp-btn" target="_blank" rel="noopener">
-                  <span data-i18n="btn_book_gianni">Prenota con Gianni</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- PILASTRO 2: BUON GUSTAIO -->
-          <article class="exp-mural-pillar" data-exp="2">
-            <div class="exp-mural-bg" style="background-image: url('assets/images/2022-11-016.jpeg');"></div>
-            <div class="exp-mural-overlay"></div>
-            
-            <div class="exp-mural-top">
-              <span class="exp-pill-badge" data-i18n="exp2_badge">02 / Esperienza Gastronomica</span>
-              <span class="exp-card-number">02</span>
-            </div>
-
-            <div class="exp-mural-content">
-              <div class="exp-price-hero">
-                20 €<span class="exp-price-unit" data-i18n="per_person">/ persona</span>
-              </div>
-              <h3 class="exp-slide-title" data-i18n="exp2_title">Degustazione Buon Gustaio</h3>
-              <p class="exp-slide-desc" data-i18n="exp2_desc">
-                3 calici di vini con ricco tagliere di affettati artigianali di nostra produzione, verdure in agrodolce dell'orto, selezione di formaggi di piccoli casari locali con miele e confetture, pane caldo con farina antica 'Giorgione'.
-              </p>
-              
-              <div class="exp-features-tags">
-                <span><i class="fa-solid fa-wine-glass"></i> 3 Calici Selezionati</span>
-                <span><i class="fa-solid fa-utensils"></i> Tagliere Salumi & Formaggi</span>
-                <span><i class="fa-solid fa-wheat-awn"></i> Grano Antico Giorgione</span>
-                <span><i class="fa-solid fa-jar"></i> Conserve dell'Orto</span>
-              </div>
-
-              <div class="exp-mural-action">
-                <a href="https://wa.me/393494356778?text=Buongiorno,%20vorrei%20prenotare%20la%20Degustazione%20Buon%20Gustaio" class="btn-primary exp-btn" target="_blank" rel="noopener">
-                  <span data-i18n="btn_book_lissa">Prenota con Lissa</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- PILASTRO 3: DAL VIGNETO A TAVOLA -->
-          <article class="exp-mural-pillar" data-exp="3">
-            <div class="exp-mural-bg" style="background-image: url('assets/images/cantina-2.jpeg');"></div>
-            <div class="exp-mural-overlay"></div>
-            
-            <div class="exp-mural-top">
-              <span class="exp-pill-badge" data-i18n="exp3_badge">03 / Tour Completo in Cantina</span>
-              <span class="exp-card-number">03</span>
-            </div>
-
-            <div class="exp-mural-content">
-              <div class="exp-price-hero">
-                25 €<span class="exp-price-unit" data-i18n="per_person">/ persona</span>
-              </div>
-              <h3 class="exp-slide-title" data-i18n="exp3_title">Dal Vigneto a Tavola</h3>
-              <p class="exp-slide-desc" data-i18n="exp3_desc">
-                Passeggiata guidata tra i filari alla scoperta della vite e della vendemmia, visita ai locali di vinificazione in cantina e infine degustazione di 4 calici con tagliere completo di specialità del Colbel. (Lun-Ven, min 4 persone).
-              </p>
-              
-              <div class="exp-features-tags">
-                <span><i class="fa-solid fa-mountain"></i> Passeggiata tra i Filari</span>
-                <span><i class="fa-solid fa-warehouse"></i> Cantina Storica</span>
-                <span><i class="fa-solid fa-wine-glass"></i> 4 Calici Degustazione</span>
-                <span><i class="fa-solid fa-users"></i> Minimo 4 Persone</span>
-              </div>
-
-              <div class="exp-mural-action">
-                <a href="https://wa.me/393462443607?text=Buongiorno,%20vorrei%20informazioni%20sul%20Tour%20Dal%20Vigneto%20a%20Tavola" class="btn-primary exp-btn" target="_blank" rel="noopener">
-                  <span data-i18n="btn_book_tour">Richiedi Tour</span>
-                  <i class="fa-brands fa-whatsapp"></i>
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ==================== 6. AGRITURISMO (FULL-WIDTH PHOTO FILMSTRIP SLIDER) ==================== -->
-    <section id="agriturismo" class="agriturismo-filmstrip-section">
-      <div class="section-header-wide">
-        <div class="header-text-group">
-          <span class="section-label" data-cb="agriturismo.etichetta">La Terra e la Cucina</span>
-          <h2 class="editorial-heading" data-cb="agriturismo.titolo">L'Agriturismo & La Cucina di Lissa</h2>
-          <p data-cb="agriturismo.descrizione" style="max-width: 900px;">
-            Nella cucina di Lissa i frutti della terra diventano conserve, composte e verdure in agrodolce. I salumi stagionano nell'antica cantina seicentesca di Casa Teo rinfrescata dai gelsi secolari, e il pane è sfornato caldo con farina di grano antico "Giorgione". Nel weekend è aperta la spuntineria su prenotazione.
-          </p>
-        </div>
-
-        <div class="slider-nav-arrows">
-          <button class="slider-arrow-btn" id="gallerySliderPrev" aria-label="Foto precedente">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <button class="slider-arrow-btn" id="gallerySliderNext" aria-label="Foto successiva">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- FULL-WIDTH PANORAMIC PHOTO FILMSTRIP -->
-      <div class="filmstrip-viewport" id="galleryViewport">
-        <div class="filmstrip-track" id="galleryTrack">
-          <div class="filmstrip-item">
-            <img src="assets/images/foccacce-e1785184768894.jpeg" alt="Focacce e pane cotto a legna" />
-            <div class="filmstrip-overlay">
-              <span class="filmstrip-caption" data-i18n="mosaic_1">Pane a legna con farina di grano antico 'Giorgione'</span>
-            </div>
-          </div>
-
-          <div class="filmstrip-item">
-            <img src="assets/images/IMG20220127145122.jpg" alt="Soppressa e salumi artigianali" />
-            <div class="filmstrip-overlay">
-              <span class="filmstrip-caption" data-i18n="mosaic_2">Soppressa & salumi stagionati nella cantina seicentesca</span>
-            </div>
-          </div>
-
-          <div class="filmstrip-item">
-            <img src="assets/images/IMG20200731193140.jpg" alt="Verdure in agrodolce e conserve" />
-            <div class="filmstrip-overlay">
-              <span class="filmstrip-caption" data-i18n="mosaic_3">Verdure in agrodolce e conserve dell'orto di Lissa</span>
-            </div>
-          </div>
-
-          <div class="filmstrip-item">
-            <img src="assets/images/IMG20200921114903.jpg" alt="Vendemmia sui colli" />
-            <div class="filmstrip-overlay">
-              <span class="filmstrip-caption" data-i18n="mosaic_4">I vigneti affacciati sul Quartier del Piave</span>
-            </div>
-          </div>
-
-          <div class="filmstrip-item">
-            <img src="assets/images/p9201850-2.jpg" alt="Brindisi in famiglia" />
-            <div class="filmstrip-overlay">
-              <span class="filmstrip-caption" data-i18n="mosaic_5">Momenti in famiglia e brindisi al tramonto</span>
-            </div>
-          </div>
-
-          <div class="filmstrip-item">
-            <img src="assets/images/cantina-2.jpeg" alt="Cantina ColBel" />
-            <div class="filmstrip-overlay">
-              <span class="filmstrip-caption">La nuova sala degustazione aperta nel 2020</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ==================== 7. CONTATTI & PRENOTAZIONI (BORDERLESS MINIMAL) ==================== -->
-    <section id="contatti" class="contact-section">
-      <div class="contact-container">
-        <!-- Left: Direct contacts -->
-        <div class="contact-info-col">
-          <span class="section-label" data-cb="contatti.etichetta">Contatti Diretti</span>
-          <h2 class="editorial-heading" data-cb="contatti.titolo">Vieni a Trovarci o Ordina</h2>
-          <p class="contact-lead-sub" data-cb="contatti.sottotitolo">
-            Siamo sempre felici di accoglierti in cantina o spedirti le nostre bottiglie comodamente a casa in tutta Italia.
-          </p>
-
-          <div class="contact-freestyle-list" id="contactList">
-            <!-- Gianni -->
-            <div class="contact-freestyle-item">
-              <div class="contact-freestyle-meta">
-                <h4>Gianni Teo</h4>
-                <p>Enologia & Vigneti • <strong>+39 346 2443607</strong></p>
-              </div>
-              <div class="contact-actions-pair">
-                <a href="tel:+393462443607" class="btn-icon-action" title="Chiama Gianni">
-                  <i class="fa-solid fa-phone"></i>
-                </a>
-                <a href="https://wa.me/393462443607" target="_blank" class="btn-icon-action wa" title="WhatsApp Gianni">
-                  <i class="fa-brands fa-whatsapp"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- Lissa -->
-            <div class="contact-freestyle-item">
-              <div class="contact-freestyle-meta">
-                <h4>Lissa Teo</h4>
-                <p>Agriturismo & Cucina • <strong>+39 349 4356778</strong></p>
-              </div>
-              <div class="contact-actions-pair">
-                <a href="tel:+393494356778" class="btn-icon-action" title="Chiama Lissa">
-                  <i class="fa-solid fa-phone"></i>
-                </a>
-                <a href="https://wa.me/393494356778" target="_blank" class="btn-icon-action wa" title="WhatsApp Lissa">
-                  <i class="fa-brands fa-whatsapp"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- Address -->
-            <div class="contact-freestyle-item">
-              <div class="contact-freestyle-meta">
-                <h4 data-i18n="contact_address_label">Sede Azienda Agricola</h4>
-                <p data-i18n="contact_address_val">Via Drio Cisa, 2, Loc. Solighetto – 31053 Pieve di Soligo (TV)</p>
-              </div>
-              <div class="contact-actions-pair">
-                <a href="https://maps.google.com/?q=Via+Drio+Cisa+2+Pieve+di+Soligo" target="_blank" class="btn-icon-action" title="Google Maps">
-                  <i class="fa-solid fa-map-location-dot"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Borderless Minimal Form -->
-        <div class="contact-form-col">
-          <h3 class="form-title" data-i18n="form_title">Richiedi Informazioni o Ordine</h3>
-          <p class="form-subtitle" data-i18n="form_desc">
-            Scrivici per prenotare un tavolo, un tour o richiedere la spedizione dei nostri vini:
-          </p>
-
-          <form id="quickContactForm">
-            <div class="form-group">
-              <label class="form-label" data-i18n="form_name">Nome e Cognome</label>
-              <input type="text" id="c_name" class="form-control" placeholder="Es. Mario Rossi" required />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" data-i18n="form_email">La tua Email</label>
-              <input type="email" id="c_email" class="form-control" placeholder="nome@esempio.it" required />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" data-i18n="form_phone">Telefono / WhatsApp</label>
-              <input type="tel" id="c_phone" class="form-control" placeholder="+39 340 0000000" />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" data-i18n="form_msg">Messaggio o Dettagli Ordine</label>
-              <textarea id="c_msg" class="form-control" rows="3" placeholder="Vorrei informazioni per..."></textarea>
-            </div>
-
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
-              <button type="button" id="sendFormWa" class="btn-primary btn-whatsapp" style="flex: 1;">
-                <i class="fa-brands fa-whatsapp"></i>
-                <span data-i18n="form_send_wa">Invia via WhatsApp</span>
-              </button>
-              <button type="button" id="sendFormMail" class="btn-outline" style="flex: 1;">
-                <i class="fa-solid fa-paper-plane"></i>
-                <span data-i18n="form_send_mail">Invia via Email</span>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
   </main>
 
-
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="site-footer">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3 class="footer-logo-title">COLBEL</h3>
-        <p class="footer-desc" data-cb="chiSiamo.citazione">
-          «Un calice sincero che racchiude il rispetto per la terra, il calore della famiglia e la poesia delle nostre colline.»
-        </p>
-        <div class="footer-socials">
-          <a href="https://www.facebook.com" target="_blank" class="social-link" title="Facebook" data-cb-social="facebook">
-            <i class="fa-brands fa-facebook-f"></i>
-          </a>
-          <a href="https://www.instagram.com" target="_blank" class="social-link" title="Instagram" data-cb-social="instagram">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-          <a href="https://wa.me/393462443607" target="_blank" class="social-link" title="WhatsApp Gianni" data-cb-wa="gianni">
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="footer-links-col">
-        <h4 data-i18n="nav_territory">TERRITORIO</h4>
-        <ul class="footer-nav-list">
-          <li><a href="#territorio">Solighetto (TV)</a></li>
-          <li><a href="#territorio">Conegliano Valdobbiadene</a></li>
-          <li><a href="#territorio">Colline del Prosecco UNESCO</a></li>
-          <li><a href="#chi-siamo">La Famiglia Teo</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-links-col">
-        <h4 data-i18n="nav_wines">VINI & DEGUSTAZIONI</h4>
-        <ul class="footer-nav-list" id="footerWineList">
-          <li><a href="#prodotti">Giusto DOCG Brut</a></li>
-          <li><a href="#prodotti">Angelo DOCG Extra Dry</a></li>
-          <li><a href="#prodotti">DOC Treviso Frizzante</a></li>
-          <li><a href="#prodotti">ColFondo Tradizionale</a></li>
-          <li><a href="#esperienze">Tour dal Vigneto a Tavola</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-links-col">
-        <h4 data-i18n="nav_contacts">CONTATTI</h4>
-        <ul class="footer-nav-list" id="footerContactList">
-          <li><span>Gianni Teo: +39 346 2443607</span></li>
-          <li><span>Lissa Teo: +39 349 4356778</span></li>
-          <li><span>Via Drio Cisa, 2 – Solighetto (TV)</span></li>
-          <li><a href="mailto:colbelwine@gmail.com">colbelwine@gmail.com</a></li>
-        </ul>
+  <!-- ==================== FOOTER (minimal: dati legali + social) ==================== -->
+  <footer class="site-footer site-footer--min" id="footer">
+    <div class="fm-main">
+      <a href="index.html" class="fm-logo" aria-label="ColBel – Home"><img src="assets/images/logo.png" alt="ColBel Vineyards and Winery" loading="lazy" /></a>
+      <address class="fm-legal">
+        <span><strong>Azienda Agricola ColBel di Teo Gianni</strong></span>
+        <span>Via Drio Cisa, 2, Località Solighetto – 31053 Pieve di Soligo (TV)</span>
+        <span>P. IVA <span data-cb="impostazioni.partita_iva" data-cb-label="Partita IVA">03920950266</span></span>
+      </address>
+      <div class="fm-social">
+        <a href="https://www.facebook.com/people/AA-Colbel-C-V-Prosecco-DOCG/100054377224427/" target="_blank" rel="noopener" aria-label="Facebook" data-cb-social="facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/colbel_wine/?hl=it" target="_blank" rel="noopener" aria-label="Instagram" data-cb-social="instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/393462443607" target="_blank" rel="noopener" aria-label="WhatsApp" data-cb-wa="gianni"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="mailto:lissa@colbelwine.com" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
       </div>
     </div>
-
-    <div class="footer-bottom">
-      <p data-cb="impostazioni.testo_footer">© 2026 Azienda Agricola ColBel di Teo Gianni. Tutti i diritti riservati.</p>
-      <p>Partita IVA: <span data-cb="impostazioni.partita_iva" data-cb-label="Partita IVA">03920950266</span> • Solighetto, Pieve di Soligo (Treviso)</p>
-      <p style="margin-top: 0.5rem;"><a href="admin/" style="color: var(--color-gold); font-size: 0.76rem; text-decoration: none; opacity: 0.75;"><i class="fa-solid fa-lock"></i> Console Gestione Cantina</a></p>
+    <div class="fm-bottom">
+      <span data-cb="impostazioni.testo_footer">© 2026 Azienda Agricola ColBel di Teo Gianni. Tutti i diritti riservati.</span>
+      <a href="admin/" class="fm-admin"><i class="fa-solid fa-lock"></i> Gestione</a>
     </div>
   </footer>
 
+  <!-- ==================== MODALE ORDINE ==================== -->
+  <div id="orderModal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalWineTitle">
+      <button class="modal-close-btn" aria-label="Chiudi">&times;</button>
+      <span class="eyebrow" data-i18n="modal_label">Ordine diretto dalla cantina</span>
+      <h3 id="modalWineTitle" class="h3">Prosecco Superiore</h3>
+      <p id="modalWinePrice" class="modal-price">11,90 € / bottiglia</p>
 
-  <!-- ==================== WINE ORDER MODAL (POPUP) ==================== -->
-  <div id="orderModal" class="modal-backdrop">
-    <div class="modal-content">
-      <button class="modal-close-btn" aria-label="Chiudi finestra">&times;</button>
-      <span class="section-label">Ordine Diretto Cantina</span>
-      <h3 id="modalWineTitle" style="font-size: 1.6rem; color: #ffffff; margin-bottom: 0.3rem;">Prosecco Superiore</h3>
-      <p id="modalWinePrice" style="color: var(--color-gold); font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem;">11,90 € / bottiglia</p>
-
-      <div class="form-group">
-        <label class="form-label" style="color: #ffffff;">Quantità Bottiglie (minimo 6):</label>
+      <div class="qty">
+        <span class="small" data-i18n="modal_qty">Quantità (minimo 6 bottiglie)</span>
         <div class="qty-stepper-wrap">
-          <button type="button" class="qty-step-btn" id="qtyMinus" aria-label="Diminuisci 6 bottiglie">
-            <i class="fa-solid fa-minus"></i>
-          </button>
-          <input type="number" id="bottleQty" class="form-control qty-input-field" value="6" min="6" step="6" readonly />
-          <button type="button" class="qty-step-btn" id="qtyPlus" aria-label="Aumenta 6 bottiglie">
-            <i class="fa-solid fa-plus"></i>
-          </button>
+          <button type="button" class="qty-step-btn" id="qtyMinus" aria-label="Meno 6 bottiglie"><i class="fa-solid fa-minus"></i></button>
+          <input type="number" id="bottleQty" class="qty-input-field" value="6" min="6" step="6" readonly />
+          <button type="button" class="qty-step-btn" id="qtyPlus" aria-label="Più 6 bottiglie"><i class="fa-solid fa-plus"></i></button>
         </div>
-        <!-- Quick Preset Pills -->
         <div class="qty-presets">
-          <button type="button" class="preset-pill active" data-qty="6">6 (1 Cassa)</button>
-          <button type="button" class="preset-pill" data-qty="12">12 (2 Casse)</button>
-          <button type="button" class="preset-pill" data-qty="24">24 (4 Casse)</button>
+          <button type="button" class="preset-pill active" data-qty="6">6 · 1 cassa</button>
+          <button type="button" class="preset-pill" data-qty="12">12 · 2 casse</button>
+          <button type="button" class="preset-pill" data-qty="24">24 · 4 casse</button>
         </div>
       </div>
 
-      <p id="modalTotalCalc" style="font-size: 1.1rem; color: #ffffff; margin: 1rem 0 1.5rem; padding: 0.8rem; background: rgba(255,255,255,0.06); border-left: 3px solid var(--color-gold);">
-        Totale indicativo: 71,40 € (IVA incl.)
-      </p>
+      <p id="modalTotalCalc" class="modal-total">Totale indicativo: 71,40 € (IVA incl.)</p>
+      <p class="small" data-i18n="modal_hint">Scegli come inviarci la richiesta: ti rispondiamo con le istruzioni per pagamento e spedizione.</p>
 
-      <p style="font-size: 0.85rem; color: var(--color-text-subtle); margin-bottom: 1.5rem;">
-        Scegli come inviare la tua richiesta: ti risponderemo subito con le istruzioni di pagamento e spedizione!
-      </p>
-
-      <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-        <a id="btnWaGianni" href="#" target="_blank" class="btn-primary btn-whatsapp" style="width: 100%;">
-          <i class="fa-brands fa-whatsapp"></i> Invia Ordine a Gianni (WhatsApp)
-        </a>
-        <a id="btnWaLissa" href="#" target="_blank" class="btn-primary btn-whatsapp" style="width: 100%; background: #128C7E;">
-          <i class="fa-brands fa-whatsapp"></i> Invia Ordine a Lissa (WhatsApp)
-        </a>
-        <a id="btnEmailOrder" href="#" class="btn-outline" style="width: 100%;">
-          <i class="fa-solid fa-envelope"></i> Invia Richiesta via Email
-        </a>
+      <div class="modal-actions">
+        <a id="btnWaGianni" href="#" target="_blank" rel="noopener" class="btn btn--block"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="modal_wa_gianni">Invia a Gianni</span></a>
+        <a id="btnWaLissa" href="#" target="_blank" rel="noopener" class="btn btn--block"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="modal_wa_lissa">Invia a Lissa</span></a>
+        <a id="btnEmailOrder" href="#" class="link" style="align-self:center"><span data-i18n="modal_email">Oppure via email</span></a>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MOBILE FLOATING BOTTOM DOCK ==================== -->
-  <aside class="mobile-bottom-bar" aria-label="Azioni rapide mobile">
-    <a href="tel:+393462443607" class="bottom-bar-action" title="Chiama la Cantina" data-cb-tel="gianni">
-      <i class="fa-solid fa-phone"></i>
-      <span data-i18n="mob_call">Chiama</span>
-    </a>
-    <a href="https://wa.me/393462443607?text=Buongiorno%20ColBel,%20vorrei%20informazioni" target="_blank" class="bottom-bar-action wa" title="Scrivi su WhatsApp" data-cb-wa="gianni" data-cb-wa-msg="Buongiorno ColBel, vorrei informazioni">
-      <i class="fa-brands fa-whatsapp"></i>
-      <span>WhatsApp</span>
-    </a>
-    <button type="button" class="bottom-bar-action cta" id="dockOrderBtn" onclick="openOrderModal('Giusto Prosecco Superiore DOCG Brut', 11.90)" title="Ordina subito">
-      <i class="fa-solid fa-wine-bottle"></i>
-      <span data-i18n="mob_order">Ordina Vini</span>
-    </button>
+  <!-- ==================== AZIONI RAPIDE (MOBILE) ==================== -->
+  <aside class="mobile-bottom-bar" aria-label="Azioni rapide">
+    <a href="tel:+393462443607" class="bottom-bar-action" data-cb-tel="gianni"><i class="fa-solid fa-phone"></i><span data-i18n="mob_call">Chiama</span></a>
+    <a href="https://wa.me/393462443607?text=Buongiorno%20ColBel,%20vorrei%20informazioni" target="_blank" rel="noopener" class="bottom-bar-action" data-cb-wa="gianni" data-cb-wa-msg="Buongiorno ColBel, vorrei informazioni"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+    <button type="button" class="bottom-bar-action cta" id="dockOrderBtn" onclick="openOrderModal('Giusto – Prosecco Superiore DOCG Millesimato Brut', 11.90)"><i class="fa-solid fa-wine-bottle"></i><span data-i18n="mob_order">Ordina</span></button>
   </aside>
 
-  <!-- ==================== FLOATING BACK TO TOP BUTTON ==================== -->
-  <button id="backToTop" class="back-to-top" aria-label="Torna all'inizio">
-    <i class="fa-solid fa-arrow-up"></i>
-  </button>
-
-  <!-- GSAP & ScrollTrigger (Local vendor for instant offline/local file loading) -->
   <script src="assets/js/vendor/gsap.min.js"></script>
   <script src="assets/js/vendor/ScrollTrigger.min.js"></script>
-  <!-- Scripts -->
-  <script src="assets/js/content.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/vendor/lenis.min.js"></script>
+  <script src="assets/js/content.js?v=25"></script>
+  <script src="assets/js/main.js?v=25"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "nome_cantina": "ColBel Vineyards and Winery",
-  "claim": "",
+  "claim": "Una tradizione, un’emozione",
   "hero_sottotitolo": "",
   "hero_immagine": "assets/images/p9201811-2.jpg",
   "minimo_bottiglie_ordine": 6,
@@ -14,11 +14,11 @@
   "testo_footer": "© 2026 Azienda Agricola ColBel di Teo Gianni. Tutti i diritti riservati.",
   "partita_iva": "03920950266",
   "testi_sezioni": {
-    "vini_etichetta": "La Cantina ColBel",
-    "vini_titolo": "I Nostri Vini & Spumanti",
-    "vini_sottotitolo": "Spedizioni dirette dalla cantina a casa vostra in tutta Italia • IVA inclusa • Minimo 6 bottiglie",
-    "esperienze_etichetta": "Ospitalità & Degustazioni",
-    "esperienze_titolo": "Vivi il ColBel dal Vivo",
-    "esperienze_intro": "Dalla visita tra i filari al brindisi conviviale: scegli l'esperienza su misura per te a Solighetto."
+    "vini_etichetta": "",
+    "vini_titolo": "Prodotti",
+    "vini_sottotitolo": "I prezzi sono IVA inclusa con spedizione a casa qui in Italia.",
+    "esperienze_etichetta": "",
+    "esperienze_titolo": "Esperienze",
+    "esperienze_intro": "Ci sono vari modi in cui potete venire a trovarci, passando per una degustazione veloce quando siete in zona visitando le nostre colline in vacanza o i vostri giorni festivi, o prendendo un momento di relax per godere i nostri vini e prodotti tipici oppure per un pranzo o cena, semplice ma autentica in buona compagnia! Godete tutto nella nostra sala con una bella vista della Quartiere di Piave e in un ambiante che speriamo trovate accogliente è di famiglia."
   }
 }

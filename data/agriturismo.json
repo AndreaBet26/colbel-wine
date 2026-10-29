@@ -1,43 +1,38 @@
 {
-  "etichetta": "La Terra e la Cucina",
-  "titolo": "L'Agriturismo & La Cucina di Lissa",
-  "descrizione": "Nella cucina di Lissa i frutti della terra diventano conserve, composte e verdure in agrodolce. I salumi stagionano nell'antica cantina seicentesca di Casa Teo rinfrescata dai gelsi secolari, e il pane è sfornato caldo con farina di grano antico \"Giorgione\". Nel weekend è aperta la spuntineria su prenotazione.",
+  "etichetta": "",
+  "titolo": "Agriturismo",
+  "descrizione": "Il cuore dell’agriturismo è la cucina dove Lissa trasforma i prodotti della terra del ColBel. Zucchine in agrodolce, composte di frutta, sottaceti. Sono solo alcune delle specialità artigianali che accompagnano l’esperienza di degustazione.",
   "galleria": [
     {
-      "id": "foto-1",
-      "immagine": "assets/images/foccacce-e1785184768894.jpeg",
-      "didascalia": "Pane a legna con farina di grano antico 'Giorgione'",
+      "id": "foto-2",
+      "immagine": "assets/images/stock/tagliere-salumi.jpg",
+      "didascalia": "La produzione di salumi, è un’altra passione di Gianni. Quando in inverno le viti riposano, salami, soppresse e altri insaccati, stagionano in un’antica cantina seicentesca di Casa Teo raffrescata dai secolari gelsi. È possibile assaggiarli sia il loco, che acquistarle per il consumo domestico.",
       "ordine": 1
     },
     {
-      "id": "foto-2",
-      "immagine": "assets/images/IMG20220127145122.jpg",
-      "didascalia": "Soppressa & salumi stagionati nella cantina seicentesca",
+      "id": "foto-1",
+      "immagine": "assets/images/stock/mani-pane.jpg",
+      "didascalia": "Il pane di Lissa è il compagno perfetto per tutti questi prodotti. Viene prodotto con una varietà di frumento antica “Giorgione”, seguendo tempi e metodi tramandati da generazioni, e cotto nel forno alimentato dalla legna dei nostri boschi.",
       "ordine": 2
+    },
+    {
+      "id": "foto-5",
+      "immagine": "assets/images/stock/alba-filari.jpg",
+      "didascalia": "Nello stesso forno e con la stessa legna durante le festività Lissa come da tradizione riscopre le ricette antiche per impastare e cucinare i gustosi panettoni natalizi, le soffici focacce pasquali e gli immancabili biscotti e crostate che ci ricordano i bei momenti passati con i nostri genitori e i nostri nonni.",
+      "ordine": 3
     },
     {
       "id": "foto-3",
       "immagine": "assets/images/IMG20200731193140.jpg",
-      "didascalia": "Verdure in agrodolce e conserve dell'orto di Lissa",
-      "ordine": 3
-    },
-    {
-      "id": "foto-4",
-      "immagine": "assets/images/IMG20200921114903.jpg",
-      "didascalia": "I vigneti affacciati sul Quartier del Piave",
+      "didascalia": "Durante la bella stagione Lissa raccoglie i prodotti dell’orto per produrre passate di pomodoro, conserve in agrodolce, sottolio e sottaceto e marmellate di prugne, pesche e albicocche che allieteranno tutti i momenti dell’anno, anche quelle fredde giornate in cui le ore di luce sono poche e l’immancabile compagno sarà il crepitio del caminetto.",
       "ordine": 4
-    },
-    {
-      "id": "foto-5",
-      "immagine": "assets/images/p9201850-2.jpg",
-      "didascalia": "Momenti in famiglia e brindisi al tramonto",
-      "ordine": 5
     },
     {
       "id": "foto-6",
       "immagine": "assets/images/cantina-2.jpeg",
-      "didascalia": "La nuova sala degustazione aperta nel 2020",
-      "ordine": 6
+      "didascalia": "Ma la cucina di Lissa è sempre calda e spazia dai piatti del nostro pollame, alla selvaggina, al vegano.",
+      "ordine": 5
     }
-  ]
+  ],
+  "spuntineria": "L’agriturismo con menù spuntineria, apre il weekend, con un menù semplice ma territoriale, che prevede la selezione di affettati di nostra produzione, formaggi da piccole aziende locali con miele e marmellate, pane cotto in forno a legna, zucchine del nostro orto in agrodolce, e spuntini cotti. il tutto accompagnato da una o più delle vostre bollicine preferite. Per i vostri eventi speciali, è invece possibile prenotare e concordare un menù più adatto alle vostre esigenze. La selezione dei nostri vini è sempre disponibile per l’acquisto in loco."
 }

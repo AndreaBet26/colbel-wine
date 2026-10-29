@@ -1,99 +1,52 @@
 [
   {
     "id": "exp-classico",
-    "badge": "01 / Degustazione Essenziale",
+    "badge": "",
     "titolo": "Degustazione Classico",
     "prezzo": 15,
-    "unita_prezzo": "/ persona",
-    "descrizione": "Assaggio di 3 calici dei nostri vini (tra cui 2 Conegliano Valdobbiadene Prosecco Superiore DOCG), accompagnati da un piatto di sopressa nostrana e cestino di pane fragrante di nostra produzione.",
-    "tags": [
-      {
-        "icona": "fa-solid fa-wine-glass",
-        "testo": "3 Calici (2 DOCG)"
-      },
-      {
-        "icona": "fa-solid fa-bread-slice",
-        "testo": "Pane a Legna"
-      },
-      {
-        "icona": "fa-solid fa-drumstick-bite",
-        "testo": "Soppressa Nostrana"
-      }
-    ],
-    "immagine": "assets/images/p9201773.jpg",
+    "unita_prezzo": "euro a persona",
+    "descrizione": "Venite a trovaci nella nostra sala di degustazione dove potete assaggiare 3 calice dei nostri vini, tra qui 2 Conegliano Valdobbiadene Prosecco DOCG. Servito con un piatto di sopressa e cestino di pane, tutto di nostra produzione!",
+    "tags": [],
+    "immagine": "assets/images/stock/calice-bollicine.jpg",
     "referente_wa": "393462443607",
     "referente_nome": "Gianni",
     "ordine": 1,
     "attivo": true,
-    "testo_pulsante": "Prenota con Gianni",
+    "testo_pulsante": "Gianni Whatsapp",
     "messaggio_whatsapp": "Buongiorno, vorrei prenotare la Degustazione Classico",
     "referente": "gianni"
   },
   {
     "id": "exp-buon-gustaio",
-    "badge": "02 / Esperienza Gastronomica",
+    "badge": "",
     "titolo": "Degustazione Buon Gustaio",
     "prezzo": 20,
-    "unita_prezzo": "/ persona",
-    "descrizione": "3 calici di vini con ricco tagliere di affettati artigianali di nostra produzione, verdure in agrodolce dell'orto, selezione di formaggi di piccoli casari locali con miele e confetture, pane caldo con farina antica 'Giorgione'.",
-    "tags": [
-      {
-        "icona": "fa-solid fa-wine-glass",
-        "testo": "3 Calici Selezionati"
-      },
-      {
-        "icona": "fa-solid fa-utensils",
-        "testo": "Tagliere Salumi & Formaggi"
-      },
-      {
-        "icona": "fa-solid fa-wheat-awn",
-        "testo": "Grano Antico Giorgione"
-      },
-      {
-        "icona": "fa-solid fa-jar",
-        "testo": "Conserve dell'Orto"
-      }
-    ],
-    "immagine": "assets/images/2022-11-016.jpeg",
+    "unita_prezzo": "euro a persona",
+    "descrizione": "Sempre nella nostra sala di degustazione dove potete assaggiare 3 calice dei nostri vini, tra qui 2 Conegliano Valdobbiadene Prosecco DOCG. I vini vengano serviti con un tagliere di varie affettate della nostra produzione, vedura in agrodolc, formaggi di piccole aziende locali con marmellata e/o miele e un cestino di pane fatto in casa con la nostra farina ‘Giorgione’!",
+    "tags": [],
+    "immagine": "assets/images/stock/tagliere-salumi.jpg",
     "referente_wa": "393494356778",
     "referente_nome": "Lissa",
     "ordine": 2,
     "attivo": true,
-    "testo_pulsante": "Prenota con Lissa",
+    "testo_pulsante": "Lissa Whatsapp",
     "messaggio_whatsapp": "Buongiorno, vorrei prenotare la Degustazione Buon Gustaio",
     "referente": "lissa"
   },
   {
     "id": "exp-vigneto-a-tavola",
-    "badge": "03 / Tour Completo in Cantina",
-    "titolo": "Dal Vigneto a Tavola",
+    "badge": "(da lunedi a venerdi)",
+    "titolo": "Tour ‘dal Vigneto a Tavola’",
     "prezzo": 25,
-    "unita_prezzo": "/ persona",
-    "descrizione": "Passeggiata guidata tra i filari alla scoperta della vite e della vendemmia, visita ai locali di vinificazione in cantina e infine degustazione di 4 calici con tagliere completo di specialità del Colbel. (Lun-Ven, min 4 persone).",
-    "tags": [
-      {
-        "icona": "fa-solid fa-mountain",
-        "testo": "Passeggiata tra i Filari"
-      },
-      {
-        "icona": "fa-solid fa-warehouse",
-        "testo": "Cantina Storica"
-      },
-      {
-        "icona": "fa-solid fa-wine-glass",
-        "testo": "4 Calici Degustazione"
-      },
-      {
-        "icona": "fa-solid fa-users",
-        "testo": "Minimo 4 Persone"
-      }
-    ],
-    "immagine": "assets/images/cantina-2.jpeg",
+    "unita_prezzo": "euro a persona, min 4 persone",
+    "descrizione": "Iniziamo nei nostri vigneti dove cerchiamo di rendervi consapevoli del lavoro che viene svolto nei nostri campi nell’arco dell’anno e la nostra filosofia lavorativa. Il discorso ci porta ad un adescizione della vendemmia, a quale momento scendiamo giù in cantina per una spiegazione della lavorazione dei nostri vini fino alla bottiglia. Tutto finisce, ovviamente, alla tavola nella nostra sala di degustazione dove potete assaggiare 4 calice dei nostri vini, tra qui 2 Conegliano Valdobbiadene Prosecco DOCG. I vini vengano serviti con un tagliere di varie affettate della nostra produzione e formaggi di piccole aziende locali con marmellata e/o miele, verdura in agrodolce e un cestino di pane fatto in casa con la nostra farina ‘Giorgione’!",
+    "tags": [],
+    "immagine": "assets/images/stock/collina-autunno.jpg",
     "referente_wa": "393462443607",
     "referente_nome": "Gianni",
     "ordine": 3,
     "attivo": true,
-    "testo_pulsante": "Richiedi Tour",
+    "testo_pulsante": "Gianni Whatsapp",
     "messaggio_whatsapp": "Buongiorno, vorrei informazioni sul Tour Dal Vigneto a Tavola",
     "referente": "gianni"
   }
