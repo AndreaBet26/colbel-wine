@@ -214,15 +214,52 @@
     </div>
     <div id="cbItemBar" hidden></div>
     <div id="cbPop" hidden></div>
+    <div id="cbCropHud" hidden>
+      <div class="cb-hud-meta">
+        <span class="cb-hud-badge"><i class="fa-solid fa-arrows-up-down-left-right"></i> Inquadratura</span>
+        <span id="cbHudTitle" class="cb-hud-name">Foto</span>
+        <span id="cbHudDimensions" class="cb-hud-dim">Scala reale</span>
+      </div>
+      <div class="cb-hud-controls">
+        <div class="cb-hud-drag-hint">
+          <i class="fa-solid fa-hand"></i> <span>Trascina con il mouse per spostare</span>
+        </div>
+        <div class="cb-hud-arrows" title="Regolazione fine a passi">
+          <button type="button" class="cb-nudge-btn" data-dx="-2" data-dy="0" title="Sposta foto a sinistra"><i class="fa-solid fa-arrow-left"></i></button>
+          <button type="button" class="cb-nudge-btn" data-dx="0" data-dy="-2" title="Sposta foto in alto"><i class="fa-solid fa-arrow-up"></i></button>
+          <button type="button" class="cb-nudge-btn" data-dx="0" data-dy="2" title="Sposta foto in basso"><i class="fa-solid fa-arrow-down"></i></button>
+          <button type="button" class="cb-nudge-btn" data-dx="2" data-dy="0" title="Sposta foto a destra"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        <div class="cb-hud-zoom">
+          <span class="cb-zoom-lbl"><i class="fa-solid fa-magnifying-glass-plus"></i> Zoom</span>
+          <button type="button" class="cb-zoom-step" id="cbZoomMinus" title="Rimpicciolisci"><i class="fa-solid fa-minus"></i></button>
+          <input type="range" id="cbCropZoomRange" min="100" max="250" value="100" step="1">
+          <button type="button" class="cb-zoom-step" id="cbZoomPlus" title="Ingrandisci"><i class="fa-solid fa-plus"></i></button>
+          <span id="cbCropZoomVal" class="cb-zoom-val">100%</span>
+        </div>
+        <div class="cb-hud-presets">
+          <button type="button" class="cb-hud-preset-btn active" data-x="50" data-y="50" title="Al centro"><i class="fa-solid fa-bullseye"></i></button>
+          <button type="button" class="cb-hud-preset-btn" data-x="50" data-y="15" title="In alto"><i class="fa-solid fa-arrow-up"></i></button>
+          <button type="button" class="cb-hud-preset-btn" data-x="50" data-y="85" title="In basso"><i class="fa-solid fa-arrow-down"></i></button>
+          <button type="button" class="cb-hud-preset-btn" data-x="15" data-y="50" title="A sinistra"><i class="fa-solid fa-arrow-left"></i></button>
+          <button type="button" class="cb-hud-preset-btn" data-x="85" data-y="50" title="A destra"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <div class="cb-hud-actions">
+        <button type="button" class="cb-btn cb-btn-ghost" id="cbCropModalToggle" title="Vista lente di precisione"><i class="fa-solid fa-crop-simple"></i> <span>Lente</span></button>
+        <button type="button" class="cb-btn cb-btn-ghost" id="cbHudCancel"><i class="fa-solid fa-xmark"></i> <span>Annulla</span></button>
+        <button type="button" class="cb-btn cb-btn-gold" id="cbHudSave"><i class="fa-solid fa-check"></i> <span>Salva</span></button>
+      </div>
+    </div>
     <div id="cbCropModal" class="cb-modal" hidden>
       <div class="cb-modal-backdrop" id="cbCropBackdrop"></div>
       <div class="cb-modal-box">
         <div class="cb-modal-head">
-          <h3><i class="fa-solid fa-arrows-up-down-left-right"></i> Inquadratura e centratura foto</h3>
+          <h3><i class="fa-solid fa-arrows-up-down-left-right"></i> Inquadratura proporzionale reale</h3>
           <button type="button" class="cb-icon cb-modal-close" id="cbCropClose" aria-label="Chiudi">&times;</button>
         </div>
         <div class="cb-modal-body">
-          <p class="cb-crop-intro">Trascina o clicca sull'anteprima per scegliere il punto focale, oppure usa i pulsanti rapidi.</p>
+          <p class="cb-crop-intro">Trascina direttamente la foto per posizionarla, usa lo slider zoom o le posizioni rapide.</p>
           <div class="cb-crop-preview-wrap">
             <div class="cb-crop-preview" id="cbCropPreview">
               <img id="cbCropImg" src="" alt="Anteprima" draggable="false" />
@@ -246,6 +283,10 @@
           </div>
           <div class="cb-crop-sliders">
             <div class="cb-slider-row">
+              <label for="cbCropRangeZoom">Zoom / Scala: <strong id="cbCropModalZoomVal">100%</strong></label>
+              <input type="range" id="cbCropRangeZoom" min="100" max="250" value="100" step="1">
+            </div>
+            <div class="cb-slider-row">
               <label for="cbCropRangeX">Orizzontale (X): <strong id="cbCropValX">50%</strong></label>
               <input type="range" id="cbCropRangeX" min="0" max="100" value="50" step="1">
             </div>
@@ -257,7 +298,7 @@
         </div>
         <div class="cb-modal-foot">
           <button type="button" class="cb-btn cb-btn-ghost" id="cbCropCancel">Annulla</button>
-          <button type="button" class="cb-btn cb-btn-primary" id="cbCropSave"><i class="fa-solid fa-check"></i> Salva inquadratura</button>
+          <button type="button" class="cb-btn cb-btn-gold" id="cbCropSave"><i class="fa-solid fa-check"></i> Salva inquadratura</button>
         </div>
       </div>
     </div>
@@ -528,9 +569,16 @@
       return;
     }
 
-    // Se il puntatore è sopra una delle due barre flottanti o dentro un popover/modale,
+    // Se la modalità centratura foto è attiva, nascondiamo le barre flottanti per non intralciare
+    if (cropTargetEl) {
+      if (imgBar) imgBar.hidden = true;
+      if (itemBar) itemBar.hidden = true;
+      return;
+    }
+
+    // Se il puntatore è sopra una delle due barre flottanti o dentro un popover/modale/HUD,
     // manteniamo la visualizzazione corrente ed evitiamo sfarfallii mentre l'utente clicca
-    if (hoveredEl && hoveredEl.closest('#cbImgBar, #cbItemBar, #cbPop, #cbCropModal')) {
+    if (hoveredEl && hoveredEl.closest('#cbImgBar, #cbItemBar, #cbPop, #cbCropModal, #cbCropHud')) {
       if ((!currentImg || currentImg.isConnected) && (!currentItem || currentItem.isConnected)) {
         return;
       }
@@ -1016,21 +1064,30 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Regolazione Inquadratura & Centratura Foto
+  // Regolazione Inquadratura & Centratura Foto (Live HUD a Schermo Intero + Lente)
   // ---------------------------------------------------------------------------
   let cropTargetEl = null;
   let cropPosPath = null;
   let cropInitialPos = '50% 50%';
   let currentCropX = 50;
   let currentCropY = 50;
+  let currentCropScale = 1;
   let isDraggingCrop = false;
+  let dragStartPointer = { x: 0, y: 0 };
+  let dragStartCoords = { x: 50, y: 50 };
 
   function parsePos(posStr) {
-    if (!posStr) return { x: 50, y: 50 };
-    const parts = String(posStr).trim().split(/\s+/);
-    const x = parseFloat(parts[0]) || 50;
-    const y = parseFloat(parts[1] || parts[0]) || 50;
-    return { x: Math.max(0, Math.min(100, x)), y: Math.max(0, Math.min(100, y)) };
+    if (!posStr) return { x: 50, y: 50, scale: 1 };
+    const parts = String(posStr).trim().split('/');
+    const coords = (parts[0] || '').trim().split(/\s+/);
+    const x = parseFloat(coords[0]) || 50;
+    const y = parseFloat(coords[1] || coords[0]) || 50;
+    const scale = parts[1] ? parseFloat(parts[1]) : 1;
+    return {
+      x: Math.max(0, Math.min(100, x)),
+      y: Math.max(0, Math.min(100, y)),
+      scale: Math.max(1, Math.min(2.5, scale || 1))
+    };
   }
 
   function getElementPos(el, posPath) {
@@ -1039,26 +1096,39 @@
       if (v) return String(v);
     }
     if (el) {
-      if (el.style.objectPosition) return el.style.objectPosition;
+      if (el.style.objectPosition) {
+        return el.style.transform && el.style.transform.includes('scale')
+          ? `${el.style.objectPosition} / ${currentCropScale}`
+          : el.style.objectPosition;
+      }
       if (el.style.backgroundPosition) return el.style.backgroundPosition;
     }
     return '50% 50%';
   }
 
-  function applyCrop(x, y) {
-    currentCropX = Math.round(x);
-    currentCropY = Math.round(y);
+  function applyCrop(x, y, scale = currentCropScale) {
+    currentCropX = Math.round(Math.max(0, Math.min(100, x)));
+    currentCropY = Math.round(Math.max(0, Math.min(100, y)));
+    currentCropScale = Math.round(Math.max(1, Math.min(2.5, scale)) * 100) / 100;
+
     const posStr = `${currentCropX}% ${currentCropY}%`;
 
+    // Aggiorna reticolo modal
     const reticle = $('#cbCropReticle');
     if (reticle) {
       reticle.style.left = currentCropX + '%';
       reticle.style.top = currentCropY + '%';
     }
 
+    // Aggiorna preview modal (con lo stesso identico object-position e transform scale)
     const cropImg = $('#cbCropImg');
-    if (cropImg) cropImg.style.objectPosition = posStr;
+    if (cropImg) {
+      cropImg.style.objectPosition = posStr;
+      cropImg.style.transform = currentCropScale > 1.01 ? `scale(${currentCropScale})` : '';
+      cropImg.style.transformOrigin = posStr;
+    }
 
+    // Aggiorna controlli slider in modale e in HUD
     const rx = $('#cbCropRangeX');
     const ry = $('#cbCropRangeY');
     const vx = $('#cbCropValX');
@@ -1068,15 +1138,41 @@
     if (vx) vx.textContent = currentCropX + '%';
     if (vy) vy.textContent = currentCropY + '%';
 
-    document.querySelectorAll('.cb-preset-btn').forEach((b) => {
+    const rZoom = $('#cbCropZoomRange');
+    const vZoom = $('#cbCropZoomVal');
+    const rModalZoom = $('#cbCropRangeZoom');
+    const vModalZoom = $('#cbCropModalZoomVal');
+    const zoomInt = Math.round(currentCropScale * 100);
+    if (rZoom) rZoom.value = zoomInt;
+    if (vZoom) vZoom.textContent = zoomInt + '%';
+    if (rModalZoom) rModalZoom.value = zoomInt;
+    if (vModalZoom) vModalZoom.textContent = zoomInt + '%';
+
+    // Aggiorna stato attivo dei pulsanti preset
+    document.querySelectorAll('.cb-preset-btn, .cb-hud-preset-btn').forEach((b) => {
       const bx = parseInt(b.getAttribute('data-x'), 10);
       const by = parseInt(b.getAttribute('data-y'), 10);
       b.classList.toggle('active', Math.abs(bx - currentCropX) < 4 && Math.abs(by - currentCropY) < 4);
     });
 
+    // Aggiorna l'elemento reale sulla pagina IN TEMPO REALE senza alcuna deformazione
     if (cropTargetEl) {
-      if (cropTargetEl.tagName === 'IMG') cropTargetEl.style.objectPosition = posStr;
-      else cropTargetEl.style.backgroundPosition = posStr;
+      if (cropTargetEl.tagName === 'IMG') {
+        cropTargetEl.style.objectPosition = posStr;
+        if (currentCropScale > 1.01) {
+          cropTargetEl.style.transform = `scale(${currentCropScale})`;
+          cropTargetEl.style.transformOrigin = posStr;
+        } else {
+          cropTargetEl.style.transform = '';
+        }
+      } else {
+        cropTargetEl.style.backgroundPosition = posStr;
+        if (currentCropScale > 1.01) {
+          cropTargetEl.style.backgroundSize = `${Math.round(currentCropScale * 100)}%`;
+        } else {
+          cropTargetEl.style.backgroundSize = '';
+        }
+      }
     }
   }
 
@@ -1097,26 +1193,64 @@
     if (!imgUrl && srcPath) imgUrl = C.get(data, srcPath) || '';
     if (!imgUrl && bgPath) imgUrl = C.get(data, bgPath) || '';
 
+    // Misura le dimensioni reali del blocco per riprodurre la scala reale 1:1 esatta
+    const rect = el.getBoundingClientRect();
+    const targetWidth = Math.round(rect.width) || window.innerWidth;
+    const targetHeight = Math.round(rect.height) || window.innerHeight;
+    const targetAspect = (targetWidth / targetHeight) || (16 / 9);
+
     cropInitialPos = getElementPos(el, cropPosPath);
-    const { x, y } = parsePos(cropInitialPos);
+    const parsed = parsePos(cropInitialPos);
+    currentCropScale = parsed.scale || 1;
 
+    // Configura immagine e aspect-ratio reale nella preview
     const cropImg = $('#cbCropImg');
+    const previewBox = $('#cbCropPreview');
     if (cropImg) cropImg.src = imgUrl;
+    if (previewBox) {
+      previewBox.style.aspectRatio = String(targetAspect.toFixed(3));
+      if (targetAspect >= 1.3) {
+        previewBox.style.maxWidth = '540px';
+        previewBox.style.maxHeight = '320px';
+      } else if (targetAspect <= 0.8) {
+        previewBox.style.maxWidth = '300px';
+        previewBox.style.maxHeight = '420px';
+      } else {
+        previewBox.style.maxWidth = '420px';
+        previewBox.style.maxHeight = '360px';
+      }
+    }
 
-    applyCrop(x, y);
+    // Configura metadati nell'HUD
+    const lbl = el.getAttribute('data-cb-label') || 'Foto';
+    const hudTitle = $('#cbHudTitle');
+    const hudDim = $('#cbHudDimensions');
+    if (hudTitle) hudTitle.textContent = lbl;
+    if (hudDim) hudDim.textContent = `${targetWidth} × ${targetHeight} px`;
 
-    const modal = $('#cbCropModal');
-    if (modal) modal.hidden = false;
+    // Evidenzia l'elemento sulla pagina
+    el.classList.add('cb-crop-active-target');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    applyCrop(parsed.x, parsed.y, currentCropScale);
+
+    // Mostra l'HUD di centratura dal vivo a schermo intero
+    const hud = $('#cbCropHud');
+    if (hud) hud.hidden = false;
   }
 
   function closeCropModal(save = false) {
     const modal = $('#cbCropModal');
-    if (!modal) return;
-    modal.hidden = true;
+    if (modal) modal.hidden = true;
+    const hud = $('#cbCropHud');
+    if (hud) hud.hidden = true;
 
-    if (!save && cropTargetEl) {
-      if (cropTargetEl.tagName === 'IMG') cropTargetEl.style.objectPosition = cropInitialPos;
-      else cropTargetEl.style.backgroundPosition = cropInitialPos;
+    if (cropTargetEl) {
+      cropTargetEl.classList.remove('cb-crop-active-target');
+      if (!save) {
+        const parsed = parsePos(cropInitialPos);
+        applyCrop(parsed.x, parsed.y, parsed.scale || 1);
+      }
     }
     cropTargetEl = null;
   }
@@ -1126,64 +1260,127 @@
       closeCropModal(true);
       return;
     }
-    const finalPos = `${currentCropX}% ${currentCropY}%`;
+    const finalVal = currentCropScale > 1.01
+      ? `${currentCropX}% ${currentCropY}% / ${currentCropScale}`
+      : `${currentCropX}% ${currentCropY}%`;
     cropTargetEl.setAttribute('data-cb-pos', cropPosPath);
-    cropTargetEl.style.objectPosition = finalPos;
-    C.set(data, cropPosPath, finalPos);
+    C.set(data, cropPosPath, finalVal);
     markDirty(cropPosPath);
-    toast(`Inquadratura salvata (${finalPos})`, 'ok');
+    toast(`Inquadratura salvata (${finalVal})`, 'ok');
     closeCropModal(true);
   }
 
   function initCropEvents() {
-    const previewBox = $('#cbCropPreview');
-    function updateFromPointer(e) {
-      if (!previewBox) return;
-      const rect = previewBox.getBoundingClientRect();
-      const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-      const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
-      applyCrop(x, y);
+    // Trascinamento diretto sia sulla pagina reale sia sull'anteprima
+    function startDrag(e) {
+      if (!cropTargetEl) return;
+      const isTarget = e.target === cropTargetEl || cropTargetEl.contains(e.target);
+      const isPreview = e.target && e.target.closest('#cbCropPreview');
+      if (!isTarget && !isPreview) return;
+
+      isDraggingCrop = true;
+      dragStartPointer = { x: e.clientX, y: e.clientY };
+      dragStartCoords = { x: currentCropX, y: currentCropY };
+      e.preventDefault();
     }
 
-    if (previewBox) {
-      previewBox.addEventListener('mousedown', (e) => {
-        isDraggingCrop = true;
-        updateFromPointer(e);
-      });
-      window.addEventListener('mousemove', (e) => {
-        if (isDraggingCrop) updateFromPointer(e);
-      });
-      window.addEventListener('mouseup', () => {
-        isDraggingCrop = false;
-      });
+    function moveDrag(e) {
+      if (!isDraggingCrop || !cropTargetEl) return;
+      const dx = e.clientX - dragStartPointer.x;
+      const dy = e.clientY - dragStartPointer.y;
+      const rect = cropTargetEl.getBoundingClientRect();
+      const w = rect.width || 400;
+      const h = rect.height || 400;
+      // Trascinando verso destra la foto scorre a destra (diminuisce X%)
+      // Trascinando verso il basso la foto scorre in basso (diminuisce Y%)
+      const speed = 100 / (currentCropScale || 1);
+      const nx = dragStartCoords.x - (dx / w) * speed;
+      const ny = dragStartCoords.y - (dy / h) * speed;
+      applyCrop(nx, ny, currentCropScale);
     }
 
+    function stopDrag() {
+      isDraggingCrop = false;
+    }
+
+    window.addEventListener('mousedown', startDrag, true);
+    window.addEventListener('mousemove', moveDrag, { passive: true });
+    window.addEventListener('mouseup', stopDrag);
+
+    // Zoom con rotella del mouse quando sopra l'elemento o HUD
+    window.addEventListener('wheel', (e) => {
+      if (!cropTargetEl) return;
+      const isTarget = e.target === cropTargetEl || cropTargetEl.contains(e.target);
+      const isPreview = e.target && e.target.closest('#cbCropPreview, #cbCropHud');
+      if (isTarget || isPreview) {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.05 : -0.05;
+        applyCrop(currentCropX, currentCropY, currentCropScale + delta);
+      }
+    }, { passive: false });
+
+    // Slider orizzontale e verticale (modal)
     const rx = $('#cbCropRangeX');
     const ry = $('#cbCropRangeY');
     if (rx) rx.addEventListener('input', () => applyCrop(parseFloat(rx.value), currentCropY));
     if (ry) ry.addEventListener('input', () => applyCrop(currentCropX, parseFloat(ry.value)));
 
-    document.querySelectorAll('.cb-preset-btn').forEach((b) => {
+    // Slider Zoom (HUD e Modal)
+    const rZoom = $('#cbCropZoomRange');
+    const rModalZoom = $('#cbCropRangeZoom');
+    if (rZoom) rZoom.addEventListener('input', () => applyCrop(currentCropX, currentCropY, parseFloat(rZoom.value) / 100));
+    if (rModalZoom) rModalZoom.addEventListener('input', () => applyCrop(currentCropX, currentCropY, parseFloat(rModalZoom.value) / 100));
+
+    const zMinus = $('#cbZoomMinus');
+    const zPlus = $('#cbZoomPlus');
+    if (zMinus) zMinus.addEventListener('click', () => applyCrop(currentCropX, currentCropY, currentCropScale - 0.1));
+    if (zPlus) zPlus.addEventListener('click', () => applyCrop(currentCropX, currentCropY, currentCropScale + 0.1));
+
+    // Spostamento a frecce (nudge)
+    document.querySelectorAll('.cb-nudge-btn').forEach((b) => {
       b.addEventListener('click', () => {
-        const x = parseFloat(b.getAttribute('data-x'));
-        const y = parseFloat(b.getAttribute('data-y'));
-        applyCrop(x, y);
+        const dx = parseFloat(b.getAttribute('data-dx') || '0');
+        const dy = parseFloat(b.getAttribute('data-dy') || '0');
+        applyCrop(currentCropX + dx, currentCropY + dy, currentCropScale);
       });
     });
 
+    // Preset posizioni rapide
+    document.querySelectorAll('.cb-preset-btn, .cb-hud-preset-btn').forEach((b) => {
+      b.addEventListener('click', () => {
+        const x = parseFloat(b.getAttribute('data-x'));
+        const y = parseFloat(b.getAttribute('data-y'));
+        applyCrop(x, y, currentCropScale);
+      });
+    });
+
+    // Toggle modale / lente
+    const toggleModal = $('#cbCropModalToggle');
+    if (toggleModal) {
+      toggleModal.addEventListener('click', () => {
+        const modal = $('#cbCropModal');
+        if (modal) modal.hidden = !modal.hidden;
+      });
+    }
+
+    // Pulsanti Salva / Annulla
     const btnSave = $('#cbCropSave');
     const btnCancel = $('#cbCropCancel');
     const btnClose = $('#cbCropClose');
     const backdrop = $('#cbCropBackdrop');
+    const hudSave = $('#cbHudSave');
+    const hudCancel = $('#cbHudCancel');
+
     if (btnSave) btnSave.addEventListener('click', saveCrop);
+    if (hudSave) hudSave.addEventListener('click', saveCrop);
     if (btnCancel) btnCancel.addEventListener('click', () => closeCropModal(false));
+    if (hudCancel) hudCancel.addEventListener('click', () => closeCropModal(false));
     if (btnClose) btnClose.addEventListener('click', () => closeCropModal(false));
     if (backdrop) backdrop.addEventListener('click', () => closeCropModal(false));
 
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const modal = $('#cbCropModal');
-        if (modal && !modal.hidden) closeCropModal(false);
+      if (e.key === 'Escape' && cropTargetEl) {
+        closeCropModal(false);
       }
     });
   }

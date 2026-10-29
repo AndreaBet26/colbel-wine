@@ -563,6 +563,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       drawFrame = (p) => { const i = Math.min(frameCount - 1, Math.round(p * (frameCount - 1))); if (i !== current) render(i); };
     }
 
+    // Suddivisione in parole per animazione fluida parola per parola
+    function prepareStepTokens(step) {
+      const els = step.querySelectorAll('h3, p');
+      const tokens = [];
+      els.forEach((el) => {
+        let spans = el.querySelectorAll('.story-word-token');
+        if (!spans.length) {
+          const raw = el.textContent.trim();
+          if (!raw) return;
+          const words = raw.split(/\s+/);
+          el.innerHTML = words.map((w) => `<span class="story-word-token">${w}</span>`).join(' ');
+          spans = el.querySelectorAll('.story-word-token');
+        }
+        tokens.push(...Array.from(spans));
+      });
+      return tokens;
+    }
+    const stepTokens = steps.map((s) => prepareStepTokens(s));
+
     // prima di fermarsi: la bottiglia sale dal basso
     gsap.fromTo(stage, { y: '35vh', scale: 0.8, opacity: 0.2 }, {
       y: 0, scale: 1, opacity: 1, ease: 'none',
@@ -570,16 +589,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     if (word) gsap.fromTo(word, { xPercent: -20 }, { xPercent: -50, ease: 'none', scrollTrigger: { trigger: story, start: 'top bottom', end: 'top top', scrub: true } });
 
-    gsap.set(steps.slice(1), { autoAlpha: 0 });
-    // la sezione resta ferma grazie a position: sticky (CSS): niente pin di GSAP, che poteva sballare i calcoli
+    // Step 0 visibile con parole inizialmente soffuse; gli altri step partono trasparenti
+    gsap.set(steps[0], { autoAlpha: 1, y: 0, opacity: 1 });
+    if (stepTokens[0]) gsap.set(stepTokens[0], { opacity: 0.22, y: 6 });
+    steps.slice(1).forEach((s, idx) => {
+      gsap.set(s, { autoAlpha: 0, y: 22, opacity: 1 });
+      if (stepTokens[idx + 1]) gsap.set(stepTokens[idx + 1], { opacity: 0.22, y: 6 });
+    });
+
+    // La sezione resta ferma con position: sticky (CSS) - scorrimento serrato senza tempi morti
     story.style.setProperty('--bottle-steps', N);
+    const totalDuration = 3.0;
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
       scrollTrigger: {
         trigger: story,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.7,
+        scrub: 0.55,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           if (drawFrame) drawFrame(self.progress);
@@ -587,25 +614,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
     });
-    if (!drawFrame) {
-      // rotazione simulata: oscillazione 3D + riflesso che attraversa il vetro (due passaggi)
-      tl.fromTo(img, { rotateY: -42, rotateZ: -4 }, { rotateY: 42, rotateZ: 4, duration: N / 2, ease: 'sine.inOut' }, 0);
-      tl.to(img, { rotateY: -30, rotateZ: -2, duration: N / 2, ease: 'sine.inOut' }, N / 2);
-      tl.fromTo(sheen, { backgroundPosition: '110% 0' }, { backgroundPosition: '-60% 0', duration: N / 2 }, 0);
-      tl.fromTo(sheen, { backgroundPosition: '110% 0' }, { backgroundPosition: '-60% 0', duration: N / 2, immediateRender: false }, N / 2);
-    }
-    tl.fromTo(stage, { scale: 1 }, { scale: 1.08, duration: N }, 0);
-    if (word) tl.fromTo(word, { xPercent: -50 }, { xPercent: -80, duration: N }, 0);
 
-    steps.forEach((s, i) => {
-      const lines = splitLines(s.querySelector('.h2'));
-      if (i === 0) return;
-      const at = i - 0.15;
-      tl.to(steps[i - 1], { autoAlpha: 0, y: -50, duration: 0.3 }, at);
-      tl.fromTo(s, { autoAlpha: 0, y: 60 }, { autoAlpha: 1, y: 0, duration: 0.4 }, at + 0.2);
-      if (lines) tl.fromTo(lines, { yPercent: 110 }, { yPercent: 0, stagger: 0.06, duration: 0.35 }, at + 0.25);
-    });
-    tl.to({}, { duration: 0.6 });
+    if (!drawFrame) {
+      // Rotazione simulata della bottiglia a sinistra
+      tl.fromTo(img, { rotateY: -35, rotateZ: -3 }, { rotateY: 35, rotateZ: 3, duration: totalDuration / 2, ease: 'sine.inOut' }, 0);
+      tl.to(img, { rotateY: -15, rotateZ: -1 }, { rotateY: 0, rotateZ: 0, duration: totalDuration / 2, ease: 'sine.inOut' }, totalDuration / 2);
+      tl.fromTo(sheen, { backgroundPosition: '110% 0' }, { backgroundPosition: '-60% 0', duration: totalDuration / 2 }, 0);
+      tl.fromTo(sheen, { backgroundPosition: '110% 0' }, { backgroundPosition: '-60% 0', duration: totalDuration / 2, immediateRender: false }, totalDuration / 2);
+    }
+    tl.fromTo(stage, { scale: 1 }, { scale: 1.05, duration: totalDuration }, 0);
+    if (word) tl.fromTo(word, { xPercent: -20 }, { xPercent: -45, duration: totalDuration }, 0);
+
+    // Animazione fluida parola per parola e transizione immediata tra le frasi
+    // Step 0: le parole si accendono in sequenza all'inizio dello scroll
+    if (stepTokens[0] && stepTokens[0].length) {
+      tl.to(stepTokens[0], { opacity: 1, y: 0, stagger: 0.045, duration: 0.3, ease: 'power1.out' }, 0.04);
+    }
+
+    // Step 1: entra subito dopo Step 0 senza tempi morti (a t = 0.92)
+    if (steps[1]) {
+      tl.to(steps[0], { opacity: 0.42, duration: 0.28, ease: 'power1.out' }, 0.90);
+      tl.fromTo(steps[1], { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out' }, 0.92);
+      if (stepTokens[1] && stepTokens[1].length) {
+        tl.to(stepTokens[1], { opacity: 1, y: 0, stagger: 0.025, duration: 0.26, ease: 'power1.out' }, 0.98);
+      }
+    }
+
+    // Step 2: entra subito dopo Step 1 (a t = 1.88)
+    if (steps[2]) {
+      tl.to(steps[1], { opacity: 0.42, duration: 0.28, ease: 'power1.out' }, 1.84);
+      tl.fromTo(steps[2], { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out' }, 1.88);
+      if (stepTokens[2] && stepTokens[2].length) {
+        tl.to(stepTokens[2], { opacity: 1, y: 0, stagger: 0.025, duration: 0.26, ease: 'power1.out' }, 1.94);
+      }
+      const cta = steps[2].querySelector('.actions');
+      if (cta) {
+        tl.fromTo(cta, { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.28, ease: 'power2.out' }, 2.65);
+      }
+    }
+
+    // Piccolo margine finale prima dell'uscita
+    tl.to({}, { duration: 0.2 }, totalDuration);
   }
 
 

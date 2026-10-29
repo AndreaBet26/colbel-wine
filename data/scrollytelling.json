@@ -3,35 +3,30 @@
   "immagine_bottiglia": "assets/images/bottiglie/giusto.png",
   "step": [
     {
-      "badge": "01 / Millesimato",
+      "badge": "",
       "titolo": "Giusto",
       "testo": "Giusto era il nonno che lavorò per primo i vigneti che producono questo vino.",
       "meta_icona": "",
       "meta_testo": ""
     },
     {
-      "badge": "02 / Millesimato",
+      "badge": "",
       "titolo": "Il nostro primo “Millesimato”",
       "testo": "Il suo nome ci sembrava adatto per il nostro primo “Millesimato”, il Prosecco che più di ogni altro riporta nel bicchiere quelle caratteristiche che sono tipiche del vitigno e dell’annata.",
       "meta_icona": "",
       "meta_testo": ""
     },
     {
-      "badge": "03 / Vino Spumante Brut",
+      "badge": "",
       "titolo": "Vino Spumante Brut",
       "testo": "Equilibrato ed elegante con una struttura molto definita e profumi delicati e fruttati, può accompagnare l’intero pasto o essere servito come aperitivo o per un brindisi.",
       "meta_icona": "",
       "meta_testo": ""
-    },
-    {
-      "badge": "04 / Vino Spumante Brut",
-      "titolo": "11, 90 Euro/bottiglia",
-      "testo": "(ordine minimo di 6 bottiglie) I prezzi sono IVA inclusa con spedizione a casa qui in Italia."
     }
   ],
   "ordine": {
     "nome": "Giusto – Conegliano Valdobbiadene Prosecco Superiore DOCG Millesimato Brut",
     "prezzo": 11.9,
-    "testo_pulsante": "Ordina questa Bottiglia"
+    "testo_pulsante": "Scopri i nostri vini"
   }
 }

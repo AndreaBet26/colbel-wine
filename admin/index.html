@@ -2,13 +2,903 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>ColBel · Modifica sito</title>
-  <meta http-equiv="refresh" content="0; url=../?modifica">
-  <script>location.replace('../?modifica');</script>
+  <title>ColBel · Studio Dashboard</title>
+
+  <link rel="icon" type="image/png" href="../assets/images/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="dashboard.css?v=20261029_studio_v3">
 </head>
-<body style="background:#111;color:#ddd;font-family:sans-serif;padding:2rem;">
-  <p>Apertura dell'editor… <a href="../?modifica" style="color:#d4af37;">clicca qui</a> se non si apre da solo.</p>
-  <p><a href="elenco.html" style="color:#999;">Vista a elenco</a></p>
+<body>
+
+  <!-- ==================== AVVISO SERVER NON ATTIVO ==================== -->
+  <div id="serverWarning" class="server-warning" hidden>
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <div>
+      <strong>Il server locale non è attivo: le modifiche non possono essere salvate.</strong>
+      <span>Fai doppio clic su <code>Avvia ColBel.bat</code> (Windows) o <code>Avvia ColBel.command</code> (Mac), oppure esegui <code>python server.py</code> nel terminale, e ricarica questa pagina.</span>
+    </div>
+  </div>
+
+  <!-- ==================== TOP HEADER ==================== -->
+  <header class="dash-header">
+    <a href="../" target="_blank" class="dash-brand" title="Apri il sito pubblico in una nuova scheda">
+      <img src="../assets/images/logo.png" alt="ColBel" class="dash-brand-img">
+      <span class="dash-brand-badge">STUDIO CONSOLE</span>
+    </a>
+
+    <div class="dash-header-actions">
+      <div class="live-indicator" id="saveStatus">
+        <span class="live-dot"></span>
+        <span id="saveStatusText">Connessione…</span>
+      </div>
+
+      <button class="btn btn-primary btn-sm" id="btnSaveHeader" title="Salva tutte le modifiche (Ctrl+S / Cmd+S)">
+        <i class="fa-solid fa-floppy-disk"></i> <span>Salva Modifiche</span>
+      </button>
+
+      <button class="btn btn-secondary btn-sm" id="btnExportJson" title="Scarica copia di sicurezza di tutti i dati (JSON)">
+        <i class="fa-solid fa-download"></i> <span>Backup JSON</span>
+      </button>
+
+      <div class="dash-dropdown">
+        <button type="button" class="btn btn-outline-gold btn-sm" id="btnVisualEditMenu" title="Pagine del sito">
+          <i class="fa-solid fa-compass"></i> <span>Apri Pagine</span> <i class="fa-solid fa-chevron-down" style="font-size:10px;margin-left:3px"></i>
+        </button>
+        <div class="dash-dropdown-menu" id="dashVisualMenu" hidden>
+          <a href="../" target="_blank"><i class="fa-solid fa-house"></i> Home</a>
+          <a href="../storia.html" target="_blank"><i class="fa-solid fa-book-open"></i> Chi siamo &amp; Storia</a>
+          <a href="../vini.html" target="_blank"><i class="fa-solid fa-wine-bottle"></i> Prodotti &amp; Vini</a>
+          <a href="../esperienze.html" target="_blank"><i class="fa-solid fa-wine-glass"></i> Esperienze</a>
+          <a href="../agriturismo.html" target="_blank"><i class="fa-solid fa-utensils"></i> Agriturismo</a>
+          <a href="../contatti.html" target="_blank"><i class="fa-solid fa-envelope"></i> Contatti</a>
+        </div>
+      </div>
+
+      <a href="../" target="_blank" class="btn btn-secondary btn-sm" title="Guarda il sito pubblico">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Vedi sito</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ==================== NAVIGAZIONE TAB (ORDINE RICHIESTO) ==================== -->
+  <nav class="dash-nav-strip" id="dashTabsBar">
+    <button class="dash-tab-btn active" data-tab="home">
+      <i class="fa-solid fa-house"></i> Home
+    </button>
+    <button class="dash-tab-btn" data-tab="chi-siamo">
+      <i class="fa-solid fa-landmark"></i> Chi Siamo
+    </button>
+    <button class="dash-tab-btn" data-tab="territorio">
+      <i class="fa-solid fa-mountain-sun"></i> Territorio
+    </button>
+    <button class="dash-tab-btn" data-tab="prodotti">
+      <i class="fa-solid fa-wine-bottle"></i> Prodotti &amp; Vini
+      <span class="tab-badge" id="badge-prodotti">0</span>
+    </button>
+    <button class="dash-tab-btn" data-tab="esperienze">
+      <i class="fa-solid fa-glass-cheers"></i> Esperienza
+      <span class="tab-badge" id="badge-esperienze">0</span>
+    </button>
+    <button class="dash-tab-btn" data-tab="agriturismo">
+      <i class="fa-solid fa-wheat-awn"></i> Agriturismo
+      <span class="tab-badge" id="badge-agriturismo">0</span>
+    </button>
+    <button class="dash-tab-btn" data-tab="contatti">
+      <i class="fa-solid fa-address-book"></i> Contatti
+    </button>
+  </nav>
+
+  <main class="dash-workspace">
+
+    <!-- ============================================================== -->
+    <!-- 1. HOME                                                        -->
+    <!-- ============================================================== -->
+    <section class="tab-pane active" id="tab-home">
+      <div class="section-head">
+        <div class="section-title-wrap">
+          <h2><i class="fa-solid fa-house" style="color:var(--gold);"></i> Pagina Home · Apertura &amp; Avvisi</h2>
+          <p>Gestisci la foto di sfondo Hero, la frase claim in oro, la barra avvisi superiore e le porte d'accesso.</p>
+        </div>
+      </div>
+
+      <div class="split-studio">
+        <!-- COLONNA SINISTRA: MODIFICA -->
+        <div class="split-editor">
+          <!-- AREA DEDICATA: FOTO DI SFONDO HERO -->
+          <div class="page-backdrop-box">
+            <div class="page-backdrop-header">
+              <span class="page-backdrop-badge"><i class="fa-solid fa-image"></i> Foto di Sfondo · Schermata Iniziale (Hero)</span>
+            </div>
+            <div class="page-backdrop-body">
+              <div class="page-backdrop-thumb-box" title="Clicca per cambiare la foto di sfondo Hero" onclick="document.querySelector('#inputHeroImgFile').click()">
+                <img src="" alt="" class="page-backdrop-thumb-img img-field-preview" id="homeHeroThumb">
+                <div class="page-backdrop-hover-badge">
+                  <i class="fa-solid fa-camera" style="font-size:1.4rem;"></i>
+                  <span>Cambia Foto di Sfondo</span>
+                </div>
+              </div>
+              <div class="page-backdrop-controls">
+                <div class="form-group" style="margin-bottom:0.5rem;">
+                  <label class="form-label">Percorso foto o caricamento diretto</label>
+                  <div class="img-field" data-img-field>
+                    <input type="text" class="form-control" data-bind="impostazioni.hero_immagine" id="inputHeroImg">
+                    <label class="btn btn-primary btn-sm"><i class="fa-solid fa-upload"></i> Scegli file<input type="file" id="inputHeroImgFile" accept="image/*" hidden></label>
+                  </div>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Frase sotto il logo (Claim in oro)</label>
+                  <input type="text" class="form-control" data-bind="impostazioni.claim" id="inputHeroClaim" placeholder="Una tradizione, un'emozione">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-panel">
+            <h4 class="panel-subtitle">Presentazione / Sottotitolo Hero</h4>
+            <div class="form-group" style="margin-bottom:0;">
+              <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.hero_sottotitolo" id="inputHeroSubtitle" placeholder="A Solighetto, tra le colline del Prosecco Superiore DOCG"></textarea>
+            </div>
+          </div>
+
+          <div class="form-panel">
+            <h4 class="panel-subtitle">Barra Avvisi in Cima al Sito</h4>
+            <div class="form-group">
+              <label class="card-status-toggle">
+                <span class="switch">
+                  <input type="checkbox" data-bind="impostazioni.banner_annuncio.attivo" id="inputBannerActive">
+                  <span class="slider"></span>
+                </span>
+                <span style="font-weight:600;">Mostra la barra (es. Vendemmia, aperture festive, eventi speciali)</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Testo del messaggio</label>
+              <input type="text" class="form-control" data-bind="impostazioni.banner_annuncio.testo" id="inputBannerText">
+            </div>
+            <div class="form-row">
+              <div class="form-group" style="flex:2; margin-bottom:0;">
+                <label class="form-label">Link di destinazione (es. #contatti, #esperienze)</label>
+                <input type="text" class="form-control" data-bind="impostazioni.banner_annuncio.link" id="inputBannerLink">
+              </div>
+              <div class="form-group" style="flex:1; margin-bottom:0;">
+                <label class="form-label">Colore accento</label>
+                <input type="color" class="form-control" style="height:38px; padding:2px;" data-bind="impostazioni.banner_annuncio.colore" id="inputBannerColor">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-panel">
+            <h4 class="panel-subtitle">Foto Porte d'Accesso (Home Footer)</h4>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Porta "Esperienze &amp; Degustazioni"</label>
+                <div class="img-field" data-img-field>
+                  <img class="img-field-preview" alt="">
+                  <input type="text" class="form-control" data-bind="impostazioni.porte_esperienze_img" id="inputDoorExp">
+                  <label class="btn btn-secondary btn-sm"><i class="fa-solid fa-upload"></i><input type="file" accept="image/*" hidden></label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Porta "Agriturismo &amp; Cucina"</label>
+                <div class="img-field" data-img-field>
+                  <img class="img-field-preview" alt="">
+                  <input type="text" class="form-control" data-bind="impostazioni.porte_agriturismo_img" id="inputDoorAgri">
+                  <label class="btn btn-secondary btn-sm"><i class="fa-solid fa-upload"></i><input type="file" accept="image/*" hidden></label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-panel">
+            <h4 class="panel-subtitle">Piè di Pagina &amp; Dati Fiscali</h4>
+            <div class="form-row">
+              <div class="form-group" style="flex:2; margin-bottom:0;">
+                <label class="form-label">Testo Copyright</label>
+                <input type="text" class="form-control" data-bind="impostazioni.testo_footer">
+              </div>
+              <div class="form-group" style="flex:1; margin-bottom:0;">
+                <label class="form-label">Partita IVA</label>
+                <input type="text" class="form-control" data-bind="impostazioni.partita_iva">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLONNA DESTRA: ANTEPRIMA LIVE IN TEMPO REALE -->
+        <div class="split-preview">
+          <div class="preview-topbar">
+            <div class="preview-topbar-title">
+              <span class="preview-dot"></span>
+              <span>Anteprima Live · Pagina Home</span>
+            </div>
+            <a href="../index.html?modifica" target="_blank" class="btn btn-outline-gold btn-xs preview-fullscreen-btn" title="Apri a schermo intero reale"><i class="fa-solid fa-expand"></i> Schermo Intero Reale</a>
+          </div>
+          <div class="preview-viewport" id="previewHomeViewport">
+            <!-- Barra avviso live -->
+            <div class="preview-banner-box" id="previewBannerBox" style="display:none;">
+              <span id="previewBannerText">Vendemmia 2026 in corso</span>
+              <span style="text-decoration:underline; font-size:0.75rem;">Scopri di più &rarr;</span>
+            </div>
+
+            <!-- Hero live -->
+            <div class="preview-hero-container" id="previewHeroBox">
+              <div class="preview-hero-overlay"></div>
+              <div class="preview-hero-content">
+                <img src="../assets/images/logo.png" alt="ColBel" class="preview-hero-logo">
+                <h1 class="preview-hero-claim" id="previewHeroClaim">Una tradizione, un’emozione</h1>
+                <p class="preview-hero-subtitle" id="previewHeroSubtitle">A Solighetto, tra le colline del Prosecco Superiore DOCG</p>
+              </div>
+            </div>
+
+            <!-- Porte live -->
+            <div class="preview-doors-container">
+              <div class="preview-door-card">
+                <img src="" alt="" class="preview-door-img" id="previewDoorExpImg">
+                <span class="preview-door-label">Esperienze &amp; Tour</span>
+              </div>
+              <div class="preview-door-card">
+                <img src="" alt="" class="preview-door-img" id="previewDoorAgriImg">
+                <span class="preview-door-label">L'Agriturismo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- 2. CHI SIAMO                                                   -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-chi-siamo">
+      <div class="section-head">
+        <div class="section-title-wrap">
+          <h2><i class="fa-solid fa-landmark" style="color:var(--gold);"></i> Pagina Chi Siamo · La Storia &amp; La Cantina</h2>
+          <p>Modifica la foto del racconto, l'introduzione in corsivo grande, la storia della famiglia e i numeri chiave.</p>
+        </div>
+      </div>
+
+      <div class="split-studio">
+        <!-- COLONNA SINISTRA: MODIFICA -->
+        <div class="split-editor">
+          <!-- AREA DEDICATA: FOTO PRINCIPALE VENDEMMIA / STORIA -->
+          <div class="page-backdrop-box">
+            <div class="page-backdrop-header">
+              <span class="page-backdrop-badge"><i class="fa-solid fa-image"></i> Foto Principale della Storia (Gianni e la Vendemmia)</span>
+            </div>
+            <div class="page-backdrop-body">
+              <div class="page-backdrop-thumb-box" title="Clicca per cambiare la foto del racconto" onclick="document.querySelector('#inputCsImgFile').click()">
+                <img src="" alt="" class="page-backdrop-thumb-img img-field-preview" id="csThumbImg">
+                <div class="page-backdrop-hover-badge">
+                  <i class="fa-solid fa-camera" style="font-size:1.4rem;"></i>
+                  <span>Cambia Foto Storia</span>
+                </div>
+              </div>
+              <div class="page-backdrop-controls">
+                <div class="form-group" style="margin-bottom:0.5rem;">
+                  <label class="form-label">Percorso foto o caricamento diretto</label>
+                  <div class="img-field" data-img-field>
+                    <input type="text" class="form-control" data-bind="chiSiamo.immagine" id="inputCsImg">
+                    <label class="btn btn-primary btn-sm"><i class="fa-solid fa-upload"></i> Scegli file<input type="file" id="inputCsImgFile" accept="image/*" hidden></label>
+                  </div>
+                </div>
+                <div class="form-row" style="margin-bottom:0;">
+                  <div class="form-group" style="flex:1; margin-bottom:0;">
+                    <label class="form-label">Etichetta piccola</label>
+                    <input type="text" class="form-control" data-bind="chiSiamo.etichetta" id="inputCsEyebrow" placeholder="LA NOSTRA STORIA">
+                  </div>
+                  <div class="form-group" style="flex:2; margin-bottom:0;">
+                    <label class="form-label">Titolo principale</label>
+                    <input type="text" class="form-control" data-bind="chiSiamo.titolo" id="inputCsTitle" placeholder="Chi siamo">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-panel">
+            <h4 class="panel-subtitle">Introduzione in Evidenza &amp; Racconto</h4>
+            <div class="form-group">
+              <label class="form-label">Introduzione (grande corsivo in Cormorant Garamond)</label>
+              <textarea class="form-control form-textarea" rows="2" data-bind="chiSiamo.introduzione" id="inputCsIntro"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Paragrafo 1: Il vigneto a Solighetto</label>
+              <textarea class="form-control form-textarea" rows="3" data-bind="chiSiamo.paragrafo_0" id="inputCsP0"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Paragrafo 2: L'incontro tra Gianni e Lissa</label>
+              <textarea class="form-control form-textarea" rows="3" data-bind="chiSiamo.paragrafo_1" id="inputCsP1"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Paragrafo 3: L'agriturismo e la sala degustazione oggi</label>
+              <textarea class="form-control form-textarea" rows="3" data-bind="chiSiamo.paragrafo_2" id="inputCsP2"></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Citazione evocativa</label>
+              <textarea class="form-control form-textarea" rows="2" data-bind="chiSiamo.citazione" id="inputCsQuote"></textarea>
+            </div>
+          </div>
+
+          <div class="form-panel">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+              <h4 class="panel-subtitle" style="margin:0;">Numeri Chiave (Statistiche)</h4>
+              <button class="btn btn-secondary btn-sm" onclick="colbelDash.addStat()">
+                <i class="fa-solid fa-plus"></i> Aggiungi numero
+              </button>
+            </div>
+            <div id="csStatsGrid"></div>
+          </div>
+        </div>
+
+        <!-- COLONNA DESTRA: ANTEPRIMA LIVE -->
+        <div class="split-preview">
+          <div class="preview-topbar">
+            <div class="preview-topbar-title">
+              <span class="preview-dot"></span>
+              <span>Anteprima Live · Pagina Chi Siamo</span>
+            </div>
+            <a href="../storia.html?modifica" target="_blank" class="btn btn-outline-gold btn-xs preview-fullscreen-btn" title="Apri a schermo intero reale"><i class="fa-solid fa-expand"></i> Schermo Intero Reale</a>
+          </div>
+          <div class="preview-viewport">
+            <div class="preview-story-box">
+              <div class="preview-story-head">
+                <span class="preview-story-eyebrow" id="prevCsEyebrow">LA NOSTRA STORIA</span>
+                <h1 class="preview-story-title" id="prevCsTitle">Chi siamo</h1>
+              </div>
+              <p class="preview-story-intro" id="prevCsIntro">“Col Bel” in dialetto veneto significa “bel colle”.</p>
+              
+              <img src="" alt="" class="preview-story-img" id="prevCsImg">
+
+              <div class="preview-story-paragraphs">
+                <p id="prevCsP0"></p>
+                <p id="prevCsP1"></p>
+                <p id="prevCsP2"></p>
+              </div>
+
+              <div class="preview-quote-box" id="prevCsQuoteBox" style="display:none;">
+                <p id="prevCsQuote"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- 3. TERRITORIO                                                 -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-territorio">
+      <div class="section-head">
+        <div class="section-title-wrap">
+          <h2><i class="fa-solid fa-mountain-sun" style="color:var(--gold);"></i> Pagina Territorio · Le Colline &amp; Scrollytelling</h2>
+          <p>La foto panoramica di Solighetto, la citazione della brezza della laguna e i capitoli della bottiglia.</p>
+        </div>
+      </div>
+
+      <div class="split-studio">
+        <!-- COLONNA SINISTRA: MODIFICA -->
+        <div class="split-editor">
+          <!-- AREA DEDICATA: FOTO PANORAMICA COLLINE DI SFONDO -->
+          <div class="page-backdrop-box">
+            <div class="page-backdrop-header">
+              <span class="page-backdrop-badge"><i class="fa-solid fa-image"></i> Foto Panoramica di Sfondo (Colline UNESCO)</span>
+            </div>
+            <div class="page-backdrop-body">
+              <div class="page-backdrop-thumb-box" title="Clicca per cambiare la foto panoramica di sfondo" onclick="document.querySelector('#inputTerImgFile').click()">
+                <img src="" alt="" class="page-backdrop-thumb-img img-field-preview" id="terThumbImg">
+                <div class="page-backdrop-hover-badge">
+                  <i class="fa-solid fa-camera" style="font-size:1.4rem;"></i>
+                  <span>Cambia Foto Sfondo</span>
+                </div>
+              </div>
+              <div class="page-backdrop-controls">
+                <div class="form-group" style="margin-bottom:0.5rem;">
+                  <label class="form-label">Percorso foto o caricamento diretto</label>
+                  <div class="img-field" data-img-field>
+                    <input type="text" class="form-control" data-bind="territorio.immagine_sfondo" id="inputTerImg">
+                    <label class="btn btn-primary btn-sm"><i class="fa-solid fa-upload"></i> Scegli file<input type="file" id="inputTerImgFile" accept="image/*" hidden></label>
+                  </div>
+                </div>
+                <div class="form-row" style="margin-bottom:0;">
+                  <div class="form-group" style="flex:1; margin-bottom:0;">
+                    <label class="form-label">Etichetta piccola</label>
+                    <input type="text" class="form-control" data-bind="territorio.etichetta" id="inputTerEyebrow" placeholder="TERRITORIO">
+                  </div>
+                  <div class="form-group" style="flex:2; margin-bottom:0;">
+                    <label class="form-label">Titolo sezione</label>
+                    <input type="text" class="form-control" data-bind="territorio.titolo" id="inputTerTitle" placeholder="Solighetto">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-panel">
+            <h4 class="panel-subtitle">Racconto del Territorio</h4>
+            <div class="form-group">
+              <label class="form-label">Citazione in rilievo sulle colline di Solighetto</label>
+              <textarea class="form-control form-textarea" rows="2" data-bind="territorio.citazione" id="inputTerQuote"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Descrizione 1: I vigneti a Solighetto</label>
+              <textarea class="form-control form-textarea" rows="2" data-bind="territorio.descrizione" id="inputTerDesc1"></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Descrizione 2: La brezza della laguna veneta</label>
+              <textarea class="form-control form-textarea" rows="2" data-bind="territorio.descrizione_2" id="inputTerDesc2"></textarea>
+            </div>
+          </div>
+
+          <div class="form-panel">
+            <h4 class="panel-subtitle">"Anatomia di un Millesimato" (Scrollytelling Bottiglia)</h4>
+            <div class="form-group">
+              <label class="form-label">Bottiglia trasparente da ruotare (PNG ritagliato)</label>
+              <div class="img-field" data-img-field>
+                <img class="img-field-preview" alt="">
+                <input type="text" class="form-control" data-bind="scrollytelling.immagine_bottiglia">
+                <label class="btn btn-secondary btn-sm"><i class="fa-solid fa-upload"></i> Carica PNG<input type="file" accept="image/*" hidden></label>
+              </div>
+            </div>
+            <div class="form-row" style="margin-bottom:0;">
+              <div class="form-group" style="flex:2; margin-bottom:0;">
+                <label class="form-label">Nome per l'ordine finale</label>
+                <input type="text" class="form-control" data-bind="scrollytelling.ordine.nome">
+              </div>
+              <div class="form-group" style="flex:1; margin-bottom:0;">
+                <label class="form-label">Prezzo (€)</label>
+                <input type="number" step="0.10" class="form-control" data-bind="scrollytelling.ordine.prezzo" data-type="number">
+              </div>
+            </div>
+          </div>
+          <div id="scrollyGrid"></div>
+        </div>
+
+        <!-- COLONNA DESTRA: ANTEPRIMA LIVE -->
+        <div class="split-preview">
+          <div class="preview-topbar">
+            <div class="preview-topbar-title">
+              <span class="preview-dot"></span>
+              <span>Anteprima Live · Territorio</span>
+            </div>
+            <a href="../index.html?modifica#territorio" target="_blank" class="btn btn-outline-gold btn-xs preview-fullscreen-btn" title="Apri a schermo intero reale"><i class="fa-solid fa-expand"></i> Schermo Intero Reale</a>
+          </div>
+          <div class="preview-viewport">
+            <div style="position:relative; min-height:280px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line-gold); display:flex; flex-direction:column; justify-content:flex-end; padding:1.75rem;" id="prevTerBox">
+              <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(13,12,10,0.95) 20%, rgba(13,12,10,0.35) 100%); z-index:1;"></div>
+              <div style="position:relative; z-index:2;">
+                <span class="preview-story-eyebrow" id="prevTerEyebrow">TERRITORIO</span>
+                <h2 style="font-family:var(--font-serif); font-size:2rem; color:#fff; margin-bottom:0.5rem;" id="prevTerTitle">Solighetto</h2>
+                <p style="font-family:var(--font-serif); font-style:italic; color:var(--gold); font-size:1.1rem; line-height:1.45;" id="prevTerQuote"></p>
+              </div>
+            </div>
+
+            <div style="margin-top:1.5rem; font-size:0.88rem; color:#ccc; line-height:1.65; display:flex; flex-direction:column; gap:0.85rem;">
+              <p id="prevTerDesc1"></p>
+              <p id="prevTerDesc2"></p>
+            </div>
+
+            <!-- ANTEPRIMA STORY SCROLL BOTTIGLIA A SINISTRA / TESTI A DESTRA -->
+            <div style="margin-top:1.75rem; border-top:1px solid var(--line); padding-top:1.25rem;">
+              <span class="preview-story-eyebrow" style="margin-bottom:0.75rem; display:block;"><i class="fa-solid fa-wine-bottle" style="color:var(--gold);"></i> Storytelling Scrolly: Bottiglia a sinistra &amp; Testi a destra</span>
+              <div style="display:grid; grid-template-columns:110px 1fr; gap:1.25rem; align-items:center; background:rgba(0,0,0,0.5); border:1px solid var(--line-gold); border-radius:var(--radius); padding:1rem;">
+                <div style="text-align:center; background:radial-gradient(circle at center, rgba(212,175,55,0.15), transparent 70%); border-radius:var(--radius); padding:0.5rem 0;">
+                  <img src="../assets/images/bottiglie/giusto.png" id="prevBottleImg" style="height:150px; margin:0 auto; object-fit:contain;" alt="">
+                  <span style="color:var(--gold); font-family:var(--font-mono); font-size:0.62rem; display:block; margin-top:4px;">Rotazione a sinistra</span>
+                </div>
+                <div id="prevBottleSteps" style="display:flex; flex-direction:column; gap:0.65rem;">
+                  <!-- Rendered live via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- 4. PRODOTTI (CON ALL'INTERNO VINI E SPUMANTI)                 -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-prodotti">
+      <!-- AREA DEDICATA: FOTO DI SFONDO & TESTATA PRODOTTI -->
+      <div class="page-backdrop-box">
+        <div class="page-backdrop-header">
+          <span class="page-backdrop-badge"><i class="fa-solid fa-image"></i> Foto di Sfondo &amp; Testata Pagina Prodotti</span>
+        </div>
+        <div class="page-backdrop-body">
+          <div class="page-backdrop-thumb-box" title="Clicca per cambiare la foto di apertura dei Vini" onclick="document.querySelector('#inputProdImgFile').click()">
+            <img src="" alt="" class="page-backdrop-thumb-img img-field-preview" id="prodOpeningThumb">
+            <div class="page-backdrop-hover-badge">
+              <i class="fa-solid fa-camera" style="font-size:1.4rem;"></i>
+              <span>Cambia Foto Apertura</span>
+            </div>
+          </div>
+          <div class="page-backdrop-controls">
+            <div class="form-row">
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">Titolo Pagina</label>
+                <input type="text" class="form-control" data-bind="impostazioni.testi_sezioni.vini_titolo" placeholder="Prodotti">
+              </div>
+              <div class="form-group" style="flex:2;">
+                <label class="form-label">Sottotitolo / Dicitura Spedizione e IVA</label>
+                <input type="text" class="form-control" data-bind="impostazioni.testi_sezioni.vini_sottotitolo" placeholder="I prezzi sono IVA inclusa con spedizione a casa qui in Italia.">
+              </div>
+            </div>
+            <div class="form-row" style="margin-bottom:0;">
+              <div class="form-group" style="flex:1; margin-bottom:0;">
+                <label class="form-label">Foto Apertura Pagina (Filari all'alba)</label>
+                <div class="img-field" data-img-field>
+                  <input type="text" class="form-control" data-bind="impostazioni.testi_sezioni.vini_immagine" id="inputProdImg">
+                  <label class="btn btn-primary btn-sm"><i class="fa-solid fa-upload"></i> Scegli<input type="file" id="inputProdImgFile" accept="image/*" hidden></label>
+                </div>
+              </div>
+              <div class="form-group" style="flex:1; margin-bottom:0;">
+                <label class="form-label">Foto Chiusura Pagina (Botti in cantina)</label>
+                <div class="img-field" data-img-field>
+                  <input type="text" class="form-control" data-bind="impostazioni.testi_sezioni.vini_chiusura_immagine">
+                  <label class="btn btn-secondary btn-sm"><i class="fa-solid fa-upload"></i> Scegli<input type="file" accept="image/*" hidden></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEZIONE VINI E SPUMANTI (SCHEDE INTERATTIVE) -->
+      <div class="section-head" style="margin-top:1.5rem;">
+        <div class="section-title-wrap">
+          <h2><i class="fa-solid fa-wine-bottle" style="color:var(--gold);"></i> Catalogo Vini &amp; Spumanti · Schede Live</h2>
+          <p>Clicca direttamente sul nome, sul prezzo, sulla denominazione o sulla bottiglia per modificare tutto al volo.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" id="btnAddNewVino">
+          <i class="fa-solid fa-plus"></i> Aggiungi nuovo vino
+        </button>
+      </div>
+
+      <div class="items-grid" id="viniVisualGrid">
+        <!-- Schede vino interattive renderizzate via JS a tutta larghezza -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- 5. ESPERIENZA                                                  -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-esperienze">
+      <!-- AREA DEDICATA: FOTO DI SFONDO & TESTATA ESPERIENZE -->
+      <div class="page-backdrop-box">
+        <div class="page-backdrop-header">
+          <span class="page-backdrop-badge"><i class="fa-solid fa-image"></i> Foto di Sfondo &amp; Testata Pagina Esperienze</span>
+        </div>
+        <div class="page-backdrop-body">
+          <div class="page-backdrop-thumb-box" title="Clicca per cambiare la foto di apertura delle Esperienze" onclick="document.querySelector('#inputExpHeroImgFile').click()">
+            <img src="" alt="" class="page-backdrop-thumb-img img-field-preview" id="expHeroThumb">
+            <div class="page-backdrop-hover-badge">
+              <i class="fa-solid fa-camera" style="font-size:1.4rem;"></i>
+              <span>Cambia Foto Esperienze</span>
+            </div>
+          </div>
+          <div class="page-backdrop-controls">
+            <div class="form-row">
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">Titolo Pagina</label>
+                <input type="text" class="form-control" data-bind="impostazioni.testi_sezioni.esperienze_titolo" placeholder="Esperienze">
+              </div>
+              <div class="form-group" style="flex:2;">
+                <label class="form-label">Percorso foto di sfondo / testata</label>
+                <div class="img-field" data-img-field>
+                  <input type="text" class="form-control" data-bind="impostazioni.testi_sezioni.esperienze_immagine" id="inputExpHeroImg">
+                  <label class="btn btn-primary btn-sm"><i class="fa-solid fa-upload"></i> Scegli<input type="file" id="inputExpHeroImgFile" accept="image/*" hidden></label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Introduzione alle Esperienze &amp; Degustazioni</label>
+              <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.testi_sezioni.esperienze_intro"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEZIONE DEGUSTAZIONI & TOUR (SCHEDE INTERATTIVE) -->
+      <div class="section-head" style="margin-top:1.5rem;">
+        <div class="section-title-wrap">
+          <h2><i class="fa-solid fa-glass-cheers" style="color:var(--gold);"></i> Pacchetti Degustazione &amp; Tour · Schede Live</h2>
+          <p>Modifica titoli, prezzi a persona, referente prenotazioni WhatsApp (Gianni o Lissa) e foto cliccando direttamente sulle schede.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" id="btnAddNewExp">
+          <i class="fa-solid fa-plus"></i> Nuova esperienza
+        </button>
+      </div>
+
+      <div class="items-grid" id="esperienzeVisualGrid">
+        <!-- Schede esperienze interattive renderizzate via JS a tutta larghezza -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- 6. AGRITURISMO                                                -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-agriturismo">
+      <!-- AREA DEDICATA: FOTO DI COPERTINA & CUCINA AGRITURISMO -->
+      <div class="page-backdrop-box">
+        <div class="page-backdrop-header">
+          <span class="page-backdrop-badge"><i class="fa-solid fa-image"></i> Foto di Copertina &amp; Presentazione Agriturismo</span>
+        </div>
+        <div class="page-backdrop-body">
+          <div class="page-backdrop-thumb-box" title="Clicca per cambiare la foto di copertina dell'Agriturismo" onclick="document.querySelector('#inputAgriImgFile').click()">
+            <img src="" alt="" class="page-backdrop-thumb-img img-field-preview" id="agriCoverThumb">
+            <div class="page-backdrop-hover-badge">
+              <i class="fa-solid fa-camera" style="font-size:1.4rem;"></i>
+              <span>Cambia Foto Copertina</span>
+            </div>
+          </div>
+          <div class="page-backdrop-controls">
+            <div class="form-row">
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">Titolo Pagina</label>
+                <input type="text" class="form-control" data-bind="agriturismo.titolo" placeholder="Agriturismo">
+              </div>
+              <div class="form-group" style="flex:2;">
+                <label class="form-label">Percorso foto copertina</label>
+                <div class="img-field" data-img-field>
+                  <input type="text" class="form-control" data-bind="agriturismo.immagine" id="inputAgriImg">
+                  <label class="btn btn-primary btn-sm"><i class="fa-solid fa-upload"></i> Scegli file<input type="file" id="inputAgriImgFile" accept="image/*" hidden></label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Descrizione principale (La cucina artigianale di Lissa)</label>
+              <textarea class="form-control form-textarea" rows="2" data-bind="agriturismo.descrizione"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-panel">
+        <h4 class="panel-subtitle">Menù Spuntineria del Weekend &amp; Eventi Privati</h4>
+        <div class="form-group" style="margin-bottom:0;">
+          <textarea class="form-control form-textarea" rows="3" data-bind="agriturismo.spuntineria"></textarea>
+        </div>
+      </div>
+
+      <!-- SEZIONE RULLINO FOTOGRAFICO -->
+      <div class="section-head" style="margin-top:2rem;">
+        <div class="section-title-wrap">
+          <h2><i class="fa-solid fa-images" style="color:var(--gold);"></i> Rullino Fotografico Panoramico</h2>
+          <p>Clicca sulla foto per sostituirla, clicca sulla didascalia sotto la foto per modificarla direttamente in tempo reale.</p>
+        </div>
+        <label class="btn btn-secondary btn-sm" style="cursor:pointer;">
+          <i class="fa-solid fa-camera"></i> Aggiungi foto al rullino
+          <input type="file" accept="image/*" multiple hidden id="agriUploadInput">
+        </label>
+      </div>
+
+      <div class="items-grid" id="agriGalleriaGrid">
+        <!-- Rullino fotografico interattivo renderizzato via JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- 7. CONTATTI                                                   -->
+    <!-- ============================================================== -->
+    <section class="tab-pane" id="tab-contatti">
+      <div class="section-head">
+        <div class="section-title-wrap">
+          <h2><i class="fa-solid fa-address-book" style="color:var(--gold);"></i> Pagina Contatti &amp; Sede Cantina</h2>
+          <p>Foto della cantina, recapiti WhatsApp ed email di Gianni e Lissa, indirizzo e canali social.</p>
+        </div>
+      </div>
+
+      <div class="split-studio">
+        <!-- COLONNA SINISTRA: MODIFICA -->
+        <div class="split-editor">
+          <!-- AREA DEDICATA: FOTO SEDE CANTINA -->
+          <div class="page-backdrop-box">
+            <div class="page-backdrop-header">
+              <span class="page-backdrop-badge"><i class="fa-solid fa-image"></i> Foto della Sede Cantina &amp; Sala Degustazione</span>
+            </div>
+            <div class="page-backdrop-body">
+              <div class="page-backdrop-thumb-box" title="Clicca per cambiare la foto della sala degustazione" onclick="document.querySelector('#inputContactImgFile').click()">
+                <img src="" alt="" class="page-backdrop-thumb-img img-field-preview" id="contactAziendaThumb">
+                <div class="page-backdrop-hover-badge">
+                  <i class="fa-solid fa-camera" style="font-size:1.4rem;"></i>
+                  <span>Cambia Foto Cantina</span>
+                </div>
+              </div>
+              <div class="page-backdrop-controls">
+                <div class="form-group" style="margin-bottom:0.5rem;">
+                  <label class="form-label">Percorso foto o caricamento diretto</label>
+                  <div class="img-field" data-img-field>
+                    <input type="text" class="form-control" data-bind="contatti.azienda.immagine" id="inputContactImg">
+                    <label class="btn btn-primary btn-sm"><i class="fa-solid fa-upload"></i> Scegli file<input type="file" id="inputContactImgFile" accept="image/*" hidden></label>
+                  </div>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Nome Azienda</label>
+                  <input type="text" class="form-control" data-bind="contatti.azienda.nome">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GIANNI -->
+          <div class="form-panel">
+            <h4 class="panel-subtitle"><i class="fa-solid fa-user" style="color:var(--gold); margin-right:4px;"></i> Gianni Teo (Cantina &amp; Degustazioni)</h4>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Nome visualizzato</label><input type="text" class="form-control" data-bind="contatti.gianni.nome" id="inputGianniNome"></div>
+              <div class="form-group"><label class="form-label">Ruolo</label><input type="text" class="form-control" data-bind="contatti.gianni.ruolo" placeholder="es. Titolare ed Enologo" id="inputGianniRuolo"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Telefono</label><input type="text" class="form-control" data-bind="contatti.gianni.telefono" id="inputGianniTel"></div>
+              <div class="form-group"><label class="form-label">WhatsApp (prefisso int. senza +)</label><input type="text" class="form-control" data-bind="contatti.gianni.wa_numero" id="inputGianniWa"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" data-bind="contatti.gianni.email" id="inputGianniEmail">
+            </div>
+          </div>
+
+          <!-- LISSA -->
+          <div class="form-panel">
+            <h4 class="panel-subtitle"><i class="fa-solid fa-user" style="color:var(--gold); margin-right:4px;"></i> Lissa (Cucina &amp; Accoglienza)</h4>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Nome visualizzato</label><input type="text" class="form-control" data-bind="contatti.lissa.nome" id="inputLissaNome"></div>
+              <div class="form-group"><label class="form-label">Ruolo</label><input type="text" class="form-control" data-bind="contatti.lissa.ruolo" placeholder="es. Cucina artigianale &amp; Accoglienza" id="inputLissaRuolo"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Telefono</label><input type="text" class="form-control" data-bind="contatti.lissa.telefono" id="inputLissaTel"></div>
+              <div class="form-group"><label class="form-label">WhatsApp (prefisso int. senza +)</label><input type="text" class="form-control" data-bind="contatti.lissa.wa_numero" id="inputLissaWa"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" data-bind="contatti.lissa.email" id="inputLissaEmail">
+            </div>
+          </div>
+
+          <!-- SEDE & SOCIAL -->
+          <div class="form-panel">
+            <h4 class="panel-subtitle"><i class="fa-solid fa-location-dot" style="color:var(--gold); margin-right:4px;"></i> Sede Cantina &amp; Social</h4>
+            <div class="form-group">
+              <label class="form-label">Indirizzo completo</label>
+              <input type="text" class="form-control" data-bind="contatti.azienda.indirizzo" id="inputAziendaIndirizzo">
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Email aziendale</label><input type="email" class="form-control" data-bind="contatti.azienda.email" id="inputAziendaEmail"></div>
+              <div class="form-group"><label class="form-label">Link Google Maps</label><input type="text" class="form-control" data-bind="contatti.azienda.mappa_url" id="inputAziendaMaps"></div>
+            </div>
+            <div class="form-row" style="margin-bottom:0;">
+              <div class="form-group" style="margin-bottom:0;"><label class="form-label">Instagram URL</label><input type="text" class="form-control" data-bind="contatti.social.instagram" id="inputSocialIg"></div>
+              <div class="form-group" style="margin-bottom:0;"><label class="form-label">Facebook URL</label><input type="text" class="form-control" data-bind="contatti.social.facebook" id="inputSocialFb"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLONNA DESTRA: ANTEPRIMA LIVE -->
+        <div class="split-preview">
+          <div class="preview-topbar">
+            <div class="preview-topbar-title">
+              <span class="preview-dot"></span>
+              <span>Anteprima Live · Schede Contatto</span>
+            </div>
+            <a href="../contatti.html?modifica" target="_blank" class="btn btn-outline-gold btn-xs preview-fullscreen-btn" title="Apri a schermo intero reale"><i class="fa-solid fa-expand"></i> Schermo Intero Reale</a>
+          </div>
+          <div class="preview-viewport">
+            <div class="preview-contacts-grid">
+              <!-- Card Gianni -->
+              <div class="preview-contact-card">
+                <div>
+                  <h3 class="preview-contact-name" id="prevGianniNome">Gianni Teo</h3>
+                  <span class="preview-contact-role" id="prevGianniRuolo">CANTINA &amp; TOUR</span>
+                </div>
+                <div class="preview-contact-detail"><i class="fa-solid fa-phone"></i> <span id="prevGianniTel">+39 346 2443607</span></div>
+                <div class="preview-contact-detail"><i class="fa-solid fa-envelope"></i> <span id="prevGianniEmail">gianniteo@libero.it</span></div>
+                <span class="preview-contact-wa-btn"><i class="fa-brands fa-whatsapp"></i> Scrivi a Gianni</span>
+              </div>
+
+              <!-- Card Lissa -->
+              <div class="preview-contact-card">
+                <div>
+                  <h3 class="preview-contact-name" id="prevLissaNome">Lissa Veilleux</h3>
+                  <span class="preview-contact-role" id="prevLissaRuolo">CUCINA &amp; DEGUSTAZIONI</span>
+                </div>
+                <div class="preview-contact-detail"><i class="fa-solid fa-phone"></i> <span id="prevLissaTel">+39 349 4356778</span></div>
+                <div class="preview-contact-detail"><i class="fa-solid fa-envelope"></i> <span id="prevLissaEmail">lmveilleux@gmail.com</span></div>
+                <span class="preview-contact-wa-btn"><i class="fa-brands fa-whatsapp"></i> Scrivi a Lissa</span>
+              </div>
+
+              <!-- Card Sede -->
+              <div class="preview-contact-card">
+                <div>
+                  <h3 class="preview-contact-name">Azienda Agricola ColBel</h3>
+                  <span class="preview-contact-role">SOLIGHETTO · VALDOBBIADENE</span>
+                </div>
+                <div class="preview-contact-detail"><i class="fa-solid fa-location-dot"></i> <span id="prevAziendaIndirizzo">Via Drio Cisa, 2, Solighetto (TV)</span></div>
+                <div class="preview-contact-detail"><i class="fa-solid fa-envelope"></i> <span id="prevAziendaEmail">lissa@colbelwine.com</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Inquadratura & Centratura Foto Dashboard -->
+  <div id="dashCropModal" class="dash-crop-modal" hidden>
+    <div class="dash-crop-backdrop" id="dashCropBackdrop"></div>
+    <div class="dash-crop-box">
+      <div class="dash-crop-head">
+        <div class="dash-crop-title">
+          <i class="fa-solid fa-arrows-up-down-left-right"></i>
+          <div>
+            <h3 id="dashCropTitle">Centratura foto</h3>
+            <span id="dashCropSubtitle" class="dash-crop-sub">Proporzioni reali senza deformazione</span>
+          </div>
+        </div>
+        <button type="button" class="dash-crop-close" id="dashCropClose" aria-label="Chiudi">&times;</button>
+      </div>
+      <div class="dash-crop-body">
+        <div class="dash-crop-viewport-wrap">
+          <div class="dash-crop-viewport" id="dashCropViewport">
+            <img id="dashCropImg" src="" alt="Anteprima inquadratura" draggable="false">
+            <div class="dash-crop-reticle" id="dashCropReticle">
+              <span class="dash-reticle-dot"></span>
+              <span class="dash-reticle-h"></span>
+              <span class="dash-reticle-v"></span>
+            </div>
+            <div class="dash-crop-drag-badge"><i class="fa-solid fa-hand"></i> Trascina con il mouse per centrare</div>
+          </div>
+        </div>
+        <div class="dash-crop-tools">
+          <div class="dash-crop-tool-row">
+            <span class="dash-crop-label"><i class="fa-solid fa-magnifying-glass-plus"></i> Zoom / Scala:</span>
+            <button type="button" class="btn btn-xs btn-secondary" id="dashCropZoomMinus"><i class="fa-solid fa-minus"></i></button>
+            <input type="range" id="dashCropZoomRange" min="100" max="250" value="100" step="1" class="dash-slider">
+            <button type="button" class="btn btn-xs btn-secondary" id="dashCropZoomPlus"><i class="fa-solid fa-plus"></i></button>
+            <strong id="dashCropZoomVal" style="color:var(--gold); font-size:0.8rem; min-width:40px;">100%</strong>
+          </div>
+          <div class="dash-crop-tool-row">
+            <span class="dash-crop-label">Spostamento fine:</span>
+            <div class="dash-nudge-group">
+              <button type="button" class="btn btn-xs btn-secondary dash-nudge" data-dx="-3" data-dy="0" title="Sinistra"><i class="fa-solid fa-arrow-left"></i></button>
+              <button type="button" class="btn btn-xs btn-secondary dash-nudge" data-dx="0" data-dy="-3" title="Alto"><i class="fa-solid fa-arrow-up"></i></button>
+              <button type="button" class="btn btn-xs btn-secondary dash-nudge" data-dx="0" data-dy="3" title="Basso"><i class="fa-solid fa-arrow-down"></i></button>
+              <button type="button" class="btn btn-xs btn-secondary dash-nudge" data-dx="3" data-dy="0" title="Destra"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <span class="dash-crop-label" style="margin-left:auto;">Posizioni rapide:</span>
+            <div class="dash-preset-group">
+              <button type="button" class="btn btn-xs btn-secondary dash-preset" data-x="50" data-y="50">Centro</button>
+              <button type="button" class="btn btn-xs btn-secondary dash-preset" data-x="50" data-y="15">In alto</button>
+              <button type="button" class="btn btn-xs btn-secondary dash-preset" data-x="50" data-y="85">In basso</button>
+              <button type="button" class="btn btn-xs btn-secondary dash-preset" data-x="15" data-y="50">Sinistra</button>
+              <button type="button" class="btn btn-xs btn-secondary dash-preset" data-x="85" data-y="50">Destra</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-crop-foot">
+        <button type="button" class="btn btn-secondary btn-sm" id="dashCropCancel">Annulla</button>
+        <button type="button" class="btn btn-primary btn-sm" id="dashCropSave"><i class="fa-solid fa-check"></i> Salva Inquadratura</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input file nascosti per caricamenti diretti con un clic -->
+  <input type="file" id="directWinePhotoInput" accept="image/*" hidden>
+  <input type="file" id="directExpPhotoInput" accept="image/*" hidden>
+  <input type="file" id="directGalleryPhotoInput" accept="image/*" hidden>
+
+  <!-- Notifiche Toast -->
+  <div id="dashToasts"></div>
+
+  <!-- Script Logica Dashboard -->
+  <script src="dashboard.js?v=20261029_studio_v4"></script>
 </body>
 </html>

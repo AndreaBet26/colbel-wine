@@ -352,47 +352,50 @@ body.has-top-banner .site-header { top: var(--banner-h, 36px); }
 .band-after > :first-child { grid-column: 2 / 7; }
 .band-after > :last-child { grid-column: 8 / 14; }
 
-/* ---------- 11. Scrollytelling della bottiglia ---------- */
+/* ---------- 11. Scrollytelling della bottiglia (Bottiglia a sinistra, testi a destra cumulativi) ---------- */
 .bottle-story { position: relative; height: 100vh; height: 100svh; overflow: hidden; }
 .bottle-story::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 30% 50% at 50% 52%, rgba(212,175,55,0.12), transparent 70%);
+    radial-gradient(ellipse 38% 55% at 26% 50%, rgba(212,175,55,0.14), transparent 70%),
+    radial-gradient(ellipse 45% 60% at 75% 50%, rgba(0,0,0,0.5), transparent 70%);
   pointer-events: none;
 }
 .story-title {
   position: absolute;
-  top: calc(var(--header-h) + 1.4rem);
-  left: 50%;
-  transform: translateX(-50%);
+  top: calc(var(--header-h) + 1.2rem);
+  left: var(--gutter);
   white-space: nowrap;
+  z-index: 3;
 }
 .story-word {
   position: absolute;
-  left: 50%;
-  top: 52%;
-  transform: translate(-50%, -50%);
+  left: clamp(2rem, 8vw, 10rem);
+  top: 50%;
+  transform: translate(-10%, -50%);
   font-family: var(--serif);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(9rem, 26vw, 26rem);
+  font-size: clamp(8rem, 24vw, 22rem);
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(220,194,126,0.12);
+  -webkit-text-stroke: 1px rgba(220,194,126,0.1);
   white-space: nowrap;
   pointer-events: none;
+  z-index: 0;
 }
 .bottle-stage {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(53% - 36vh);
-  margin: 0 auto;
+  left: clamp(1.5rem, 6vw, 9rem);
+  right: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
   z-index: 1;
-  width: min(28vw, 38vh);
-  height: 72vh;
+  width: min(34vw, 42vh);
+  height: 75vh;
   perspective: 1200px;
   pointer-events: none;
 }
@@ -417,17 +420,66 @@ body.has-top-banner .site-header { top: var(--banner-h, 36px); }
 }
 .bottle-stage.has-frames .bottle-img, .bottle-stage.has-frames .bottle-sheen { display: none; }
 
-.story-steps { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-.story-step { position: absolute; top: 50%; width: min(28rem, 30vw); transform: translateY(-50%); }
-.js .story-step:not(.is-first) { opacity: 0; visibility: hidden; }
-.story-step:nth-child(odd)  { left: var(--gutter); }
-.story-step:nth-child(even) { right: var(--gutter); }
-.story-step .num { display: block; font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--gold-soft); margin-bottom: 0.8rem; }
-.story-step .h2 { margin: 1rem 0 1.1rem; }
-.story-step .meta { margin-top: 1.3rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); }
-.story-step .meta i { margin-right: 0.5rem; }
-.story-step .actions { margin-top: 2rem; pointer-events: auto; }
-.story-progress { position: absolute; left: 50%; bottom: 2.2rem; z-index: 3; transform: translateX(-50%); display: flex; gap: 0.6rem; }
+.story-steps {
+  position: absolute;
+  top: 50%;
+  right: clamp(2rem, 7vw, 10rem);
+  left: auto;
+  transform: translateY(-50%);
+  width: min(54rem, 52vw);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  pointer-events: none;
+}
+.story-step {
+  position: relative;
+  top: auto;
+  left: auto !important;
+  right: auto !important;
+  transform: none;
+  width: 100%;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.16);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+.story-step.is-dimmed {
+  opacity: 0.42;
+}
+.story-word-token {
+  display: inline-block;
+  opacity: 0.18;
+  transform: translateY(6px);
+  will-change: opacity, transform, color;
+}
+.story-step:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.story-step .eyebrow {
+  display: none !important;
+}
+.story-step .h2 {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 3.4vw, 3.8rem);
+  line-height: 1.05;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: -0.01em;
+  margin: 0 0 0.85rem 0;
+  text-shadow: 0 0 35px rgba(212, 175, 55, 0.25);
+}
+.story-step .text {
+  font-family: var(--sans);
+  font-size: clamp(1.15rem, 1.4vw, 1.4rem);
+  line-height: 1.7;
+  color: var(--ivory);
+  max-width: 48rem;
+}
+.story-step .meta { display: none; }
+.story-step .actions { margin-top: 1.4rem; display: flex; align-items: center; gap: 1.25rem; pointer-events: auto; }
+.story-progress { position: absolute; right: clamp(1.5rem, 6vw, 9rem); bottom: 2.2rem; z-index: 3; display: flex; gap: 0.6rem; }
 .story-progress span { width: 2.6rem; height: 1px; background: var(--ivory-30); position: relative; overflow: hidden; }
 .story-progress span i { position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; }
 
@@ -1325,8 +1377,8 @@ main[data-bubbles] { position: relative; z-index: 1; }
   .site-header .header-tools .lang-menu { display: block; }
 }
 
-/* bottiglia: il contenitore alto scorre, la scena resta ferma con position: sticky */
-.bottle-scroll { position: relative; height: calc(100vh * (var(--bottle-steps, 4) + 1.6)); }
+/* bottiglia: il contenitore alto scorre, la scena resta ferma con position: sticky (scorrimento serrato e continuo) */
+.bottle-scroll { position: relative; height: calc(100vh * (var(--bottle-steps, 3) * 0.95 + 0.5)); }
 .bottle-scroll > .bottle-story { position: sticky; top: 0; }
 
 /* Territorio: più corto, il testo arriva subito, tutto centrato, titolo grande e dorato */

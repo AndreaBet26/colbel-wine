@@ -68,23 +68,6 @@
     "attivo": true
   },
   {
-    "id": "casanova-frizzante",
-    "nome": "Casa Nova Frizzante",
-    "nome_breve": "Casa Nova Frizz.",
-    "nome_ordine": "Casa Nova Bianco Frizzante",
-    "tipo": "",
-    "denominazione": "",
-    "tag": "",
-    "descrizione": "",
-    "descrizione_breve": "",
-    "prezzo": 7.9,
-    "note_prezzo": "IVA incl. (min. 6 bott.)",
-    "immagine": "assets/images/bottiglie/casanova-frizzante.png",
-    "categoria": "frizzante",
-    "ordine": 6,
-    "attivo": false
-  },
-  {
     "id": "colbel-colfondo",
     "nome": "ColBel ColFondo",
     "nome_breve": "ColFondo",
@@ -100,5 +83,22 @@
     "categoria": "colfondo",
     "ordine": 5,
     "attivo": true
+  },
+  {
+    "id": "casanova-frizzante",
+    "nome": "Casa Nova Frizzante",
+    "nome_breve": "Casa Nova Frizz.",
+    "nome_ordine": "Casa Nova Bianco Frizzante",
+    "tipo": "",
+    "denominazione": "",
+    "tag": "",
+    "descrizione": "",
+    "descrizione_breve": "",
+    "prezzo": 7.9,
+    "note_prezzo": "IVA incl. (min. 6 bott.)",
+    "immagine": "assets/images/bottiglie/casanova-frizzante.png",
+    "categoria": "frizzante",
+    "ordine": 6,
+    "attivo": false
   }
 ]

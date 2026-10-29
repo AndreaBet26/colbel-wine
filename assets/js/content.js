@@ -107,6 +107,27 @@
   }
 
   // ---------- binding semplici ----------
+  function applyPos(el, pos) {
+    if (!pos) return;
+    const parts = String(pos).trim().split('/');
+    const coords = (parts[0] || '').trim();
+    const scale = parts[1] ? parseFloat(parts[1]) : 1;
+    if (el.tagName === 'IMG') {
+      if (coords) el.style.objectPosition = coords;
+      if (scale && scale > 1.01) {
+        el.style.transform = `scale(${scale})`;
+        el.style.transformOrigin = coords || '50% 50%';
+      } else {
+        el.style.transform = '';
+      }
+    } else {
+      if (coords) el.style.backgroundPosition = coords;
+      if (scale && scale > 1.01) {
+        el.style.backgroundSize = `${Math.round(scale * 100)}%`;
+      }
+    }
+  }
+
   function bindSimple(data) {
     document.querySelectorAll('[data-cb]').forEach((el) => {
       if (el === document.activeElement) return; // non disturbare chi sta scrivendo
@@ -120,7 +141,7 @@
       const posPath = el.getAttribute('data-cb-pos') || (srcPath + '_pos');
       const pos = get(data, posPath);
       if (pos) {
-        el.style.objectPosition = pos;
+        applyPos(el, pos);
         el.setAttribute('data-cb-pos', posPath);
       }
     });
@@ -131,7 +152,7 @@
       const posPath = el.getAttribute('data-cb-pos') || (bgPath + '_pos');
       const pos = get(data, posPath);
       if (pos) {
-        el.style.backgroundPosition = pos;
+        applyPos(el, pos);
         el.setAttribute('data-cb-pos', posPath);
       }
     });
