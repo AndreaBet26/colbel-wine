@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="dashboard.css?v=20261029_studio_pan_v5">
+  <link rel="stylesheet" href="dashboard.css?v=20261029_clean_v6">
 </head>
 <body>
 
@@ -177,11 +177,19 @@
 
           <div class="form-panel">
             <h4 class="panel-subtitle">Foto Porte d'Accesso (Home Footer)</h4>
-            <div class="form-row">
+            <div class="form-row" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+              <div class="form-group">
+                <label class="form-label">Porta "Prodotti &amp; Vini"</label>
+                <div class="img-field" data-img-field>
+                  <img class="img-field-preview" alt="" draggable="false">
+                  <input type="text" class="form-control" data-bind="impostazioni.porte_prodotti_img" id="inputDoorProd">
+                  <label class="btn btn-secondary btn-sm"><i class="fa-solid fa-upload"></i><input type="file" accept="image/*" hidden></label>
+                </div>
+              </div>
               <div class="form-group">
                 <label class="form-label">Porta "Esperienze &amp; Degustazioni"</label>
                 <div class="img-field" data-img-field>
-                  <img class="img-field-preview" alt="">
+                  <img class="img-field-preview" alt="" draggable="false">
                   <input type="text" class="form-control" data-bind="impostazioni.porte_esperienze_img" id="inputDoorExp">
                   <label class="btn btn-secondary btn-sm"><i class="fa-solid fa-upload"></i><input type="file" accept="image/*" hidden></label>
                 </div>
@@ -189,7 +197,7 @@
               <div class="form-group">
                 <label class="form-label">Porta "Agriturismo &amp; Cucina"</label>
                 <div class="img-field" data-img-field>
-                  <img class="img-field-preview" alt="">
+                  <img class="img-field-preview" alt="" draggable="false">
                   <input type="text" class="form-control" data-bind="impostazioni.porte_agriturismo_img" id="inputDoorAgri">
                   <label class="btn btn-secondary btn-sm"><i class="fa-solid fa-upload"></i><input type="file" accept="image/*" hidden></label>
                 </div>
@@ -245,15 +253,19 @@
               </div>
             </div>
 
-            <!-- Porte live -->
-            <div class="preview-doors-container">
+            <!-- Porte live (Prodotti, Esperienze, Agriturismo) -->
+            <div class="preview-doors-container" style="grid-template-columns: repeat(3, 1fr);">
+              <div class="preview-door-card" id="previewDoorProdCard" title="Trascina con il mouse per centrare">
+                <img src="" alt="" class="preview-door-img" id="previewDoorProdImg" draggable="false">
+                <span class="preview-door-label">Prodotti</span>
+              </div>
               <div class="preview-door-card" id="previewDoorExpCard" title="Trascina con il mouse per centrare">
-                <img src="" alt="" class="preview-door-img" id="previewDoorExpImg">
-                <span class="preview-door-label">Esperienze &amp; Tour</span>
+                <img src="" alt="" class="preview-door-img" id="previewDoorExpImg" draggable="false">
+                <span class="preview-door-label">Esperienze</span>
               </div>
               <div class="preview-door-card" id="previewDoorAgriCard" title="Trascina con il mouse per centrare">
-                <img src="" alt="" class="preview-door-img" id="previewDoorAgriImg">
-                <span class="preview-door-label">L'Agriturismo</span>
+                <img src="" alt="" class="preview-door-img" id="previewDoorAgriImg" draggable="false">
+                <span class="preview-door-label">Agriturismo</span>
               </div>
             </div>
           </div>
@@ -937,6 +949,6 @@
   <div id="dashToasts"></div>
 
   <!-- Script Logica Dashboard -->
-  <script src="dashboard.js?v=20261029_studio_pan_v5"></script>
+  <script src="dashboard.js?v=20261029_clean_v6"></script>
 </body>
 </html>

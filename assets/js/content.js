@@ -137,7 +137,17 @@
     document.querySelectorAll('[data-cb-src]').forEach((el) => {
       const srcPath = el.getAttribute('data-cb-src');
       const v = get(data, srcPath);
-      if (v) el.setAttribute('src', v);
+      if (v) {
+        el.setAttribute('src', v);
+        if (srcPath === 'impostazioni.porte_prodotti_img') {
+          const bottles = el.parentElement ? el.parentElement.querySelector('.door-bottles') : null;
+          if (bottles) {
+            const isBottleImg = /bottiglie\/giusto/i.test(v);
+            bottles.style.display = isBottleImg ? '' : 'none';
+            el.style.display = isBottleImg ? 'none' : 'block';
+          }
+        }
+      }
       const posPath = el.getAttribute('data-cb-pos') || (srcPath + '_pos');
       const pos = get(data, posPath);
       if (pos) {

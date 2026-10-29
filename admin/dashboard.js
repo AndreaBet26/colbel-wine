@@ -830,9 +830,9 @@
   }
 
   // ---------------------------------------------------------------------------
-  // MOTORE DI CENTRATURA DIRETTA & PAN SULLE ANTEPRIME DELLA DASHBOARD
-  // Permette di trascinare le immagini direttamente col mouse nelle anteprime
-  // e nelle schede, con rotella per zoom, pulsanti nudge e preset immediati.
+  // MOTORE DI CENTRATURA DIRETTA & SPOSTAMENTO NATURALE DELLE IMMAGINI
+  // Clicchi e trascini direttamente col mouse dove vuoi l'immagine, rotella per zoom,
+  // doppio clic per ricentrare. Nessun mirino ingombrante o tasti antiintuitivi.
   // ---------------------------------------------------------------------------
   function parsePos(str) {
     if (!str) return { x: 50, y: 50, scale: 1 };
@@ -864,40 +864,11 @@
     container._panInited = true;
     container.classList.add('preview-interactive-pan');
 
-    // Crea Reticle
-    const reticle = document.createElement('div');
-    reticle.className = 'pan-reticle';
-    reticle.innerHTML = '<span class="pan-reticle-dot"></span><span class="pan-reticle-h"></span><span class="pan-reticle-v"></span>';
-    container.appendChild(reticle);
-
-    // Crea Badge di stato
+    // Badge discreto che appare solo al passaggio del mouse
     const badge = document.createElement('div');
-    badge.className = 'pan-status-badge';
-    badge.textContent = 'Trascina per centrare';
+    badge.className = 'pan-badge';
+    badge.innerHTML = '<i class="fa-solid fa-hand"></i> Trascina per spostare';
     container.appendChild(badge);
-
-    // Crea HUD fluttuante
-    const hud = document.createElement('div');
-    hud.className = 'pan-hud';
-    hud.innerHTML = `
-      <span class="pan-hud-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Trascina</span>
-      <div class="pan-hud-btns">
-        <button type="button" class="pan-hud-btn" data-dx="-3" data-dy="0" title="Sposta a sinistra">←</button>
-        <button type="button" class="pan-hud-btn" data-dx="0" data-dy="-3" title="Sposta in alto">↑</button>
-        <button type="button" class="pan-hud-btn" data-dx="0" data-dy="3" title="Sposta in basso">↓</button>
-        <button type="button" class="pan-hud-btn" data-dx="3" data-dy="0" title="Sposta a destra">→</button>
-        <button type="button" class="pan-hud-btn" data-preset="top" title="In alto">Alto</button>
-        <button type="button" class="pan-hud-btn" data-preset="center" title="Centro">Centro</button>
-        <button type="button" class="pan-hud-btn" data-preset="bottom" title="In basso">Basso</button>
-      </div>
-      <div class="pan-hud-zoom">
-        <button type="button" class="pan-hud-btn" data-zoom="-0.1" title="Riduci zoom">-</button>
-        <span class="pan-hud-zoom-val">100%</span>
-        <button type="button" class="pan-hud-btn" data-zoom="0.1" title="Aumenta zoom">+</button>
-      </div>
-      <button type="button" class="pan-hud-btn" data-reset="1" title="Ripristina centro"><i class="fa-solid fa-rotate-left"></i></button>
-    `;
-    container.appendChild(hud);
 
     function applyVisual(x, y, scale) {
       const rx = Math.round(Math.max(0, Math.min(100, x)));
@@ -917,12 +888,7 @@
           targetImg.style.transformOrigin = posStr;
         }
       }
-
-      reticle.style.left = rx + '%';
-      reticle.style.top = ry + '%';
-      const zLabel = hud.querySelector('.pan-hud-zoom-val');
-      if (zLabel) zLabel.textContent = `${Math.round(rs * 100)}%`;
-      badge.textContent = `Pos: ${rx}% ${ry}%${rs > 1.01 ? ' · Zoom ' + Math.round(rs * 100) + '%' : ''}`;
+      badge.innerHTML = `<i class="fa-solid fa-arrows-up-down-left-right"></i> ${rx}% ${ry}%${rs > 1.01 ? ' · Zoom ' + Math.round(rs * 100) + '%' : ''}`;
     }
 
     container._updatePanVisual = () => {
@@ -935,17 +901,16 @@
       const val = formatPos(x, y, scale);
       opts.setPos(val);
       applyVisual(x, y, scale);
-      showToast(`Inquadratura impostata (${val})`, 'info');
     }
 
-    // Drag con mouse
+    // Drag naturale con il mouse
     let isDragging = false;
     let startX = 0, startY = 0;
     let initX = 50, initY = 50, initScale = 1;
     let curX = 50, curY = 50;
 
     container.addEventListener('mousedown', (e) => {
-      if (e.target.closest('.pan-hud') || e.target.closest('.exp-change-photo-badge') || e.target.closest('.wine-change-photo-badge') || e.target.closest('.page-backdrop-hover-badge')) return;
+      if (e.target.closest('.exp-change-photo-badge') || e.target.closest('.wine-change-photo-badge') || e.target.closest('.page-backdrop-hover-badge')) return;
       isDragging = true;
       startX = e.clientX;
       startY = e.clientY;
@@ -974,7 +939,7 @@
       commitPos(curX, curY, initScale);
     });
 
-    // Zoom con rotella mouse
+    // Zoom fluido con rotella del mouse
     container.addEventListener('wheel', (e) => {
       e.preventDefault();
       const delta = e.deltaY < 0 ? 0.05 : -0.05;
@@ -983,29 +948,12 @@
       commitPos(p.x, p.y, newScale);
     }, { passive: false });
 
-    // Controlli HUD
-    hud.addEventListener('click', (e) => {
-      const btn = e.target.closest('button');
-      if (!btn) return;
-      e.stopPropagation();
-      const p = parsePos(opts.getPos());
-
-      if (btn.dataset.dx || btn.dataset.dy) {
-        const nx = p.x + parseFloat(btn.dataset.dx || '0');
-        const ny = p.y + parseFloat(btn.dataset.dy || '0');
-        commitPos(nx, ny, p.scale);
-      } else if (btn.dataset.preset) {
-        const pr = btn.dataset.preset;
-        if (pr === 'top') commitPos(50, 15, p.scale);
-        else if (pr === 'bottom') commitPos(50, 85, p.scale);
-        else commitPos(50, 50, p.scale);
-      } else if (btn.dataset.zoom) {
-        const dz = parseFloat(btn.dataset.zoom);
-        const nz = Math.round(Math.max(1, Math.min(2.5, p.scale + dz)) * 100) / 100;
-        commitPos(p.x, p.y, nz);
-      } else if (btn.dataset.reset) {
-        commitPos(50, 50, 1);
-      }
+    // Doppio clic: ricentra rapidamente al 50% 50%
+    container.addEventListener('dblclick', (e) => {
+      if (e.target.closest('.exp-change-photo-badge') || e.target.closest('.wine-change-photo-badge') || e.target.closest('.page-backdrop-hover-badge')) return;
+      e.preventDefault();
+      commitPos(50, 50, 1);
+      showToast('Posizione foto reimpostata al centro', 'info');
     });
   }
 
@@ -1053,6 +1001,14 @@
     }
 
     // 2. Home Porte
+    const dProd = $('previewDoorProdCard');
+    if (dProd) {
+      bindInteractivePan(dProd, {
+        getImgEl: () => $('previewDoorProdImg'),
+        getPos: () => (state.impostazioni || {}).porte_prodotti_img_pos || '50% 50%',
+        setPos: (v) => { state.impostazioni.porte_prodotti_img_pos = v; markDirty('impostazioni'); updateHomePreview(); }
+      });
+    }
     const dExp = $('previewDoorExpCard');
     if (dExp) {
       bindInteractivePan(dExp, {
@@ -1221,9 +1177,19 @@
       $('previewHeroSubtitle').textContent = imp.hero_sottotitolo || 'A Solighetto, tra le colline del Prosecco Superiore DOCG';
     }
 
-    // Porte d'accesso
+    // Porte d'accesso (Prodotti, Esperienze, Agriturismo)
+    const pProd = $('previewDoorProdImg');
     const pExp = $('previewDoorExpImg');
     const pAgri = $('previewDoorAgriImg');
+    if (pProd) {
+      pProd.src = img(imp.porte_prodotti_img || 'assets/images/bottiglie/giusto.png');
+      if (imp.porte_prodotti_img_pos) {
+        const parts = String(imp.porte_prodotti_img_pos).split('/');
+        pProd.style.objectPosition = parts[0].trim();
+        const sc = parseFloat(parts[1]) || 1;
+        pProd.style.transform = sc > 1.01 ? `scale(${sc})` : '';
+      }
+    }
     if (pExp) {
       pExp.src = img(imp.porte_esperienze_img || 'assets/images/stock/tagliere-salumi.jpg');
       if (imp.porte_esperienze_img_pos) {
@@ -1401,26 +1367,8 @@
         prev.src = img(input.value.trim());
         prev.style.visibility = input.value.trim() ? 'visible' : 'hidden';
       }
-      if (!f.querySelector('.btn-crop-field')) {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'btn btn-secondary btn-sm btn-crop-field';
-        btn.title = 'Centra e inquadra questa foto';
-        btn.innerHTML = '<i class="fa-solid fa-arrows-up-down-left-right"></i> Centra';
-        btn.addEventListener('click', () => {
-          const path = input ? input.value.trim() : '';
-          if (!path) { showToast('Nessuna foto selezionata da centrare', 'info'); return; }
-          const bind = input.getAttribute('data-bind') || '';
-          const posPath = bind ? bind + '_pos' : '';
-          openDashCrop({
-            title: 'Centratura foto',
-            imgUrl: path,
-            posPath: posPath,
-            aspect: 16 / 9
-          });
-        });
-        f.appendChild(btn);
-      }
+      const oldBtn = f.querySelector('.btn-crop-field');
+      if (oldBtn) oldBtn.remove();
     });
     // Sincronizza i thumbnail dedicati di testata/sfondo
     const imp = state.impostazioni || {};
