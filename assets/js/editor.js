@@ -112,7 +112,7 @@
 
   async function saveDirty() {
     clearTimeout(saveTimer);
-    if (!serverOnline) { toast('Il server locale non è attivo: avvia "Avvia ColBel.command" per salvare.', 'error'); return false; }
+    if (!serverOnline) { toast('Il server locale non è attivo: avvia "Avvia ColBel.bat" (Windows) o "Avvia ColBel.command" (Mac) per salvare.', 'error'); return false; }
     if (saving) { saveTimer = setTimeout(saveDirty, 400); return false; }
     if (!dirty.size) { setStatus('Tutto salvato', 'ok'); return true; }
     saving = true;
@@ -190,7 +190,7 @@
     </div>
     <div id="cbOffline" hidden>
       <i class="fa-solid fa-triangle-exclamation"></i>
-      <span><strong>Il server locale non è attivo:</strong> puoi provare le modifiche ma non verranno salvate. Avvia <code>Avvia ColBel.command</code> e ricarica questa pagina.</span>
+      <span><strong>Il server locale non è attivo:</strong> puoi provare le modifiche ma non verranno salvate. Avvia <code>Avvia ColBel.bat</code> (Windows) o <code>Avvia ColBel.command</code> (Mac) e ricarica questa pagina.</span>
     </div>
     <div id="cbLabel" hidden></div>
     <button type="button" id="cbImgBtn" hidden><i class="fa-solid fa-camera"></i> <span>Cambia foto</span></button>

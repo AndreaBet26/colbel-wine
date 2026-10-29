@@ -63,7 +63,9 @@ HTML + CSS + JavaScript senza build. GSAP 3 e ScrollTrigger in `assets/js/vendor
 
 ## Gestione dei contenuti (modifica direttamente sul sito)
 
-1. Fai **doppio clic su `Avvia ColBel.command`** (oppure, da Terminale nella cartella del sito: `python3 server.py`).
+1. **Avvia il server locale**:
+   - **Windows**: Fai doppio clic su `Avvia ColBel.bat` (oppure esegui `python server.py`).
+   - **macOS**: Fai doppio clic su `Avvia ColBel.command` (oppure esegui `python3 server.py`).
 2. Si apre il browser sul sito in **modalità modifica** (`http://localhost:8080/admin/` → `http://localhost:8080/?modifica`).
 3. Si modifica direttamente la pagina:
    - **Testi:** passa sopra un testo (compare un bordo tratteggiato), clicca e scrivi. Invio per confermare.

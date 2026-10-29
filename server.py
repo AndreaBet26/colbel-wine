@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
-ColBel – Server locale per sito + dashboard.
+ColBel – Server locale per sito + dashboard (compatibile con macOS e Windows).
 
-Avvio:  python3 server.py        (oppure doppio clic su "Avvia ColBel.command")
+Avvio:
+  - macOS:   Doppio clic su "Avvia ColBel.command" (oppure: python3 server.py)
+  - Windows: Doppio clic su "Avvia ColBel.bat"     (oppure: python server.py)
+
 Sito:   http://localhost:8080/
 Admin:  http://localhost:8080/admin/
 
@@ -22,11 +25,20 @@ import json
 import os
 import re
 import shutil
+import socket
 import sys
 import threading
+import urllib.request
 import webbrowser
 from datetime import datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+
+# Assicura flush immediato dei messaggi nel terminale
+try:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(line_buffering=True)
+except Exception:
+    pass
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(ROOT, "data")
@@ -47,15 +59,18 @@ class ColBelHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=ROOT, **kwargs)
 
-    # I JSON non devono mai essere presi dalla cache del browser
+    # I file del sito e le API non devono mai essere memorizzati in cache durante lo sviluppo
     def end_headers(self):
-        if self.path.split("?")[0].endswith((".json", ".js", ".css", ".html", "/")) or self.path.startswith("/api/"):
-            self.send_header("Cache-Control", "no-store")
+        clean_path = self.path.split("?")[0]
+        if clean_path.endswith((".json", ".js", ".css", ".html", "/")) or self.path.startswith("/api/"):
+            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+            self.send_header("Pragma", "no-cache")
+            self.send_header("Expires", "0")
         super().end_headers()
 
     def log_message(self, fmt, *args):
         if self.path.startswith("/api/"):
-            sys.stderr.write("[ColBel] %s\n" % (fmt % args))
+            sys.stderr.write("[ColBel API] %s\n" % (fmt % args))
 
     # --- helpers ---
     def _json(self, status, payload):
@@ -153,21 +168,93 @@ class ColBelHandler(SimpleHTTPRequestHandler):
         return self._json(200, {"ok": True, "path": "assets/images/uploads/" + filename})
 
 
+def is_port_busy(port):
+    """Verifica se una porta e' attualmente in ascolto."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.settimeout(0.3)
+        return s.connect_ex(("127.0.0.1", port)) == 0
+
+
+def check_existing_colbel(port):
+    """Verifica se un'istanza di ColBel e' gia' in esecuzione su quella porta."""
+    try:
+        req = urllib.request.Request(f"http://127.0.0.1:{port}/api/ping")
+        with urllib.request.urlopen(req, timeout=0.6) as resp:
+            if resp.status == 200:
+                payload = json.loads(resp.read().decode("utf-8"))
+                return payload.get("server") == "colbel-local"
+    except Exception:
+        return False
+    return False
+
+
 def main():
-    server = ThreadingHTTPServer(("127.0.0.1", PORT), ColBelHandler)
-    url = "http://localhost:%d/" % PORT
+    # 1. Se il server ColBel è già in esecuzione, apriamo direttamente il browser
+    if is_port_busy(PORT) and check_existing_colbel(PORT):
+        url = f"http://localhost:{PORT}/"
+        print("")
+        print("  =======================================================")
+        print("  ColBel - Il server locale e' gia' attivo!")
+        print(f"  Sito pubblico : {url}")
+        print(f"  Dashboard     : {url}admin/")
+        print("  =======================================================")
+        print("")
+        if "--no-browser" not in sys.argv:
+            webbrowser.open(url + "admin/")
+        return
+
+    # 2. Cerca una porta disponibile partendo da PORT
+    server = None
+    active_port = PORT
+    for p in range(PORT, PORT + 10):
+        if is_port_busy(p):
+            if check_existing_colbel(p):
+                url = f"http://localhost:{p}/"
+                print("")
+                print("  =======================================================")
+                print("  ColBel - Il server locale e' gia' attivo!")
+                print(f"  Sito pubblico : {url}")
+                print(f"  Dashboard     : {url}admin/")
+                print("  =======================================================")
+                print("")
+                if "--no-browser" not in sys.argv:
+                    webbrowser.open(url + "admin/")
+                return
+            continue
+
+        try:
+            # allow_reuse_address solo su Unix per evitare socket-hijack su Windows
+            if sys.platform != "win32":
+                ThreadingHTTPServer.allow_reuse_address = True
+            server = ThreadingHTTPServer(("127.0.0.1", p), ColBelHandler)
+            active_port = p
+            break
+        except OSError:
+            continue
+
+    if server is None:
+        sys.stderr.write(f"\n[ERRORE] Impossibile avviare il server: tutte le porte da {PORT} a {PORT+9} sono occupate.\n")
+        sys.exit(1)
+
+    url = f"http://localhost:{active_port}/"
     print("")
-    print("  ColBel – server locale attivo")
-    print("  Sito pubblico : %s" % url)
-    print("  Dashboard     : %sadmin/" % url)
-    print("  (chiudi questa finestra o premi Ctrl+C per fermarlo)")
+    print("  =======================================================")
+    print("  ColBel - Server Locale Attivo")
+    print(f"  Sito pubblico : {url}")
+    print(f"  Dashboard     : {url}admin/")
+    print("  (premi Ctrl+C per fermare il server)")
+    print("  =======================================================")
     print("")
+
     if "--no-browser" not in sys.argv:
         threading.Timer(0.8, lambda: webbrowser.open(url + "admin/")).start()
+
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         print("\nServer fermato.")
+    finally:
+        server.server_close()
 
 
 if __name__ == "__main__":
