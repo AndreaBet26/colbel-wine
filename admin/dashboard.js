@@ -510,8 +510,15 @@
       // riapplica il badge float perché innerHTML lo cancella
       photoBox.prepend(badgeFloat);
 
+      bindInteractivePan(photoBox, {
+        getImgEl: () => photoBox.querySelector('.exp-photo-img'),
+        getPos: () => e.immagine_pos || '50% 50%',
+        setPos: (val) => { e.immagine_pos = val; markDirty('esperienze'); }
+      });
+
       photoBox.addEventListener('click', (evt) => {
         if (evt.target === badgeFloat || badgeFloat.contains(evt.target)) return;
+        if (evt.target.closest('.pan-hud') || evt.target.closest('.pan-reticle') || evt.target.closest('.pan-status-badge')) return;
         uploadTarget = { type: 'exp', index: idx };
         $('directExpPhotoInput').click();
       });
@@ -730,7 +737,13 @@
           <span>Cambia Foto</span>
         </div>
       `;
-      imgBox.addEventListener('click', () => {
+      bindInteractivePan(imgBox, {
+        getImgEl: () => imgBox.querySelector('.photo-card-img'),
+        getPos: () => f.immagine_pos || '50% 50%',
+        setPos: (val) => { f.immagine_pos = val; markDirty('agriturismo'); }
+      });
+      imgBox.addEventListener('click', (evt) => {
+        if (evt.target.closest('.pan-hud') || evt.target.closest('.pan-reticle') || evt.target.closest('.pan-status-badge')) return;
         uploadTarget = { type: 'gallery', index: idx };
         $('directGalleryPhotoInput').click();
       });
@@ -817,6 +830,362 @@
   }
 
   // ---------------------------------------------------------------------------
+  // MOTORE DI CENTRATURA DIRETTA & PAN SULLE ANTEPRIME DELLA DASHBOARD
+  // Permette di trascinare le immagini direttamente col mouse nelle anteprime
+  // e nelle schede, con rotella per zoom, pulsanti nudge e preset immediati.
+  // ---------------------------------------------------------------------------
+  function parsePos(str) {
+    if (!str) return { x: 50, y: 50, scale: 1 };
+    const parts = String(str).trim().split('/');
+    const coords = (parts[0] || '').trim().split(/\s+/);
+    const x = parseFloat(coords[0]);
+    const y = parseFloat(coords[1] !== undefined ? coords[1] : coords[0]);
+    const scale = parts[1] ? parseFloat(parts[1]) : 1;
+    return {
+      x: isNaN(x) ? 50 : Math.max(0, Math.min(100, x)),
+      y: isNaN(y) ? 50 : Math.max(0, Math.min(100, y)),
+      scale: isNaN(scale) ? 1 : Math.max(1, Math.min(2.5, scale))
+    };
+  }
+
+  function formatPos(x, y, scale) {
+    const rx = Math.round(Math.max(0, Math.min(100, x)));
+    const ry = Math.round(Math.max(0, Math.min(100, y)));
+    const rs = Math.round(Math.max(1, Math.min(2.5, scale)) * 100) / 100;
+    return rs > 1.01 ? `${rx}% ${ry}% / ${rs}` : `${rx}% ${ry}%`;
+  }
+
+  function bindInteractivePan(container, opts) {
+    if (!container) return;
+    if (container._panInited) {
+      if (container._updatePanVisual) container._updatePanVisual();
+      return;
+    }
+    container._panInited = true;
+    container.classList.add('preview-interactive-pan');
+
+    // Crea Reticle
+    const reticle = document.createElement('div');
+    reticle.className = 'pan-reticle';
+    reticle.innerHTML = '<span class="pan-reticle-dot"></span><span class="pan-reticle-h"></span><span class="pan-reticle-v"></span>';
+    container.appendChild(reticle);
+
+    // Crea Badge di stato
+    const badge = document.createElement('div');
+    badge.className = 'pan-status-badge';
+    badge.textContent = 'Trascina per centrare';
+    container.appendChild(badge);
+
+    // Crea HUD fluttuante
+    const hud = document.createElement('div');
+    hud.className = 'pan-hud';
+    hud.innerHTML = `
+      <span class="pan-hud-hint"><i class="fa-solid fa-arrows-up-down-left-right"></i> Trascina</span>
+      <div class="pan-hud-btns">
+        <button type="button" class="pan-hud-btn" data-dx="-3" data-dy="0" title="Sposta a sinistra">←</button>
+        <button type="button" class="pan-hud-btn" data-dx="0" data-dy="-3" title="Sposta in alto">↑</button>
+        <button type="button" class="pan-hud-btn" data-dx="0" data-dy="3" title="Sposta in basso">↓</button>
+        <button type="button" class="pan-hud-btn" data-dx="3" data-dy="0" title="Sposta a destra">→</button>
+        <button type="button" class="pan-hud-btn" data-preset="top" title="In alto">Alto</button>
+        <button type="button" class="pan-hud-btn" data-preset="center" title="Centro">Centro</button>
+        <button type="button" class="pan-hud-btn" data-preset="bottom" title="In basso">Basso</button>
+      </div>
+      <div class="pan-hud-zoom">
+        <button type="button" class="pan-hud-btn" data-zoom="-0.1" title="Riduci zoom">-</button>
+        <span class="pan-hud-zoom-val">100%</span>
+        <button type="button" class="pan-hud-btn" data-zoom="0.1" title="Aumenta zoom">+</button>
+      </div>
+      <button type="button" class="pan-hud-btn" data-reset="1" title="Ripristina centro"><i class="fa-solid fa-rotate-left"></i></button>
+    `;
+    container.appendChild(hud);
+
+    function applyVisual(x, y, scale) {
+      const rx = Math.round(Math.max(0, Math.min(100, x)));
+      const ry = Math.round(Math.max(0, Math.min(100, y)));
+      const rs = Math.round(Math.max(1, Math.min(2.5, scale)) * 100) / 100;
+      const posStr = `${rx}% ${ry}%`;
+
+      if (opts.isBg) {
+        container.style.backgroundPosition = posStr;
+        if (rs > 1.01) container.style.backgroundSize = `${Math.round(rs * 100)}%`;
+        else container.style.backgroundSize = 'cover';
+      } else {
+        const targetImg = opts.getImgEl ? opts.getImgEl() : (opts.imgEl || container.querySelector('img'));
+        if (targetImg) {
+          targetImg.style.objectPosition = posStr;
+          targetImg.style.transform = rs > 1.01 ? `scale(${rs})` : '';
+          targetImg.style.transformOrigin = posStr;
+        }
+      }
+
+      reticle.style.left = rx + '%';
+      reticle.style.top = ry + '%';
+      const zLabel = hud.querySelector('.pan-hud-zoom-val');
+      if (zLabel) zLabel.textContent = `${Math.round(rs * 100)}%`;
+      badge.textContent = `Pos: ${rx}% ${ry}%${rs > 1.01 ? ' · Zoom ' + Math.round(rs * 100) + '%' : ''}`;
+    }
+
+    container._updatePanVisual = () => {
+      const p = parsePos(opts.getPos());
+      applyVisual(p.x, p.y, p.scale);
+    };
+    container._updatePanVisual();
+
+    function commitPos(x, y, scale) {
+      const val = formatPos(x, y, scale);
+      opts.setPos(val);
+      applyVisual(x, y, scale);
+      showToast(`Inquadratura impostata (${val})`, 'info');
+    }
+
+    // Drag con mouse
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let initX = 50, initY = 50, initScale = 1;
+    let curX = 50, curY = 50;
+
+    container.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.pan-hud') || e.target.closest('.exp-change-photo-badge') || e.target.closest('.wine-change-photo-badge') || e.target.closest('.page-backdrop-hover-badge')) return;
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      const p = parsePos(opts.getPos());
+      initX = curX = p.x;
+      initY = curY = p.y;
+      initScale = p.scale;
+      container.classList.add('is-dragging');
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const rect = container.getBoundingClientRect();
+      const dx = ((e.clientX - startX) / (rect.width || 400)) * (100 / (initScale || 1));
+      const dy = ((e.clientY - startY) / (rect.height || 300)) * (100 / (initScale || 1));
+      curX = Math.round(Math.max(0, Math.min(100, initX - dx)));
+      curY = Math.round(Math.max(0, Math.min(100, initY - dy)));
+      applyVisual(curX, curY, initScale);
+    }, { passive: true });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      container.classList.remove('is-dragging');
+      commitPos(curX, curY, initScale);
+    });
+
+    // Zoom con rotella mouse
+    container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.05 : -0.05;
+      const p = parsePos(opts.getPos());
+      const newScale = Math.round(Math.max(1, Math.min(2.5, p.scale + delta)) * 100) / 100;
+      commitPos(p.x, p.y, newScale);
+    }, { passive: false });
+
+    // Controlli HUD
+    hud.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      e.stopPropagation();
+      const p = parsePos(opts.getPos());
+
+      if (btn.dataset.dx || btn.dataset.dy) {
+        const nx = p.x + parseFloat(btn.dataset.dx || '0');
+        const ny = p.y + parseFloat(btn.dataset.dy || '0');
+        commitPos(nx, ny, p.scale);
+      } else if (btn.dataset.preset) {
+        const pr = btn.dataset.preset;
+        if (pr === 'top') commitPos(50, 15, p.scale);
+        else if (pr === 'bottom') commitPos(50, 85, p.scale);
+        else commitPos(50, 50, p.scale);
+      } else if (btn.dataset.zoom) {
+        const dz = parseFloat(btn.dataset.zoom);
+        const nz = Math.round(Math.max(1, Math.min(2.5, p.scale + dz)) * 100) / 100;
+        commitPos(p.x, p.y, nz);
+      } else if (btn.dataset.reset) {
+        commitPos(50, 50, 1);
+      }
+    });
+  }
+
+  function initPreviewExpansion() {
+    // Pulsanti Vista Ampia (espansione preview nella dashboard)
+    document.querySelectorAll('.btn-toggle-expand').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const split = btn.closest('.split-studio');
+        if (!split) return;
+        const isExp = split.classList.toggle('is-expanded');
+        btn.classList.toggle('active', isExp);
+        const icon = btn.querySelector('i');
+        const span = btn.querySelector('span');
+        if (icon) icon.className = isExp ? 'fa-solid fa-minimize' : 'fa-solid fa-maximize';
+        if (span) span.textContent = isExp ? 'Riduci' : 'Vista Ampia';
+      });
+    });
+
+    // Selettore dispositivi (Desktop 16:9, Tablet 4:3, Mobile 9:16)
+    document.querySelectorAll('.preview-device-switcher').forEach((switcher) => {
+      const splitPrev = switcher.closest('.split-preview');
+      const viewport = splitPrev ? splitPrev.querySelector('.preview-viewport') : null;
+      switcher.querySelectorAll('.btn-device-mode').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          switcher.querySelectorAll('.btn-device-mode').forEach((b) => b.classList.toggle('active', b === btn));
+          const dev = btn.dataset.device;
+          if (viewport) {
+            viewport.classList.toggle('is-tablet', dev === 'tablet');
+            viewport.classList.toggle('is-mobile', dev === 'mobile');
+          }
+        });
+      });
+    });
+  }
+
+  function initDirectInteractivePans() {
+    // 1. Home Hero
+    const hBox = $('previewHeroBox');
+    if (hBox) {
+      bindInteractivePan(hBox, {
+        isBg: true,
+        getPos: () => (state.impostazioni || {}).hero_immagine_pos || '50% 50%',
+        setPos: (v) => { state.impostazioni.hero_immagine_pos = v; markDirty('impostazioni'); updateHomePreview(); }
+      });
+    }
+
+    // 2. Home Porte
+    const dExp = $('previewDoorExpCard');
+    if (dExp) {
+      bindInteractivePan(dExp, {
+        getImgEl: () => $('previewDoorExpImg'),
+        getPos: () => (state.impostazioni || {}).porte_esperienze_img_pos || '50% 50%',
+        setPos: (v) => { state.impostazioni.porte_esperienze_img_pos = v; markDirty('impostazioni'); updateHomePreview(); }
+      });
+    }
+    const dAgri = $('previewDoorAgriCard');
+    if (dAgri) {
+      bindInteractivePan(dAgri, {
+        getImgEl: () => $('previewDoorAgriImg'),
+        getPos: () => (state.impostazioni || {}).porte_agriturismo_img_pos || '50% 50%',
+        setPos: (v) => { state.impostazioni.porte_agriturismo_img_pos = v; markDirty('impostazioni'); updateHomePreview(); }
+      });
+    }
+
+    // 3. Chi Siamo Story Img
+    const csWrap = $('prevCsImgWrap');
+    if (csWrap) {
+      bindInteractivePan(csWrap, {
+        getImgEl: () => $('prevCsImg'),
+        getPos: () => (state.chiSiamo || {}).immagine_pos || '50% 50%',
+        setPos: (v) => { state.chiSiamo.immagine_pos = v; markDirty('chiSiamo'); updateChiSiamoPreview(); }
+      });
+    }
+
+    // 4. Territorio Panoramic Box
+    const terBox = $('prevTerBox');
+    if (terBox) {
+      bindInteractivePan(terBox, {
+        isBg: true,
+        getPos: () => (state.territorio || {}).immagine_sfondo_pos || '50% 50%',
+        setPos: (v) => { state.territorio.immagine_sfondo_pos = v; markDirty('territorio'); updateTerritorioPreview(); }
+      });
+    }
+
+    // 5. Contatti Cantina Banner
+    const cBox = $('prevContactBox');
+    if (cBox) {
+      bindInteractivePan(cBox, {
+        isBg: true,
+        getPos: () => (((state.contatti || {}).azienda || {}).immagine_pos) || '50% 50%',
+        setPos: (v) => {
+          if (!state.contatti) state.contatti = {};
+          if (!state.contatti.azienda) state.contatti.azienda = {};
+          state.contatti.azienda.immagine_pos = v;
+          markDirty('contatti');
+          updateContattiPreview();
+        }
+      });
+    }
+
+    // 6. Thumbnails dedicate nei backdrop
+    const heroTh = $('homeHeroThumb');
+    if (heroTh && heroTh.parentElement) {
+      bindInteractivePan(heroTh.parentElement, {
+        getImgEl: () => heroTh,
+        getPos: () => (state.impostazioni || {}).hero_immagine_pos || '50% 50%',
+        setPos: (v) => { state.impostazioni.hero_immagine_pos = v; markDirty('impostazioni'); updateHomePreview(); }
+      });
+    }
+    const csTh = $('csThumbImg');
+    if (csTh && csTh.parentElement) {
+      bindInteractivePan(csTh.parentElement, {
+        getImgEl: () => csTh,
+        getPos: () => (state.chiSiamo || {}).immagine_pos || '50% 50%',
+        setPos: (v) => { state.chiSiamo.immagine_pos = v; markDirty('chiSiamo'); updateChiSiamoPreview(); }
+      });
+    }
+    const terTh = $('terThumbImg');
+    if (terTh && terTh.parentElement) {
+      bindInteractivePan(terTh.parentElement, {
+        getImgEl: () => terTh,
+        getPos: () => (state.territorio || {}).immagine_sfondo_pos || '50% 50%',
+        setPos: (v) => { state.territorio.immagine_sfondo_pos = v; markDirty('territorio'); updateTerritorioPreview(); }
+      });
+    }
+    const prodTh = $('prodOpeningThumb');
+    if (prodTh && prodTh.parentElement) {
+      bindInteractivePan(prodTh.parentElement, {
+        getImgEl: () => prodTh,
+        getPos: () => ((state.impostazioni || {}).testi_sezioni || {}).vini_immagine_pos || '50% 50%',
+        setPos: (v) => {
+          if (!state.impostazioni) state.impostazioni = {};
+          if (!state.impostazioni.testi_sezioni) state.impostazioni.testi_sezioni = {};
+          state.impostazioni.testi_sezioni.vini_immagine_pos = v;
+          markDirty('impostazioni');
+        }
+      });
+    }
+    const expTh = $('expHeroThumb');
+    if (expTh && expTh.parentElement) {
+      bindInteractivePan(expTh.parentElement, {
+        getImgEl: () => expTh,
+        getPos: () => ((state.impostazioni || {}).testi_sezioni || {}).esperienze_immagine_pos || '50% 50%',
+        setPos: (v) => {
+          if (!state.impostazioni) state.impostazioni = {};
+          if (!state.impostazioni.testi_sezioni) state.impostazioni.testi_sezioni = {};
+          state.impostazioni.testi_sezioni.esperienze_immagine_pos = v;
+          markDirty('impostazioni');
+        }
+      });
+    }
+    const agriTh = $('agriCoverThumb');
+    if (agriTh && agriTh.parentElement) {
+      bindInteractivePan(agriTh.parentElement, {
+        getImgEl: () => agriTh,
+        getPos: () => (state.agriturismo || {}).immagine_pos || '50% 50%',
+        setPos: (v) => {
+          if (!state.agriturismo) state.agriturismo = {};
+          state.agriturismo.immagine_pos = v;
+          markDirty('agriturismo');
+        }
+      });
+    }
+    const contTh = $('contactAziendaThumb');
+    if (contTh && contTh.parentElement) {
+      bindInteractivePan(contTh.parentElement, {
+        getImgEl: () => contTh,
+        getPos: () => (((state.contatti || {}).azienda || {}).immagine_pos) || '50% 50%',
+        setPos: (v) => {
+          if (!state.contatti) state.contatti = {};
+          if (!state.contatti.azienda) state.contatti.azienda = {};
+          state.contatti.azienda.immagine_pos = v;
+          markDirty('contatti');
+          updateContattiPreview();
+        }
+      });
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // ANTEPRIME LIVE IN TEMPO REALE (SPLIT-SCREEN DESTRA)
   // ---------------------------------------------------------------------------
   function updateHomePreview() {
@@ -836,15 +1205,18 @@
     const hBox = $('previewHeroBox');
     if (hBox) {
       const bgImg = img(imp.hero_immagine || 'assets/images/p9201811-2.jpg');
-      hBox.style.backgroundImage = `radial-gradient(ellipse at center, rgba(13,12,10,0.65) 0%, rgba(13,12,10,0.92) 100%), url('${bgImg}')`;
+      hBox.style.backgroundImage = `radial-gradient(ellipse at center, rgba(13,12,10,0.55) 0%, rgba(13,12,10,0.92) 100%), url('${bgImg}')`;
       if (imp.hero_immagine_pos) {
         const parts = String(imp.hero_immagine_pos).split('/');
         hBox.style.backgroundPosition = parts[0].trim();
         const sc = parseFloat(parts[1]) || 1;
         if (sc > 1.01) hBox.style.backgroundSize = `${Math.round(sc * 100)}%`;
+        else hBox.style.backgroundSize = 'cover';
       } else {
         hBox.style.backgroundPosition = 'center';
+        hBox.style.backgroundSize = 'cover';
       }
+      if (hBox._updatePanVisual) hBox._updatePanVisual();
       $('previewHeroClaim').textContent = imp.claim || 'Una tradizione, un’emozione';
       $('previewHeroSubtitle').textContent = imp.hero_sottotitolo || 'A Solighetto, tra le colline del Prosecco Superiore DOCG';
     }
@@ -852,8 +1224,24 @@
     // Porte d'accesso
     const pExp = $('previewDoorExpImg');
     const pAgri = $('previewDoorAgriImg');
-    if (pExp) pExp.src = img(imp.porte_esperienze_img || 'assets/images/stock/tagliere-salumi.jpg');
-    if (pAgri) pAgri.src = img(imp.porte_agriturismo_img || 'assets/images/stock/pane-olive.jpg');
+    if (pExp) {
+      pExp.src = img(imp.porte_esperienze_img || 'assets/images/stock/tagliere-salumi.jpg');
+      if (imp.porte_esperienze_img_pos) {
+        const parts = String(imp.porte_esperienze_img_pos).split('/');
+        pExp.style.objectPosition = parts[0].trim();
+        const sc = parseFloat(parts[1]) || 1;
+        pExp.style.transform = sc > 1.01 ? `scale(${sc})` : '';
+      }
+    }
+    if (pAgri) {
+      pAgri.src = img(imp.porte_agriturismo_img || 'assets/images/stock/pane-olive.jpg');
+      if (imp.porte_agriturismo_img_pos) {
+        const parts = String(imp.porte_agriturismo_img_pos).split('/');
+        pAgri.style.objectPosition = parts[0].trim();
+        const sc = parseFloat(parts[1]) || 1;
+        pAgri.style.transform = sc > 1.01 ? `scale(${sc})` : '';
+      }
+    }
   }
 
   function updateChiSiamoPreview() {
@@ -873,6 +1261,8 @@
         $('prevCsImg').style.transform = '';
       }
     }
+    const csWrap = $('prevCsImgWrap');
+    if (csWrap && csWrap._updatePanVisual) csWrap._updatePanVisual();
 
     if ($('prevCsP0')) $('prevCsP0').textContent = cs.paragrafo_0 || '';
     if ($('prevCsP1')) $('prevCsP1').textContent = cs.paragrafo_1 || '';
@@ -900,6 +1290,7 @@
       } else {
         tBox.style.backgroundPosition = 'center';
       }
+      if (tBox._updatePanVisual) tBox._updatePanVisual();
     }
     if ($('prevTerEyebrow')) $('prevTerEyebrow').textContent = ter.etichetta || 'TERRITORIO';
     if ($('prevTerTitle')) $('prevTerTitle').textContent = ter.titolo || 'Solighetto';
@@ -927,6 +1318,21 @@
     const l = c.lissa || {};
     const az = c.azienda || {};
 
+    const cBox = $('prevContactBox');
+    if (cBox) {
+      const bg = img(az.immagine || 'assets/images/azienda-cantina.jpg');
+      cBox.style.backgroundImage = `linear-gradient(to top, rgba(13,12,10,0.92) 15%, rgba(13,12,10,0.3) 100%), url('${bg}')`;
+      if (az.immagine_pos) {
+        const parts = String(az.immagine_pos).split('/');
+        cBox.style.backgroundPosition = parts[0].trim();
+        const sc = parseFloat(parts[1]) || 1;
+        if (sc > 1.01) cBox.style.backgroundSize = `${Math.round(sc * 100)}%`;
+      } else {
+        cBox.style.backgroundPosition = 'center';
+      }
+      if (cBox._updatePanVisual) cBox._updatePanVisual();
+    }
+
     // Gianni
     if ($('prevGianniNome')) $('prevGianniNome').textContent = g.nome || 'Gianni Teo';
     if ($('prevGianniRuolo')) $('prevGianniRuolo').textContent = (g.ruolo || 'CANTINA & TOUR').toUpperCase();
@@ -942,6 +1348,7 @@
     // Azienda
     if ($('prevAziendaIndirizzo')) $('prevAziendaIndirizzo').textContent = az.indirizzo || 'Via Drio Cisa, 2, Solighetto (TV)';
     if ($('prevAziendaEmail')) $('prevAziendaEmail').textContent = az.email || 'lissa@colbelwine.com';
+    if ($('prevContactTitle')) $('prevContactTitle').textContent = az.nome || 'Azienda Agricola ColBel';
   }
 
   function renderAllLivePreviews() {
@@ -949,6 +1356,7 @@
     updateChiSiamoPreview();
     updateTerritorioPreview();
     updateContattiPreview();
+    initDirectInteractivePans();
   }
 
   // ---------------------------------------------------------------------------
@@ -1436,6 +1844,8 @@
     initImgFields();
     initDirectUploadInputs();
     initDashCropEvents();
+    initPreviewExpansion();
+    initDirectInteractivePans();
 
     // Ascolto modifiche campi form
     document.addEventListener('input', onBoundChange);

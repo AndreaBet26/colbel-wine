@@ -1230,12 +1230,12 @@ input:checked + .slider:before {
   font-size: 0.8rem;
   font-family: var(--font-mono);
 }
+
+/* Widescreen Hero Container (Scala 16:9 Reale Senza Deformazioni) */
 .preview-hero-container {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  min-height: 250px;
-  max-height: 480px;
   border-radius: var(--radius);
   overflow: hidden;
   display: flex;
@@ -1243,22 +1243,25 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2.5rem 1.5rem;
+  padding: 2rem 1.25rem;
   background-size: cover;
   background-position: center;
   border: 1px solid var(--line);
   box-sizing: border-box;
+  margin-bottom: 1.25rem;
 }
 .preview-hero-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(13,12,10,0.6) 0%, rgba(13,12,10,0.92) 100%);
+  background: radial-gradient(ellipse at center, rgba(13,12,10,0.55) 0%, rgba(13,12,10,0.92) 100%);
+  pointer-events: none;
 }
 .preview-hero-content {
   position: relative;
   z-index: 2;
   max-width: 800px;
   width: 100%;
+  pointer-events: none;
 }
 .preview-hero-logo {
   height: 44px;
@@ -1305,6 +1308,7 @@ input:checked + .slider:before {
   height: 100%;
   object-fit: cover;
   filter: brightness(0.65);
+  pointer-events: none;
 }
 .preview-door-label {
   position: relative;
@@ -1314,6 +1318,7 @@ input:checked + .slider:before {
   color: #fff;
   font-weight: 600;
   letter-spacing: 0.03em;
+  pointer-events: none;
 }
 
 /* Anteprima Chi Siamo */
@@ -1346,13 +1351,22 @@ input:checked + .slider:before {
   color: var(--gold);
   line-height: 1.5;
 }
+.preview-interactive-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line-gold);
+  background: #000;
+  box-sizing: border-box;
+}
 .preview-story-img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--line-gold);
+  display: block;
+  pointer-events: none;
 }
 .preview-story-paragraphs {
   font-size: 0.88rem;
@@ -1369,6 +1383,65 @@ input:checked + .slider:before {
   font-style: italic;
   font-size: 1.1rem;
   color: var(--gold);
+}
+
+/* Anteprima Panoramica Territorio */
+.preview-panoramic-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line-gold);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.75rem;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+}
+.preview-panoramic-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,12,10,0.95) 20%, rgba(13,12,10,0.35) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.preview-panoramic-content {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Anteprima Cantina Contatti */
+.preview-cantina-banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line-gold);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  margin-bottom: 1.25rem;
+}
+.preview-cantina-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,12,10,0.92) 15%, rgba(13,12,10,0.3) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.preview-cantina-content {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
 }
 
 /* Anteprima Contatti */
@@ -1724,4 +1797,237 @@ input:checked + .slider:before {
   align-items: center;
   gap: 0.35rem;
   text-decoration: none;
+}
+
+/* ==========================================================================
+   INTERACTIVE PAN & CENTERING DIRECTLY IN DASHBOARD PREVIEWS
+   ========================================================================== */
+.preview-interactive-pan {
+  position: relative !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  cursor: grab !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.preview-interactive-pan:hover {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2) !important;
+}
+.preview-interactive-pan.is-dragging,
+.preview-interactive-pan:active {
+  cursor: grabbing !important;
+}
+
+/* Floating HUD on top of interactive preview image */
+.pan-hud {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(10, 11, 14, 0.92);
+  border: 1px solid var(--line-gold);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.55rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(-4px);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #fff;
+}
+.preview-interactive-pan:hover .pan-hud,
+.preview-interactive-pan.is-dragging .pan-hud,
+.preview-interactive-pan:focus-within .pan-hud {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.pan-hud-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--gold);
+  font-weight: 600;
+  padding-right: 0.4rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+}
+
+.pan-hud-btns {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.pan-hud-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f2ebdf;
+  border-radius: 3px;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  line-height: 1.2;
+  transition: all 0.15s ease;
+}
+.pan-hud-btn:hover {
+  background: var(--gold);
+  color: #0b0c0e;
+  border-color: var(--gold);
+}
+.pan-hud-btn.active {
+  background: var(--gold);
+  color: #0b0c0e;
+  font-weight: 700;
+}
+
+.pan-hud-zoom {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding-left: 0.35rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+.pan-hud-zoom-val {
+  color: var(--gold);
+  font-size: 0.68rem;
+  min-width: 34px;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Subtle Reticle indicator on the interactive image */
+.pan-reticle {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.preview-interactive-pan:hover .pan-reticle,
+.preview-interactive-pan.is-dragging .pan-reticle {
+  opacity: 0.85;
+}
+.pan-reticle-dot {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+}
+.pan-reticle-h {
+  position: absolute;
+  top: 50%;
+  left: -6px;
+  right: -6px;
+  height: 1px;
+  background: var(--gold);
+  transform: translateY(-50%);
+}
+.pan-reticle-v {
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  bottom: -6px;
+  width: 1px;
+  background: var(--gold);
+  transform: translateX(-50%);
+}
+
+/* Toast Badge indicator when dragging/saving */
+.pan-status-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 25;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--line-gold);
+  border-radius: var(--radius-xs);
+  padding: 0.2rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.preview-interactive-pan.is-dragging .pan-status-badge,
+.preview-interactive-pan:hover .pan-status-badge {
+  opacity: 1;
+}
+
+/* Device Switcher & Topbar Actions */
+.preview-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.preview-device-switcher {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  padding: 2px;
+  gap: 2px;
+}
+.btn-device-mode {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 7px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-device-mode:hover {
+  color: #fff;
+}
+.btn-device-mode.active {
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--gold);
+}
+
+/* Expanded Vista Ampia Mode (Dentro la Dashboard) */
+.split-studio.is-expanded {
+  grid-template-columns: 1fr !important;
+}
+.split-studio.is-expanded .split-editor {
+  display: none !important;
+}
+.split-studio.is-expanded .split-preview {
+  position: relative;
+  top: 0;
+  max-height: none;
+  min-height: 85vh;
+}
+.split-studio.is-expanded .preview-viewport {
+  padding: 2.5rem 3.5rem;
+}
+
+/* Device View constraints inside viewport */
+.preview-viewport.is-tablet {
+  max-width: 768px;
+  margin: 0 auto;
+  border-left: 1px dashed var(--line-gold);
+  border-right: 1px dashed var(--line-gold);
+}
+.preview-viewport.is-mobile {
+  max-width: 390px;
+  margin: 0 auto;
+  border-left: 1px dashed var(--line-gold);
+  border-right: 1px dashed var(--line-gold);
 }

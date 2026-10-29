@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="dashboard.css?v=20261029_studio_v3">
+  <link rel="stylesheet" href="dashboard.css?v=20261029_studio_pan_v5">
 </head>
 <body>
 
@@ -217,9 +217,16 @@
           <div class="preview-topbar">
             <div class="preview-topbar-title">
               <span class="preview-dot"></span>
-              <span>Anteprima Live · Pagina Home</span>
+              <span>Anteprima Live · Home</span>
             </div>
-            <a href="../index.html?modifica" target="_blank" class="btn btn-outline-gold btn-xs preview-fullscreen-btn" title="Apri a schermo intero reale"><i class="fa-solid fa-expand"></i> Schermo Intero Reale</a>
+            <div class="preview-topbar-actions">
+              <div class="preview-device-switcher">
+                <button type="button" class="btn-device-mode active" data-device="desktop" title="Vista Desktop Widescreen (16:9)"><i class="fa-solid fa-desktop"></i></button>
+                <button type="button" class="btn-device-mode" data-device="tablet" title="Vista Tablet (4:3)"><i class="fa-solid fa-tablet-screen-button"></i></button>
+                <button type="button" class="btn-device-mode" data-device="mobile" title="Vista Mobile (9:16)"><i class="fa-solid fa-mobile-screen"></i></button>
+              </div>
+              <button type="button" class="btn btn-outline-gold btn-xs btn-toggle-expand" title="Espandi anteprima a tutta larghezza"><i class="fa-solid fa-maximize"></i> <span>Vista Ampia</span></button>
+            </div>
           </div>
           <div class="preview-viewport" id="previewHomeViewport">
             <!-- Barra avviso live -->
@@ -228,8 +235,8 @@
               <span style="text-decoration:underline; font-size:0.75rem;">Scopri di più &rarr;</span>
             </div>
 
-            <!-- Hero live -->
-            <div class="preview-hero-container" id="previewHeroBox">
+            <!-- Hero live con trascina per centrare -->
+            <div class="preview-hero-container" id="previewHeroBox" title="Trascina con il mouse per centrare la foto di sfondo">
               <div class="preview-hero-overlay"></div>
               <div class="preview-hero-content">
                 <img src="../assets/images/logo.png" alt="ColBel" class="preview-hero-logo">
@@ -240,11 +247,11 @@
 
             <!-- Porte live -->
             <div class="preview-doors-container">
-              <div class="preview-door-card">
+              <div class="preview-door-card" id="previewDoorExpCard" title="Trascina con il mouse per centrare">
                 <img src="" alt="" class="preview-door-img" id="previewDoorExpImg">
                 <span class="preview-door-label">Esperienze &amp; Tour</span>
               </div>
-              <div class="preview-door-card">
+              <div class="preview-door-card" id="previewDoorAgriCard" title="Trascina con il mouse per centrare">
                 <img src="" alt="" class="preview-door-img" id="previewDoorAgriImg">
                 <span class="preview-door-label">L'Agriturismo</span>
               </div>
@@ -343,9 +350,16 @@
           <div class="preview-topbar">
             <div class="preview-topbar-title">
               <span class="preview-dot"></span>
-              <span>Anteprima Live · Pagina Chi Siamo</span>
+              <span>Anteprima Live · Chi Siamo</span>
             </div>
-            <a href="../storia.html?modifica" target="_blank" class="btn btn-outline-gold btn-xs preview-fullscreen-btn" title="Apri a schermo intero reale"><i class="fa-solid fa-expand"></i> Schermo Intero Reale</a>
+            <div class="preview-topbar-actions">
+              <div class="preview-device-switcher">
+                <button type="button" class="btn-device-mode active" data-device="desktop" title="Vista Desktop Widescreen (16:9)"><i class="fa-solid fa-desktop"></i></button>
+                <button type="button" class="btn-device-mode" data-device="tablet" title="Vista Tablet (4:3)"><i class="fa-solid fa-tablet-screen-button"></i></button>
+                <button type="button" class="btn-device-mode" data-device="mobile" title="Vista Mobile (9:16)"><i class="fa-solid fa-mobile-screen"></i></button>
+              </div>
+              <button type="button" class="btn btn-outline-gold btn-xs btn-toggle-expand" title="Espandi anteprima a tutta larghezza"><i class="fa-solid fa-maximize"></i> <span>Vista Ampia</span></button>
+            </div>
           </div>
           <div class="preview-viewport">
             <div class="preview-story-box">
@@ -355,7 +369,9 @@
               </div>
               <p class="preview-story-intro" id="prevCsIntro">“Col Bel” in dialetto veneto significa “bel colle”.</p>
               
-              <img src="" alt="" class="preview-story-img" id="prevCsImg">
+              <div class="preview-interactive-img-wrap" id="prevCsImgWrap" title="Trascina con il mouse per centrare la foto">
+                <img src="" alt="" class="preview-story-img" id="prevCsImg">
+              </div>
 
               <div class="preview-story-paragraphs">
                 <p id="prevCsP0"></p>
@@ -468,12 +484,19 @@
               <span class="preview-dot"></span>
               <span>Anteprima Live · Territorio</span>
             </div>
-            <a href="../index.html?modifica#territorio" target="_blank" class="btn btn-outline-gold btn-xs preview-fullscreen-btn" title="Apri a schermo intero reale"><i class="fa-solid fa-expand"></i> Schermo Intero Reale</a>
+            <div class="preview-topbar-actions">
+              <div class="preview-device-switcher">
+                <button type="button" class="btn-device-mode active" data-device="desktop" title="Vista Desktop Widescreen (16:9)"><i class="fa-solid fa-desktop"></i></button>
+                <button type="button" class="btn-device-mode" data-device="tablet" title="Vista Tablet (4:3)"><i class="fa-solid fa-tablet-screen-button"></i></button>
+                <button type="button" class="btn-device-mode" data-device="mobile" title="Vista Mobile (9:16)"><i class="fa-solid fa-mobile-screen"></i></button>
+              </div>
+              <button type="button" class="btn btn-outline-gold btn-xs btn-toggle-expand" title="Espandi anteprima a tutta larghezza"><i class="fa-solid fa-maximize"></i> <span>Vista Ampia</span></button>
+            </div>
           </div>
           <div class="preview-viewport">
-            <div style="position:relative; min-height:280px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line-gold); display:flex; flex-direction:column; justify-content:flex-end; padding:1.75rem;" id="prevTerBox">
-              <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(13,12,10,0.95) 20%, rgba(13,12,10,0.35) 100%); z-index:1;"></div>
-              <div style="position:relative; z-index:2;">
+            <div class="preview-panoramic-container" id="prevTerBox" title="Trascina con il mouse per centrare la foto">
+              <div class="preview-panoramic-overlay"></div>
+              <div class="preview-panoramic-content">
                 <span class="preview-story-eyebrow" id="prevTerEyebrow">TERRITORIO</span>
                 <h2 style="font-family:var(--font-serif); font-size:2rem; color:#fff; margin-bottom:0.5rem;" id="prevTerTitle">Solighetto</h2>
                 <p style="font-family:var(--font-serif); font-style:italic; color:var(--gold); font-size:1.1rem; line-height:1.45;" id="prevTerQuote"></p>
@@ -785,11 +808,26 @@
           <div class="preview-topbar">
             <div class="preview-topbar-title">
               <span class="preview-dot"></span>
-              <span>Anteprima Live · Schede Contatto</span>
+              <span>Anteprima Live · Contatti</span>
             </div>
-            <a href="../contatti.html?modifica" target="_blank" class="btn btn-outline-gold btn-xs preview-fullscreen-btn" title="Apri a schermo intero reale"><i class="fa-solid fa-expand"></i> Schermo Intero Reale</a>
+            <div class="preview-topbar-actions">
+              <div class="preview-device-switcher">
+                <button type="button" class="btn-device-mode active" data-device="desktop" title="Vista Desktop Widescreen (16:9)"><i class="fa-solid fa-desktop"></i></button>
+                <button type="button" class="btn-device-mode" data-device="tablet" title="Vista Tablet (4:3)"><i class="fa-solid fa-tablet-screen-button"></i></button>
+                <button type="button" class="btn-device-mode" data-device="mobile" title="Vista Mobile (9:16)"><i class="fa-solid fa-mobile-screen"></i></button>
+              </div>
+              <button type="button" class="btn btn-outline-gold btn-xs btn-toggle-expand" title="Espandi anteprima a tutta larghezza"><i class="fa-solid fa-maximize"></i> <span>Vista Ampia</span></button>
+            </div>
           </div>
           <div class="preview-viewport">
+            <div class="preview-cantina-banner" id="prevContactBox" title="Trascina con il mouse per centrare la foto">
+              <div class="preview-cantina-overlay"></div>
+              <div class="preview-cantina-content">
+                <span class="preview-story-eyebrow">SEDE CANTINA &amp; DEGUSTAZIONI</span>
+                <h3 style="font-family:var(--font-serif); font-size:1.6rem; color:#fff; margin:0;" id="prevContactTitle">Azienda Agricola ColBel</h3>
+              </div>
+            </div>
+
             <div class="preview-contacts-grid">
               <!-- Card Gianni -->
               <div class="preview-contact-card">
@@ -899,6 +937,6 @@
   <div id="dashToasts"></div>
 
   <!-- Script Logica Dashboard -->
-  <script src="dashboard.js?v=20261029_studio_v4"></script>
+  <script src="dashboard.js?v=20261029_studio_pan_v5"></script>
 </body>
 </html>
