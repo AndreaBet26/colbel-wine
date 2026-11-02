@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const contatti = DATA.contatti || {};
   const waGianni = String((contatti.gianni && contatti.gianni.wa_numero) || '393462443607').replace(/\D/g, '');
   const waLissa = String((contatti.lissa && contatti.lissa.wa_numero) || '393494356778').replace(/\D/g, '');
-  const mailCantina = (contatti.azienda && contatti.azienda.email) || 'colbelwine@gmail.com';
+  const mailCantina = (contatti.azienda && contatti.azienda.email) || 'lissa@colbelwine.com';
 
   // Le animazioni fanno parte del racconto: restano attive anche se Windows/macOS hanno
   // "effetti di animazione" disattivati (prima questo le spegneva tutte).
@@ -89,10 +89,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       ab_1_big: 'Radici', ab_1_label: 'Solighetto', ab_1_text: 'Sul Colbel, il «bel colle» di Solighetto, la famiglia Teo coltiva la vite da generazioni: qui nasce il nostro prosecco.', ab_2_big: 'Davis', ab_2_label: "L'incontro", ab_3_label: 'Nasce ColBel',
       cta_wines: 'I nostri vini', cta_wines_label: 'Giusto, Angelo, Casa Nova, ColFondo',
       nav_home: 'Home', nav_about: 'Chi siamo', nav_territory: 'Territorio', footer_wines: 'Prodotti',
-      nav_story: 'Chi siamo', nav_wines: 'Prodotti', nav_experiences: 'Esperienze', nav_agriturismo: 'Agriturismo',
+      nav_story: 'Chi siamo', nav_wines: 'I nostri vini', nav_experiences: 'Esperienze', nav_agriturismo: 'Agriturismo',
       nav_contacts: 'Contatti', nav_order_now: 'Ordina vini',
       hero_btn_wines: 'Scopri i vini', hero_btn_exp: "Prenota un'esperienza", hero_scroll: 'Scorri',
       more_story: 'La nostra storia', scrolly_all_wines: 'Scopri i nostri vini',
+      cb_where: 'Dove siamo', cb_directions: 'Indicazioni stradali', cb_write: 'Scrivici', exp_weekend: 'Ogni weekend, su prenotazione', exp_agri_title: 'Pranzo o cena in agriturismo', exp_agri_btn: "Scopri l'agriturismo",
       door_wines: 'Scopri tutti i vini', door_exp: 'Scegli la tua esperienza', door_agri: 'Entra in cucina',
       door_agri_text: "Pane a legna, salumi della cantina seicentesca e le conserve dell'orto. Nel weekend su prenotazione.",
       stats_label: 'ColBel in numeri', wine_order: 'Ordina',
@@ -119,10 +120,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       ab_1_big: 'Roots', ab_1_label: 'Solighetto', ab_1_text: 'On the Colbel, the “beautiful hill” of Solighetto, the Teo family has grown vines for generations: this is where our prosecco is born.', ab_2_big: 'Davis', ab_2_label: 'The meeting', ab_3_label: 'ColBel is born',
       cta_wines: 'Our wines', cta_wines_label: 'Giusto, Angelo, Casa Nova, ColFondo',
       nav_home: 'Home', nav_about: 'About us', nav_territory: 'Territory', footer_wines: 'Products',
-      nav_story: 'About us', nav_wines: 'Products', nav_experiences: 'Experiences', nav_agriturismo: 'Agriturismo',
+      nav_story: 'About us', nav_wines: 'Our wines', nav_experiences: 'Experiences', nav_agriturismo: 'Agriturismo',
       nav_contacts: 'Contact us', nav_order_now: 'Order wine',
       hero_btn_wines: 'Discover the wines', hero_btn_exp: 'Book an experience', hero_scroll: 'Scroll',
       more_story: 'Our story', scrolly_all_wines: 'Discover our wines',
+      cb_where: 'Find us', cb_directions: 'Get directions', cb_write: 'Write to us', exp_weekend: 'Every weekend, by reservation', exp_agri_title: 'Lunch or dinner at the farm', exp_agri_btn: 'Discover the agriturismo',
       door_wines: 'Discover all wines', door_exp: 'Choose your experience', door_agri: 'Step into the kitchen',
       door_agri_text: 'Wood-fired bread, cured meats from the 17th-century cellar and preserves from the garden. Weekends, by reservation.',
       stats_label: 'ColBel in numbers', wine_order: 'Order',
@@ -668,8 +670,59 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // --- 6m. Blocchi di scrollytelling: la foto resta ferma, i capitoli scorrono ---
+
+  // --- Esperienze: una per schermata; la foto riempie la metà destra e sfuma nella successiva (niente foto "in coda") ---
+  function initFadeStory(story) {
+    const media = Array.from(story.querySelectorAll('.story-track > .photo'));
+    const texts = Array.from(story.querySelectorAll('.story-texts > .story-chapter'));
+    const N = Math.max(texts.length, media.length);
+    if (EDIT || N < 1) { story.classList.add('is-static'); return; }
+    story.style.setProperty('--story-n', N);
+    // indicatore (senza numeri): una tacca per esperienza + "scorri", così si capisce che è un racconto a scorrimento
+    const pin = story.querySelector('.story-pin');
+    const ui = document.createElement('div');
+    ui.className = 'exp-progress';
+    ui.setAttribute('aria-hidden', 'true');
+    ui.innerHTML = '<div class="exp-progress-bars">' + texts.map(() => '<span><i></i></span>').join('') + '</div><span class="exp-progress-hint">' + (currentLang === 'eng' ? 'Scroll' : 'Scorri') + ' <i class="fa-solid fa-arrow-down"></i></span>';
+    pin.appendChild(ui);
+    const bars = Array.from(ui.querySelectorAll('.exp-progress-bars i'));
+    const hint = ui.querySelector('.exp-progress-hint');
+
+    // ogni capitolo: prima esce del tutto il precedente, poi entra il nuovo (mai due testi sovrapposti)
+    const parts = texts.map((t) => Array.from(t.children).filter((c) => !c.matches('.feature-list:empty, .eyebrow:empty')));
+    gsap.set(media.slice(1), { autoAlpha: 0 });
+    gsap.set(texts.slice(1), { autoAlpha: 0 });
+    media.forEach((m) => { const im = m.querySelector('img'); if (im) gsap.set(im, { scale: 1.08 }); });
+
+    // il primo capitolo compare una volta sola, quando la sezione arriva
+    if (parts[0]) gsap.from(parts[0], { y: 40, opacity: 0, duration: 1.2, stagger: 0.09, ease: 'expo.out', scrollTrigger: { trigger: story, start: 'top 55%', once: true } });
+
+    const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
+      trigger: story, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const p = self.progress * N;
+        bars.forEach((b, i) => gsap.set(b, { scaleX: Math.min(1, Math.max(0, p - i)) }));
+        if (hint) hint.style.opacity = self.progress > 0.92 ? 0 : 1;
+      }
+    } });
+    media.forEach((m, i) => { const im = m.querySelector('img'); if (im) tl.to(im, { scale: 1, duration: 1.2 }, Math.max(0, i - 0.3)); });
+    for (let i = 1; i < N; i++) {
+      const at = i - 0.5;
+      if (media[i]) tl.to(media[i], { autoAlpha: 1, duration: 0.5 }, at);
+      if (media[i - 1]) tl.to(media[i - 1], { autoAlpha: 0, duration: 0.5 }, at + 0.15);
+      if (texts[i - 1]) tl.fromTo(parts[i - 1], { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -30, duration: 0.18, stagger: 0.02, ease: 'power1.in', immediateRender: false }, at)
+        .set(texts[i - 1], { autoAlpha: 0 }, at + 0.26);
+      if (texts[i]) {
+        tl.set(texts[i], { autoAlpha: 1 }, at + 0.3);
+        tl.fromTo(parts[i], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }, at + 0.3);
+      }
+    }
+    tl.to({}, { duration: 0.5 });
+  }
+
   function initStories() {
     document.querySelectorAll('[data-story]').forEach((story) => {
+      if (story.classList.contains('story--fade')) { initFadeStory(story); return; }
       const pin = story.querySelector('.story-pin');
       const media = Array.from(story.querySelectorAll('.story-track > .photo'));
       const texts = Array.from(story.querySelectorAll('.story-texts > .story-chapter'));

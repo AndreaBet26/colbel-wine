@@ -3,11 +3,11 @@
   "claim": "Una tradizione, un’emozione",
   "hero_sottotitolo": "",
   "hero_immagine": "assets/images/p9201811-2.jpg",
-  "hero_immagine_pos": "42% 52%",
+  "hero_immagine_pos": "43% 54%",
   "porte_prodotti_img": "assets/images/bottiglie/giusto.png",
   "porte_prodotti_img_pos": "50% 50%",
   "porte_esperienze_img": "assets/images/stock/tagliere-salumi.jpg",
-  "porte_esperienze_img_pos": "35% 87%",
+  "porte_esperienze_img_pos": "49% 100%",
   "porte_agriturismo_img": "assets/images/stock/pane-olive.jpg",
   "porte_agriturismo_img_pos": "59% 59%",
   "minimo_bottiglie_ordine": 6,
@@ -22,7 +22,7 @@
   "partita_iva": "03920950266",
   "testi_sezioni": {
     "vini_etichetta": "",
-    "vini_titolo": "Prodotti",
+    "vini_titolo": "I nostri vini",
     "vini_sottotitolo": "I prezzi sono IVA inclusa con spedizione a casa qui in Italia.",
     "vini_immagine": "assets/images/stock/alba-filari.jpg",
     "vini_immagine_pos": "50% 50%",
@@ -32,6 +32,15 @@
     "esperienze_titolo": "Esperienze",
     "esperienze_intro": "Ci sono vari modi in cui potete venire a trovarci, passando per una degustazione veloce quando siete in zona visitando le nostre colline in vacanza o i vostri giorni festivi, o prendendo un momento di relax per godere i nostri vini e prodotti tipici oppure per un pranzo o cena, semplice ma autentica in buona compagnia! Godete tutto nella nostra sala con una bella vista della Quartiere di Piave e in un ambiante che speriamo trovate accogliente è di famiglia.",
     "esperienze_immagine": "assets/images/stock/tavola-brindisi.jpg",
-    "esperienze_immagine_pos": "50% 40%"
+    "esperienze_immagine_pos": "50% 40%",
+    "contatti_home": "",
+    "contatti_vini": "Per ordnire il vino, potete contattarci tramite email o WhatsApp. I prezzi sono IVA inclusa con spedizione a casa qui in Italia.",
+    "contatti_esperienze": "Per prenotare la tua esperienza o per ulteriore informazione, potete chiamare:",
+    "contatti_agriturismo": "Per prenotare la tua esperienza o per ulteriore informazioni, chiama:",
+    "esperienze_weekend": "Se cercate un posto accogliente per un pranzo o cena, ogni weekend apriamo, sul prenotazione, il nostro agriturismo con menù spuntineria, dove potete godere il massimo della nostra azienda. Il menu è semplice ma territoriale – nostro spuntino rustico prevede una selezione di affettati di nostra produzione a km, formaggi da piccole aziende agricole locali con miele e/o marmellate pane cotto nel nostro forno di legna* con farina di nostra produzione tipo 1, semi-integrale, varietà antica e resistente ‘Giorgione’, verdura del nostro orto in agrodolce, antipasti cotti a base di verdura o carne di stagione, dolce di casa e caffe.",
+    "esperienze_weekend_2": "Un calice di Casa Nova Brut poi vino sfuso e acqua inclusa. Vini spumanti e frizzanti possono essere acquistati a parte in calice o bottiglia.",
+    "esperienze_menu": "Per i vostri occasioni più speciale, potete aggiungere i primi di stagione realizzati con i nostri prodotti e/o piatti di carne. Per vedere il nostro menu:",
+    "agriturismo_menu": "Per le vostre occasioni più speciali, potete aggiungere i primi di stagione realizzati con i nostri prodotti e/o piatti di carne. Per vedere il nostro menu:",
+    "menu_url": "https://drive.google.com/file/d/1X7A61adjXPqkHjpULQF5xil_7dh0yKVr/view?usp=sharing"
   }
 }

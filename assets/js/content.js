@@ -291,16 +291,11 @@
         `<span><i class="${esc(t.icona || 'fa-solid fa-check')}"></i><b class="cb-tag-text" data-cb="${p}.tags.${ti}.testo" data-cb-label="Caratteristica">${esc(t.testo)}</b></span>`).join('');
       return `
           <div class="story-chapter${hiddenCls(e)}" id="esperienza-${esc(e.id)}" data-cb-item="${p}" data-cb-kind="esperienza">
-            <span class="eyebrow"><span class="exp-num">${pad2(i + 1)}</span><span data-cb="${p}.badge" data-cb-label="Etichetta">${esc(e.badge)}</span></span>
+            <span class="eyebrow" data-cb="${p}.badge" data-cb-label="Nota (es. giorni)">${esc(e.badge)}</span>
             <h2 class="h1" data-cb="${p}.titolo" data-cb-label="Titolo">${esc(e.titolo)}</h2>
             <div class="exp-price"><span data-cb="${p}.prezzo" data-cb-type="price-short" data-cb-label="Prezzo">${fmtPriceShort(e.prezzo)}</span> <span class="unit" data-cb="${p}.unita_prezzo" data-cb-label="Unità di prezzo">${esc(e.unita_prezzo)}</span></div>
             <p class="text" data-cb="${p}.descrizione" data-cb-label="Descrizione">${esc(e.descrizione)}</p>
             <div class="feature-list">${tags}</div>
-            <div class="actions">
-              <a href="https://wa.me/${wa}?text=${encodeURIComponent(msg)}" class="btn" target="_blank" rel="noopener">
-                <i class="fa-brands fa-whatsapp"></i> <span data-cb="${p}.testo_pulsante" data-cb-label="Testo del pulsante">${esc(e.testo_pulsante || ('Prenota con ' + (e.referente_nome || 'noi')))}</span>
-              </a>
-            </div>
           </div>`;
     }).join('');
   }
@@ -316,7 +311,6 @@
         <div class="photo-row grid" data-cb-item="${p}" data-cb-kind="foto">
           ${photoFig(f.immagine, (left ? 'fade-r' : 'fade-l') + ' fade-t fade-b', p + '.immagine', 'Foto', f.didascalia, f.immagine_pos)}
           <div class="copy">
-            <span class="photo-num">${pad2(i + 1)}</span>
             <p class="caption" data-cb="${p}.didascalia" data-cb-label="Didascalia">${esc(f.didascalia)}</p>
           </div>
         </div>`;

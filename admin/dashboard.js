@@ -346,8 +346,8 @@
       // Tag / Millesimato
       const tagEl = document.createElement('div');
       tagEl.className = 'wine-tag';
-      tagEl.textContent = v.tag || `${pad(idx + 1)} / Millesimato`;
-      bindInlineEdit(tagEl, v, 'tag', { fallback: `${pad(idx + 1)} / Millesimato`, fileKey: 'vini' });
+      tagEl.textContent = v.tag || '';
+      bindInlineEdit(tagEl, v, 'tag', { fallback: '', fileKey: 'vini' });
 
       // Nome Vino
       const nameEl = document.createElement('h3');
@@ -433,7 +433,7 @@
       nome_ordine: 'Nuovo Vino ' + newIdx,
       tipo: 'Vino Spumante Brut',
       denominazione: 'Conegliano Valdobbiadene Prosecco Superiore DOCG',
-      tag: `${pad(newIdx)} / Millesimato`,
+      tag: '',
       descrizione: 'Descrizione del nuovo vino, note floreali e abbinamenti…',
       descrizione_breve: '',
       prezzo: 11.9,
@@ -496,8 +496,8 @@
 
       const badgeFloat = document.createElement('span');
       badgeFloat.className = 'exp-badge-float';
-      badgeFloat.textContent = e.badge || `0${idx + 1} / TOUR`;
-      bindInlineEdit(badgeFloat, e, 'badge', { fallback: `0${idx + 1} / TOUR`, fileKey: 'esperienze' });
+      badgeFloat.textContent = e.badge || '';
+      bindInlineEdit(badgeFloat, e, 'badge', { fallback: '', fileKey: 'esperienze' });
 
       photoBox.appendChild(badgeFloat);
       photoBox.innerHTML += `
@@ -663,7 +663,7 @@
     const newIdx = list.length + 1;
     const newExp = {
       id: 'exp-' + Date.now().toString(36),
-      badge: `0${newIdx} / DEGUSTAZIONE`,
+      badge: '',
       titolo: 'Nuova Degustazione ' + newIdx,
       prezzo: 20,
       unita_prezzo: 'euro a persona',

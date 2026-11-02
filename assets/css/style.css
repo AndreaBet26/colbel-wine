@@ -1394,3 +1394,155 @@ main[data-bubbles] { position: relative; z-index: 1; }
   .land-copy { padding: 26svh var(--gutter) 24svh; }
   .land-copy .wide-title { font-size: 3.6rem; }
 }
+
+/* ======================================================================
+   40. Pulizia: menu più sottile · niente numeri · footer compatto ·
+       blocco contatti unico · Esperienze una per schermata · Agriturismo centrato
+   ====================================================================== */
+:root { --header-h: 70px; }
+.brand img { height: 42px; }
+.chapter-mark, .story-progress, .story-ui, .exp-num, .photo-num { display: none !important; }
+
+/* footer: un unico blocco basso, senza linea interna */
+.site-footer--min { padding: 1.6rem var(--gutter) 1.2rem; margin-top: 0; }
+.fm-bottom { border-top: 0; margin-top: .5rem; padding-top: 0; }
+.fm-logo img { height: 36px; }
+
+/* blocco contatti compatto, identico su tutte le pagine */
+.contact-block { padding: calc(var(--section) * 1.1) var(--gutter); border-top: 1px solid var(--ivory-12); }
+.cb-inner { max-width: 74rem; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.cb-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 3vw, 2.8rem); line-height: 1.1; margin-bottom: 1rem; }
+.cb-intro { color: var(--ivory-80); margin-bottom: 1.2rem; max-width: 34rem; }
+.cb-list { list-style: none; display: flex; flex-direction: column; gap: .7rem; font-size: .95rem; color: var(--ivory-80); }
+.cb-list li { display: flex; flex-wrap: wrap; gap: .3rem 1rem; align-items: baseline; }
+.cb-list strong { font-weight: 500; color: var(--ivory); min-width: 3.6rem; }
+.cb-list a:hover { color: var(--gold-soft); }
+.cb-list .cb-address { flex-direction: column; gap: .1rem; margin-top: .4rem; font-size: .88rem; color: var(--ivory-60); }
+.cb-actions { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .8rem; }
+.btn--sm { padding: .75rem 1.2rem; font-size: .68rem; }
+.btn--ghost { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+.btn--ghost:hover { background: var(--gold); color: var(--ink); }
+.cb-form { display: flex; flex-direction: column; gap: 1rem; }
+.cb-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.cb-form textarea { min-height: 5.5rem; }
+@media (max-width: 900px) {
+  .cb-inner { grid-template-columns: 1fr; }
+  .cb-form .row { grid-template-columns: 1fr; }
+}
+.page-text .copy { grid-column: 2 / 14; max-width: 68rem; }
+
+/* Esperienze: una per schermata, foto a tutta altezza nella metà destra, testo grande */
+.story--fade { height: calc(100vh * (var(--story-n, 3) + 0.8)); }
+.story--fade .story-pin { position: sticky; top: 0; height: 100vh; height: 100svh; }
+.story--fade .story-media { top: 0; bottom: 0; right: 0; left: auto; width: 52%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 6%, rgba(0,0,0,.8) 14%, #000 22%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 6%, rgba(0,0,0,.8) 14%, #000 22%); }
+.story--fade .story-track { position: absolute; inset: 0; transform: none !important; }
+.story--fade .story-media > .story-track > .photo { position: absolute; inset: 0; height: 100%; -webkit-mask-image: none; mask-image: none; }
+.story--fade .story-media img { top: 0; height: 100%; }
+.story--fade .story-texts { left: var(--gutter); right: auto; width: min(40rem, 42vw); top: var(--header-h); }
+.story--fade .story-chapter .h1 { font-size: clamp(3rem, 5vw, 5.6rem); line-height: 1; }
+.story--fade .story-chapter .exp-price { font-size: clamp(1.6rem, 2.2vw, 2.2rem); }
+.story--fade .story-chapter .text { font-size: clamp(1.02rem, 1.2vw, 1.2rem); line-height: 1.8; }
+.story--fade.is-static { height: auto; }
+.story--fade.is-static .story-pin { position: relative; height: auto; }
+@media (max-width: 900px) {
+  .story--fade .story-media { width: auto; left: 0; right: 0; top: var(--header-h); bottom: auto; height: 42%; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
+  .story--fade .story-texts { left: var(--gutter); right: var(--gutter); width: auto; top: calc(var(--header-h) + 40%); bottom: 0; }
+  .story--fade .story-chapter { justify-content: flex-start; }
+  .story--fade .story-chapter .h1 { font-size: 2.4rem; }
+  .story--fade .story-chapter .text { font-size: .92rem; }
+}
+
+/* Agriturismo: i testi tutti nello stesso punto, centrati in basso e più grandi */
+.gallery-track.is-h .photo-row .copy { left: 18% !important; right: 18% !important; bottom: 9% !important; top: auto !important; text-align: center; display: flex; justify-content: center; }
+.gallery-track.is-h .photo-row .caption { font-size: clamp(1.1rem, 1.35vw, 1.4rem); line-height: 1.7; max-width: 36rem; margin: 0 auto; text-align: center; }
+@media (max-width: 900px) {
+  .gallery-track.is-h .photo-row .copy { left: 6% !important; right: 6% !important; }
+  .gallery-track.is-h .photo-row .caption { font-size: .98rem; }
+}
+.cb-intro:empty { display: none; }
+
+/* ======================================================================
+   41. Revisione 30/10: linee tra le sezioni (senza numeri) · contatti a tutta
+       larghezza · Esperienze una alla volta · Agriturismo girato e centrato
+   ====================================================================== */
+
+/* linee di stacco tra le sezioni: tornano, solo senza numerazione */
+.chapter-mark { display: grid !important; padding: calc(var(--section) * 0.75) 0 calc(var(--section) * 0.45); }
+.chapter-mark .cm-num { display: none !important; }
+.chapter-mark .cm-inner { gap: 1.4rem; }
+.chapter-mark .cm-line { order: 2; }
+.chapter-mark .cm-label { order: 1; color: var(--gold-soft); }
+@media (max-width: 900px) {
+  .chapter-mark { padding: calc(var(--section) * 0.6) 0 calc(var(--section) * 0.35); }
+}
+
+/* --- Contatti: tutta la larghezza, tre colonne continue + modulo in riga --- */
+.contact-block { padding: calc(var(--section) * 0.9) 0 calc(var(--section) * 0.6); border-top: 0; }
+.cb-head { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: clamp(1.4rem, 3vw, 3rem); padding: 0 var(--gutter); }
+.cb-head .cb-title { margin: 0; font-size: clamp(2.8rem, 5.4vw, 5.6rem); line-height: 1; }
+.cb-rule { height: 1px; background: linear-gradient(90deg, var(--gold), rgba(212,175,55,0.1)); transform-origin: left; }
+.cb-head .cb-intro { grid-column: 1 / -1; margin: 1.2rem 0 0; max-width: 46rem; }
+.cb-people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(2.4rem, 5vw, 4.4rem); border-top: 1px solid var(--ivory-12); border-bottom: 1px solid var(--ivory-12); }
+.cb-person { display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; padding: clamp(1.8rem, 3.2vw, 3.2rem) var(--gutter); }
+.cb-person + .cb-person { border-left: 1px solid var(--ivory-12); }
+.cb-name { font-size: var(--fs-eyebrow); font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: .4rem; }
+.cb-phone { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 3vw, 3.1rem); line-height: 1.05; color: var(--ivory); transition: color .3s; }
+.cb-phone:hover, .cb-mail:hover { color: var(--gold-soft); }
+.cb-mail, .cb-addr { font-size: .95rem; color: var(--ivory-80); transition: color .3s; }
+.cb-where .cb-addr:first-of-type { font-family: var(--serif); font-weight: 300; font-size: clamp(1.4rem, 1.9vw, 1.95rem); line-height: 1.2; color: var(--ivory); }
+.cb-person .link { margin-top: auto; padding-top: 1.1rem; }
+.cb-form { display: grid; grid-template-columns: minmax(10rem, 1fr) 4fr; column-gap: clamp(2rem, 5vw, 5rem); align-items: start; padding: clamp(2.2rem, 4vw, 3.6rem) var(--gutter) 0; }
+.cb-form-title { font-family: var(--serif); font-weight: 300; font-size: clamp(1.9rem, 2.6vw, 2.7rem); line-height: 1.1; color: var(--ivory); }
+.cb-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem 2.2rem; }
+.cb-fields .cb-msg { grid-column: 1 / -1; }
+.cb-fields textarea { min-height: 3.4rem; }
+.cb-form > .actions { grid-column: 2; margin-top: 1.6rem; }
+@media (max-width: 900px) {
+  .cb-head { grid-template-columns: 1fr; }
+  .cb-rule { margin-top: 1rem; }
+  .cb-people { grid-template-columns: 1fr; }
+  .cb-person + .cb-person { border-left: 0; border-top: 1px solid var(--ivory-12); }
+  .cb-form { grid-template-columns: 1fr; }
+  .cb-form-title { margin-bottom: 1.2rem; }
+  .cb-fields { grid-template-columns: 1fr; }
+  .cb-form > .actions { grid-column: 1; }
+}
+
+/* --- Esperienze: una alla volta, con le tacche di avanzamento in basso --- */
+.story--fade .story-texts { bottom: 5.5rem; }
+.story--fade .story-chapter .actions { display: none; }
+.exp-progress { position: absolute; z-index: 3; left: var(--gutter); bottom: 2.4rem; display: flex; align-items: center; gap: 1.8rem; pointer-events: none; }
+.exp-progress-bars { display: flex; gap: .55rem; }
+.exp-progress-bars span { display: block; width: 2.8rem; height: 2px; background: var(--ivory-12); overflow: hidden; }
+.exp-progress-bars i { display: block; height: 100%; background: var(--gold); transform: scaleX(0); transform-origin: left; }
+.exp-progress-hint { font-size: var(--fs-eyebrow); font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--ivory-60); transition: opacity .5s; }
+.exp-progress-hint i { margin-left: .5rem; color: var(--gold); animation: expHint 1.8s ease-in-out infinite; }
+@keyframes expHint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@media (max-width: 900px) {
+  .story--fade .story-texts { bottom: 4rem; }
+  .exp-progress { bottom: 1.2rem; }
+}
+
+/* --- Sezioni testo + foto (Esperienze → agriturismo, Agriturismo → spuntineria) --- */
+.feature-split .photo { height: min(94vh, 920px); }
+.feature-split .copy .col { max-width: 40rem; }
+.feature-split .h1 { font-size: clamp(2.6rem, 4.4vw, 4.8rem); line-height: 1.02; margin: 1.1rem 0 1.6rem; }
+.feature-split .lead { font-size: clamp(1.15rem, 1.45vw, 1.45rem); line-height: 1.6; color: var(--ivory); }
+.feature-split .text { margin-top: 1.1rem; color: var(--ivory-80); }
+.feature-split .text a { color: var(--gold-soft); border-bottom: 1px solid rgba(212,175,55,.4); }
+.feature-split .actions { margin-top: 2.2rem; }
+.feature-split--right .copy { grid-column: 2 / 8; }
+.feature-split--left .copy { grid-column: 8 / 14; }
+.feature-split .lead, .feature-split .text, .feature-split .h1 { text-shadow: 0 1px 2px rgba(0,0,0,.5), 0 2px 20px rgba(0,0,0,.6); }
+
+
+.feature-split--right .photo { grid-column: 7 / -1; }
+.feature-split--left .photo { grid-column: 1 / 9; }
+@media (max-width: 900px) { .feature-split .photo { grid-column: 1 / -1 !important; } }
+
+/* contatti senza modulo; pagina Contatti senza titolo ripetuto */
+.contact-block { padding-bottom: calc(var(--section) * 0.9); }
+.contact-block--page { padding-top: calc(var(--section) * 0.4); }
+.contact-block--page .cb-people { margin-top: 0; }
+.chapter-mark .cm-inner { gap: 0; }

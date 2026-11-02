@@ -309,7 +309,7 @@
                   </div>
                 </div>
                 <div class="form-row" style="margin-bottom:0;">
-                  <div class="form-group" style="flex:1; margin-bottom:0;">
+                  <div class="form-group" style="flex:1; margin-bottom:0; display:none;">
                     <label class="form-label">Etichetta piccola</label>
                     <input type="text" class="form-control" data-bind="chiSiamo.etichetta" id="inputCsEyebrow" placeholder="LA NOSTRA STORIA">
                   </div>
@@ -340,7 +340,7 @@
               <label class="form-label">Paragrafo 3: L'agriturismo e la sala degustazione oggi</label>
               <textarea class="form-control form-textarea" rows="3" data-bind="chiSiamo.paragrafo_2" id="inputCsP2"></textarea>
             </div>
-            <div class="form-group" style="margin-bottom:0;">
+            <div class="form-group" style="margin-bottom:0; display:none;">
               <label class="form-label">Citazione evocativa</label>
               <textarea class="form-control form-textarea" rows="2" data-bind="chiSiamo.citazione" id="inputCsQuote"></textarea>
             </div>
@@ -436,7 +436,7 @@
                   </div>
                 </div>
                 <div class="form-row" style="margin-bottom:0;">
-                  <div class="form-group" style="flex:1; margin-bottom:0;">
+                  <div class="form-group" style="flex:1; margin-bottom:0; display:none;">
                     <label class="form-label">Etichetta piccola</label>
                     <input type="text" class="form-control" data-bind="territorio.etichetta" id="inputTerEyebrow" placeholder="TERRITORIO">
                   </div>
@@ -574,7 +574,7 @@
                   <label class="btn btn-primary btn-sm"><i class="fa-solid fa-upload"></i> Scegli<input type="file" id="inputProdImgFile" accept="image/*" hidden></label>
                 </div>
               </div>
-              <div class="form-group" style="flex:1; margin-bottom:0;">
+              <div class="form-group" style="flex:1; margin-bottom:0; display:none;">
                 <label class="form-label">Foto Chiusura Pagina (Botti in cantina)</label>
                 <div class="img-field" data-img-field>
                   <input type="text" class="form-control" data-bind="impostazioni.testi_sezioni.vini_chiusura_immagine">
@@ -655,6 +655,22 @@
       <div class="items-grid" id="esperienzeVisualGrid">
         <!-- Schede esperienze interattive renderizzate via JS a tutta larghezza -->
       </div>
+
+      <div class="form-panel" style="margin-top:1.5rem;">
+        <h4 class="panel-subtitle">Pranzo o cena del weekend (testo sotto le esperienze)</h4>
+        <div class="form-group">
+          <label class="form-label">Testo principale</label>
+          <textarea class="form-control form-textarea" rows="5" data-bind="impostazioni.testi_sezioni.esperienze_weekend"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Secondo paragrafo</label>
+          <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.testi_sezioni.esperienze_weekend_2"></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Frase prima del link "clicca qua" al menù</label>
+          <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.testi_sezioni.esperienze_menu"></textarea>
+        </div>
+      </div>
     </section>
 
     <!-- ============================================================== -->
@@ -700,6 +716,10 @@
         <h4 class="panel-subtitle">Menù Spuntineria del Weekend &amp; Eventi Privati</h4>
         <div class="form-group" style="margin-bottom:0;">
           <textarea class="form-control form-textarea" rows="3" data-bind="agriturismo.spuntineria"></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom:0; margin-top:1rem;">
+          <label class="form-label">Frase prima del link "clicca qui." al menù</label>
+          <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.testi_sezioni.agriturismo_menu"></textarea>
         </div>
       </div>
 
@@ -768,7 +788,7 @@
             <h4 class="panel-subtitle"><i class="fa-solid fa-user" style="color:var(--gold); margin-right:4px;"></i> Gianni Teo (Cantina &amp; Degustazioni)</h4>
             <div class="form-row">
               <div class="form-group"><label class="form-label">Nome visualizzato</label><input type="text" class="form-control" data-bind="contatti.gianni.nome" id="inputGianniNome"></div>
-              <div class="form-group"><label class="form-label">Ruolo</label><input type="text" class="form-control" data-bind="contatti.gianni.ruolo" placeholder="es. Titolare ed Enologo" id="inputGianniRuolo"></div>
+              <div class="form-group" style="display:none;"><label class="form-label">Ruolo</label><input type="text" class="form-control" data-bind="contatti.gianni.ruolo" placeholder="es. Titolare ed Enologo" id="inputGianniRuolo"></div>
             </div>
             <div class="form-row">
               <div class="form-group"><label class="form-label">Telefono</label><input type="text" class="form-control" data-bind="contatti.gianni.telefono" id="inputGianniTel"></div>
@@ -785,7 +805,7 @@
             <h4 class="panel-subtitle"><i class="fa-solid fa-user" style="color:var(--gold); margin-right:4px;"></i> Lissa (Cucina &amp; Accoglienza)</h4>
             <div class="form-row">
               <div class="form-group"><label class="form-label">Nome visualizzato</label><input type="text" class="form-control" data-bind="contatti.lissa.nome" id="inputLissaNome"></div>
-              <div class="form-group"><label class="form-label">Ruolo</label><input type="text" class="form-control" data-bind="contatti.lissa.ruolo" placeholder="es. Cucina artigianale &amp; Accoglienza" id="inputLissaRuolo"></div>
+              <div class="form-group" style="display:none;"><label class="form-label">Ruolo</label><input type="text" class="form-control" data-bind="contatti.lissa.ruolo" placeholder="es. Cucina artigianale &amp; Accoglienza" id="inputLissaRuolo"></div>
             </div>
             <div class="form-row">
               <div class="form-group"><label class="form-label">Telefono</label><input type="text" class="form-control" data-bind="contatti.lissa.telefono" id="inputLissaTel"></div>
@@ -874,6 +894,33 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    
+      <div class="form-panel" style="margin-top:1.5rem;">
+        <h4 class="panel-subtitle"><i class="fa-solid fa-envelope" style="color:var(--gold); margin-right:4px;"></i> Blocco "Contatti" in fondo alle pagine · frase sopra i numeri</h4>
+        <div class="form-group">
+          <label class="form-label">Home (lascia vuoto per nessuna frase)</label>
+          <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.testi_sezioni.contatti_home"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pagina I nostri vini</label>
+          <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.testi_sezioni.contatti_vini"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pagina Esperienze</label>
+          <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.testi_sezioni.contatti_esperienze"></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Pagina Agriturismo</label>
+          <textarea class="form-control form-textarea" rows="2" data-bind="impostazioni.testi_sezioni.contatti_agriturismo"></textarea>
+        </div>
+      </div>
+
+      <div class="form-panel">
+        <h4 class="panel-subtitle"><i class="fa-solid fa-utensils" style="color:var(--gold); margin-right:4px;"></i> Link al menù (usato da "clicca qui" in Esperienze e Agriturismo)</h4>
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="text" class="form-control" data-bind="impostazioni.testi_sezioni.menu_url" placeholder="https://drive.google.com/...">
         </div>
       </div>
     </section>
