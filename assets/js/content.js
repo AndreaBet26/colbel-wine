@@ -134,6 +134,11 @@
       const v = get(data, el.getAttribute('data-cb'));
       if (v !== undefined && v !== null) el.textContent = formatValue(el, v);
     });
+    // link presi dai dati (es. menù dell'agriturismo)
+    document.querySelectorAll('[data-cb-href]').forEach((el) => {
+      const v = get(data, el.getAttribute('data-cb-href'));
+      if (v) el.setAttribute('href', v);
+    });
     document.querySelectorAll('[data-cb-src]').forEach((el) => {
       const srcPath = el.getAttribute('data-cb-src');
       const v = get(data, srcPath);

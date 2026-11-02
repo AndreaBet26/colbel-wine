@@ -10,35 +10,40 @@
       "immagine": "assets/images/stock/tagliere-salumi.jpg",
       "immagine_pos": "50% 50%",
       "didascalia": "La produzione di salumi, è un’altra passione di Gianni. Quando in inverno le viti riposano, salami, soppresse e altri insaccati, stagionano in un’antica cantina seicentesca di Casa Teo raffrescata dai secolari gelsi. È possibile assaggiarli sia il loco, che acquistarle per il consumo domestico.",
-      "ordine": 1
+      "ordine": 1,
+      "titolo": "I salumi di Gianni"
     },
     {
       "id": "foto-1",
       "immagine": "assets/images/stock/mani-pane.jpg",
       "immagine_pos": "50% 50%",
       "didascalia": "Il pane di Lissa è il compagno perfetto per tutti questi prodotti. Viene prodotto con una varietà di frumento antica “Giorgione”, seguendo tempi e metodi tramandati da generazioni, e cotto nel forno alimentato dalla legna dei nostri boschi.",
-      "ordine": 2
+      "ordine": 2,
+      "titolo": "Il pane e il forno a legna"
     },
     {
       "id": "foto-5",
       "immagine": "assets/images/stock/alba-filari.jpg",
       "immagine_pos": "50% 50%",
       "didascalia": "Nello stesso forno e con la stessa legna durante le festività Lissa come da tradizione riscopre le ricette antiche per impastare e cucinare i gustosi panettoni natalizi, le soffici focacce pasquali e gli immancabili biscotti e crostate che ci ricordano i bei momenti passati con i nostri genitori e i nostri nonni.",
-      "ordine": 3
+      "ordine": 3,
+      "titolo": ""
     },
     {
       "id": "foto-3",
       "immagine": "assets/images/IMG20200731193140.jpg",
       "immagine_pos": "50% 50%",
       "didascalia": "Durante la bella stagione Lissa raccoglie i prodotti dell’orto per produrre passate di pomodoro, conserve in agrodolce, sottolio e sottaceto e marmellate di prugne, pesche e albicocche che allieteranno tutti i momenti dell’anno, anche quelle fredde giornate in cui le ore di luce sono poche e l’immancabile compagno sarà il crepitio del caminetto.",
-      "ordine": 4
+      "ordine": 4,
+      "titolo": "L’orto e le conserve"
     },
     {
       "id": "foto-6",
       "immagine": "assets/images/cantina-2.jpeg",
-      "immagine_pos": "50% 50%",
+      "immagine_pos": "50% 50% / 1.2",
       "didascalia": "Ma la cucina di Lissa è sempre calda e spazia dai piatti del nostro pollame, alla selvaggina, al vegano.",
-      "ordine": 5
+      "ordine": 5,
+      "titolo": ""
     }
   ],
   "spuntineria": "L’agriturismo con menù spuntineria, apre il weekend, con un menù semplice ma territoriale, che prevede la selezione di affettati di nostra produzione, formaggi da piccole aziende locali con miele e marmellate, pane cotto in forno a legna, zucchine del nostro orto in agrodolce, e spuntini cotti. il tutto accompagnato da una o più delle vostre bollicine preferite. Per i vostri eventi speciali, è invece possibile prenotare e concordare un menù più adatto alle vostre esigenze. La selezione dei nostri vini è sempre disponibile per l’acquisto in loco."

@@ -753,6 +753,16 @@
       const captionWrap = document.createElement('div');
       captionWrap.className = 'photo-card-caption-wrap';
 
+      // Titolo del capitolo: se pieno, questa foto apre un nuovo capitolo; se vuoto, il testo si aggiunge al capitolo precedente
+      const titleEl = document.createElement('div');
+      titleEl.className = 'photo-caption visual-editable';
+      titleEl.style.fontWeight = '600';
+      titleEl.style.color = 'var(--gold)';
+      titleEl.title = 'Titolo del capitolo (lascia vuoto per continuare il capitolo precedente)';
+      titleEl.textContent = f.titolo || '';
+      bindInlineEdit(titleEl, f, 'titolo', { fallback: '', fileKey: 'agriturismo' });
+      captionWrap.appendChild(titleEl);
+
       const captionEl = document.createElement('div');
       captionEl.className = 'photo-caption visual-editable';
       captionEl.textContent = f.didascalia || 'Scrivi qui la didascalia della foto…';
