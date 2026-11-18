@@ -4,7 +4,13 @@
 # Doppio clic per avviare il sito e l'editor di contenuti
 # ==============================================================
 
-cd "$(dirname "$0")"
+if [ -d "/Volumes/T7/Sito ColBel" ]; then
+    cd "/Volumes/T7/Sito ColBel"
+elif [ -d "/Volumes/T7/Sito col bel" ]; then
+    cd "/Volumes/T7/Sito col bel"
+else
+    cd "$(dirname "$0")"
+fi
 
 # Imposta il titolo della finestra del Terminale
 printf "\e]2;ColBel Server Locale + Dashboard\a"

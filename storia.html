@@ -14,9 +14,9 @@
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="assets/css/style.css?v=30" />
+  <link rel="stylesheet" href="assets/css/casa.css" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Winery","name":"ColBel Vineyards and Winery","legalName":"Azienda Agricola ColBel di Teo Gianni","slogan":"Una tradizione, un’emozione","url":"https://colbelwine.com/","logo":"https://colbelwine.com/assets/images/logo.png","email":"lissa@colbelwine.com","telephone":["+39 346 2443607","+39 349 4356778"],"vatID":"IT03920950266","address":{"@type":"PostalAddress","streetAddress":"Via Drio Cisa, 2, Località Solighetto","postalCode":"31053","addressLocality":"Pieve di Soligo","addressRegion":"TV","addressCountry":"IT"},"sameAs":["https://www.facebook.com/people/AA-Colbel-C-V-Prosecco-DOCG/100054377224427/","https://www.instagram.com/colbel_wine/"]}</script>
   <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -29,14 +29,14 @@
     </a>
     <nav class="main-nav" id="mainNav" aria-label="Menu principale">
       <a href="index.html" class="nav-link"><span data-i18n="nav_home">Home</span></a>
-      <a href="index.html#chi-siamo" class="nav-link"><span data-i18n="nav_about">Chi siamo</span></a>
-      <a href="index.html#territorio" class="nav-link"><span data-i18n="nav_territory">Territorio</span></a>
+      <a href="storia.html" class="nav-link active"><span data-i18n="nav_about">Chi siamo</span></a>
       <a href="vini.html" class="nav-link"><span data-i18n="nav_wines">I nostri vini</span></a>
       <a href="esperienze.html" class="nav-link"><span data-i18n="nav_experiences">Esperienze</span></a>
       <a href="agriturismo.html" class="nav-link"><span data-i18n="nav_agriturismo">Agriturismo</span></a>
       <a href="contatti.html" class="nav-link"><span data-i18n="nav_contacts">Contatti</span></a>
     </nav>
     <div class="header-tools">
+      <a href="https://wa.me/393462443607" target="_blank" rel="noopener" class="header-cta-btn"><i class="fa-brands fa-whatsapp"></i> <span>Scrivici su WhatsApp</span></a>
       <div class="lang-menu" id="langMenu">
         <button type="button" class="lang-current" id="langCurrent" aria-haspopup="true" aria-expanded="false"><span id="langCurrentLabel">ITA</span> <i class="fa-solid fa-chevron-down"></i></button>
         <div class="lang-list" role="menu">
@@ -51,8 +51,7 @@
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <nav aria-label="Menu">
         <a href="index.html" data-i18n="nav_home">Home</a>
-        <a href="index.html#chi-siamo" data-i18n="nav_about">Chi siamo</a>
-        <a href="index.html#territorio" data-i18n="nav_territory">Territorio</a>
+        <a href="storia.html" data-i18n="nav_about">Chi siamo</a>
         <a href="vini.html" data-i18n="nav_wines">I nostri vini</a>
         <a href="esperienze.html" data-i18n="nav_experiences">Esperienze</a>
         <a href="agriturismo.html" data-i18n="nav_agriturismo">Agriturismo</a>
@@ -69,82 +68,98 @@
 
   <main id="top" data-page="storia">
 
+    <!-- 1. Hero Spaccato 50/50: Gianni in vigna (B&W) e presentazione -->
     <section class="page-hero grid">
-      <figure class="photo bleed-right-wide fade-l fade-b " data-photo><img src="assets/images/web/vendemmia-gianni.jpg" alt="" fetchpriority="high" style="object-position:65% 40%" data-cb-src="chiSiamo.immagine" data-cb-pos="chiSiamo.immagine_pos" data-cb-label="Foto Chi siamo" /></figure>
+      <figure class="photo bw" data-photo><img src="assets/images/web/vendemmia-gianni.jpg" alt="Gianni tra i filari di ColBel" fetchpriority="high" style="object-position:65% 40%" data-cb-src="chiSiamo.immagine" data-cb-pos="chiSiamo.immagine_pos" data-cb-label="Foto Chi siamo" class="bw" /></figure>
       <div class="copy copy-left">
         <div class="col" data-reveal>
-          
+          <span class="eyebrow">La nostra storia</span>
           <h1 class="h1" data-cb="chiSiamo.titolo">Chi siamo</h1>
           <p class="lead" data-cb="chiSiamo.introduzione">“Col Bel” in dialetto veneto significa “bel colle”.</p>
-          
+          <p class="text">Un colle ripido a Solighetto, nel cuore della zona DOCG del Conegliano Valdobbiadene, dove la nostra famiglia coltiva la vite e accoglie gli ospiti come a casa propria.</p>
         </div>
       </div>
     </section>
 
-    
-    
-    <div class="chapter-mark grid" data-mark><div class="cm-inner"><span class="cm-line"></span></div></div>
-
-    <section class="about-head" id="chi-siamo">
-      <div class="grid">
-        <div class="about-head__copy" data-reveal>
-          <h2 class="wide-title about-title" data-cb="chiSiamo.titolo">Chi siamo</h2>
-          <p class="lead about-lead" data-cb="chiSiamo.introduzione">“Col Bel” in dialetto veneto significa “bel colle”.</p>
-        </div>
+    <!-- 2. Cronistoria a 3 tappe: Solighetto, 2004, 2020 -->
+    <section class="story-milestones" id="tappe">
+      <div class="story-milestones-head" data-reveal>
+        <span class="eyebrow">Le nostre radici</span>
+        <h2 class="h2">Tre momenti che ci hanno portato fin qui</h2>
       </div>
-    </section>
-    <section class="section about" data-about>
-      <div class="grid">
-        <div class="about-moments">
-          <div class="about-line" aria-hidden="true"><span></span></div>
-          <article class="about-moment">
-            <span class="about-dot" aria-hidden="true"></span>
-            <span class="about-big">Solighetto</span>
-            <p class="text" data-cb="chiSiamo.paragrafo_0">Il Colbel sorge a Solighetto, nel comune di Pieve di Soligo, e su di esso è sito il vigneto da cui, da generazioni, la famiglia di Gianni Teo produce prosecco.</p>
-          </article>
-          <article class="about-moment">
-            <span class="about-dot" aria-hidden="true"></span>
-            <span class="about-big">2004</span>
-            <p class="text" data-cb="chiSiamo.paragrafo_1">Crescendo fra le colline del prosecco, Gianni sviluppa una grande passione per il mondo dei vini, e frequenterà l’università di Padova nell’ambito dell’enologia. Durante un percorso di ricerca in California, incontra Lissa, che, nata in Texas, si trova a Davis per studiare biologia. Il loro incontro diventa presto amore, e Gianni tornerà con Lissa in Italia, per fondare, nel 2004, l’azienda agricola “Colbel”.</p>
-          </article>
-          <article class="about-moment">
-            <span class="about-dot" aria-hidden="true"></span>
-            <span class="about-big">2020</span>
-            <p class="text" data-cb="chiSiamo.paragrafo_2">Ad oggi, tra rinnovi e trasformazioni, Colbel, oltre a produrre prosecco e vini frizzanti, è anche agriturismo: nel 2020 i due coniugi aprono le porte della nuova sala di degustazione. Qui è possibile assaggiare i loro vini, accompagnati da pane, affettati, verdure di loro produzione e altri prodotti locali.</p>
-          </article>
-        </div>
+      <div class="milestones-grid">
+        <article class="milestone-item" data-reveal>
+          <span class="milestone-year">Solighetto</span>
+          <p class="text" data-cb="chiSiamo.paragrafo_0">Il Colbel sorge a Solighetto, nel comune di Pieve di Soligo, e su di esso è sito il vigneto da cui, da generazioni, la famiglia di Gianni Teo produce prosecco.</p>
+        </article>
+        <article class="milestone-item" data-reveal>
+          <span class="milestone-year">2004</span>
+          <p class="text" data-cb="chiSiamo.paragrafo_1">Crescendo fra le colline del prosecco, Gianni sviluppa una grande passione per il mondo dei vini, e frequenterà l’università di Padova nell’ambito dell’enologia. Durante un percorso di ricerca in California, incontra Lissa, che, nata in Texas, si trova a Davis per studiare biologia. Il loro incontro diventa presto amore, e Gianni tornerà con Lissa in Italia, per fondare, nel 2004, l’azienda agricola “Colbel”.</p>
+        </article>
+        <article class="milestone-item" data-reveal>
+          <span class="milestone-year">2020</span>
+          <p class="text" data-cb="chiSiamo.paragrafo_2">Ad oggi, tra rinnovi e trasformazioni, Colbel, oltre a produrre prosecco e vini frizzanti, è anche agriturismo: nel 2020 i due coniugi aprono le porte della nuova sala di degustazione. Qui è possibile assaggiare i loro vini, accompagnati da pane, affettati, verdure di loro produzione e altri prodotti locali.</p>
+        </article>
       </div>
     </section>
 
-    
-    
-    <div class="chapter-mark grid" data-mark><div class="cm-inner"><span class="cm-line"></span></div></div>
-
-    <section class="land" id="territorio">
-      <div class="land-bg" aria-hidden="true"><img src="assets/images/IMG-20180409-WA0003.jpg" alt="" data-cb-src="territorio.immagine_sfondo" data-cb-pos="territorio.immagine_sfondo_pos" data-cb-label="Foto del territorio" /></div>
-      <div class="land-copy">
-        <h2 class="wide-title" data-cb="territorio.titolo">Territorio</h2>
-        <div class="land-cols">
+    <!-- 3. Territorio: Spaccato 50/50 su fondo caldo Pietra #E9E1D4 -->
+    <section class="split-section split-section--left" id="territorio" style="background-color: var(--caldo-contrast);">
+      <div class="split-photo">
+        <img src="assets/images/IMG-20180409-WA0003.jpg" alt="Le colline del Prosecco Superiore a Solighetto" loading="lazy" data-cb-src="territorio.immagine_sfondo" data-cb-pos="territorio.immagine_sfondo_pos" data-cb-label="Foto del territorio" />
+      </div>
+      <div class="split-copy" data-reveal>
+        <div class="col">
+          <span class="eyebrow">Il nostro paesaggio</span>
+          <h2 class="h1" data-cb="territorio.titolo">Territorio</h2>
           <p class="lead" data-cb="territorio.citazione">“Colbel” si trova a Solighetto, nel cuore della rinomata zona di produzione del Prosecco di Conegliano Valdobbiadene DOCG.</p>
-          <div class="stack">
-            <p class="text" data-cb="territorio.descrizione">I vigneti si arrampicano sulle prime colline e creano un cuscinetto tra la fertile pianura trevigiana a sud e le superfici boscate a monte.</p>
-            <p class="text" data-cb="territorio.descrizione_2">Dal nostro agriturismo, se siete fortunati, sarà possibile intravedere la romantica laguna veneta, dalla quale nelle ore serali spira una brezza che conferisce al nostro vino un aroma unico.</p>
-            <div class="actions"><a href="contatti.html" class="link"><span data-i18n="nav_contacts">Contatti</span></a></div>
+          <p class="text" data-cb="territorio.descrizione">I vigneti si arrampicano sulle prime colline e creano un cuscinetto tra la fertile pianura trevigiana a sud e le superfici boscate a monte.</p>
+          <p class="text" data-cb="territorio.descrizione_2">Dal nostro agriturismo, se sei fortunato, sarà possibile intravedere la romantica laguna veneta, dalla quale nelle ore serali spira una brezza che conferisce al nostro vino un aroma unico.</p>
+          <div class="actions" style="margin-top: 1.5rem;">
+            <a href="vini.html" class="btn">I nostri vini</a>
+            <a href="contatti.html" class="link">Contattaci &rarr;</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Sezione Contatti in fondo -->
+    <section class="contact-block" id="contatti-blocco">
+      <div class="cb-head" data-reveal>
+        <h2 class="cb-title" data-i18n="nav_contacts">Contatti</h2>
+        <span class="cb-rule" aria-hidden="true"></span>
+        <p class="text cb-intro">Vieni a trovarci a Solighetto o contattaci per qualsiasi informazione sui nostri vini e sulla cantina.</p>
+      </div>
+      <div class="cb-people">
+        <div class="cb-person" data-reveal>
+          <strong class="cb-name" data-cb="contatti.gianni.nome">Gianni</strong>
+          <a class="cb-phone" href="tel:+393462443607" data-cb-tel="gianni"><span data-cb="contatti.gianni.telefono">346 2443607</span></a>
+          <a class="cb-mail" href="mailto:gianniteo@libero.it" data-cb="contatti.gianni.email">gianniteo@libero.it</a>
+          <a href="https://wa.me/393462443607" class="link" target="_blank" rel="noopener" data-cb-wa="gianni"><i class="fa-brands fa-whatsapp"></i> <span>WhatsApp</span></a>
+        </div>
+        <div class="cb-person" data-reveal>
+          <strong class="cb-name" data-cb="contatti.lissa.nome">Lissa</strong>
+          <a class="cb-phone" href="tel:+393494356778" data-cb-tel="lissa"><span data-cb="contatti.lissa.telefono">349 4356778</span></a>
+          <a class="cb-mail" href="mailto:lmveilleux@gmail.com" data-cb="contatti.lissa.email">lmveilleux@gmail.com</a>
+          <a href="https://wa.me/393494356778" class="link" target="_blank" rel="noopener" data-cb-wa="lissa"><i class="fa-brands fa-whatsapp"></i> <span>WhatsApp</span></a>
+        </div>
+        <div class="cb-person cb-where" data-reveal>
+          <strong class="cb-name" data-i18n="cb_where">Dove siamo</strong>
+          <span class="cb-addr" data-cb="contatti.azienda.nome">Azienda Agricola ColBel di Teo Gianni</span>
+          <span class="cb-addr" data-cb="contatti.azienda.indirizzo">Via Drio Cisa, 2, Località Solighetto – 31053 Pieve di Soligo (TV)</span>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=ColBel+Via+Drio+Cisa+2+Solighetto+Pieve+di+Soligo" class="link" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> <span data-i18n="cb_directions">Indicazioni stradali</span></a>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ==================== FOOTER (minimal: dati legali + social) ==================== -->
-  <footer class="site-footer site-footer--min" id="footer">
+  <!-- ==================== FOOTER (minimal: due righe) ==================== -->
+  <footer class="site-footer" id="footer">
     <div class="fm-main">
       <a href="index.html" class="fm-logo" aria-label="ColBel – Home"><img src="assets/images/logo.png" alt="ColBel Vineyards and Winery" loading="lazy" /></a>
       <address class="fm-legal">
-        <span><strong>Azienda Agricola ColBel di Teo Gianni</strong></span>
-        <span>Via Drio Cisa, 2, Località Solighetto – 31053 Pieve di Soligo (TV)</span>
-        <span>P. IVA <span data-cb="impostazioni.partita_iva" data-cb-label="Partita IVA">03920950266</span></span>
+        <span>Azienda Agricola ColBel di Teo Gianni · Via Drio Cisa, 2, Località Solighetto – 31053 Pieve di Soligo (TV) · P. IVA <span data-cb="impostazioni.partita_iva" data-cb-label="Partita IVA">03920950266</span></span>
       </address>
       <div class="fm-social">
         <a href="https://www.facebook.com/people/AA-Colbel-C-V-Prosecco-DOCG/100054377224427/" target="_blank" rel="noopener" aria-label="Facebook" data-cb-social="facebook"><i class="fa-brands fa-facebook-f"></i></a>
@@ -202,7 +217,7 @@
   <script src="assets/js/vendor/gsap.min.js"></script>
   <script src="assets/js/vendor/ScrollTrigger.min.js"></script>
   <script src="assets/js/vendor/lenis.min.js"></script>
-  <script src="assets/js/content.js?v=30"></script>
-  <script src="assets/js/main.js?v=30"></script>
+  <script src="assets/js/content.js"></script>
+  <script src="assets/js/casa.js"></script>
 </body>
 </html>

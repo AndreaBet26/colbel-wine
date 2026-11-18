@@ -1,0 +1,1404 @@
+/* ==========================================================================
+   ColBel — Design System Approvato (Board "D-finale": A casa nostra + Dal colle alla tavola)
+   Riferimento visivo esatto: D-finale.dc.html
+   --------------------------------------------------------------------------
+   · Palette esatta:
+     - Farina: #F2ECE2 (fondo base continuo)
+     - Farina chiara: #F7F3EC (fondo header e sezioni editoriali)
+     - Caldo contrasto: #E9E1D4 (fondo sezioni di stacco e accoglienza)
+     - Pietra: #8B847B
+     - Terra: #5C4535
+     - Castagna: #3B2E25 (testo primario, titoli, bottoni scuri)
+     - Testo corpo: #4A3D33 (morbido e naturale)
+     - Sottotitoli / Eyebrow: #6E665D
+     - Mattone: #9C5340 (accento caldo, bottoni primari)
+     - Linee divisorie: #D8CFC2 e #E2DACE
+   · Caratteri:
+     - Titoli: 'Libre Caslon Text', serif (con corsivo per le frasi dette a voce)
+     - Testi e UI: 'Karla', sans-serif
+   · Foto:
+     - Persone in bianco e nero (.bw, filter: grayscale(1))
+     - Luoghi e cibo a colori naturali
+   · Layout:
+     - 100% full-bleed da bordo a bordo, ZERO schede/box/ombre/bordi arrotondati
+   ========================================================================== */
+
+/* ---------- 1. Token di Design ---------- */
+:root {
+  --farina: #F2ECE2;
+  --farina-light: #F7F3EC;
+  --caldo-contrast: #E9E1D4;
+  --pietra: #8B847B;
+  --terra: #5C4535;
+  --castagna: #3B2E25;
+  --testo: #4A3D33;
+  --testo-sub: #6E665D;
+  --mattone: #9C5340;
+  --mattone-hover: #7E3E2F;
+  --linea: #D8CFC2;
+  --linea-light: #E2DACE;
+  --bianco: #FFFFFF;
+
+  --serif: 'Libre Caslon Text', Georgia, serif;
+  --sans: 'Karla', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --header-h: 84px;
+  --gutter: clamp(24px, 5vw, 80px);
+}
+
+/* ---------- 2. Reset e Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  background-color: var(--farina);
+}
+
+body {
+  background-color: var(--farina);
+  color: var(--castagna);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+img, video, canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--mattone);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+a:hover {
+  color: var(--mattone-hover);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection {
+  background-color: var(--mattone);
+  color: var(--bianco);
+}
+
+/* ---------- 3. Trattamento Foto (Persone B&W, Cibo/Luoghi a Colori) ---------- */
+.bw, img.bw, figure.bw img,
+[data-bw], .is-person img,
+img[src*="gianni"], img[src*="lissa"], img[src*="vendemmia"] {
+  filter: grayscale(1);
+  -webkit-filter: grayscale(1);
+}
+
+img[src*="bottigl"], img[src*="pane"], img[src*="filari"],
+img[src*="collin"], img[src*="uva"], img[src*="tagliere"],
+img[src*="calice"], img[src*="botti"], img[src*="sala"],
+img[src*="focacce"], img[src*="cantina"] {
+  filter: none !important;
+}
+
+/* ---------- 4. Tipografia (Libre Caslon + Karla) ---------- */
+h1, h2, h3, h4, .display, .h1, .h2, .h3, .wide-title, .cb-title {
+  font-family: var(--serif);
+  color: var(--castagna);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: normal;
+}
+
+h1, .h1, .wide-title {
+  font-size: clamp(38px, 5.5vw, 64px);
+}
+
+h2, .h2 {
+  font-size: clamp(30px, 4vw, 50px);
+}
+
+h3, .h3 {
+  font-size: clamp(24px, 3vw, 34px);
+}
+
+.lead {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 2.3vw, 26px);
+  line-height: 1.4;
+  color: var(--terra);
+  max-width: 54ch;
+}
+
+.text, p {
+  color: var(--testo);
+  font-size: 16.5px;
+  line-height: 1.68;
+  max-width: 65ch;
+}
+
+.small {
+  font-size: 14px;
+  color: var(--testo-sub);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--testo-sub);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.eyebrow:empty {
+  display: none;
+}
+
+/* ---------- 5. Bottoni e Link (Stile D-finale) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background-color: var(--mattone);
+  color: var(--bianco) !important;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none !important;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--mattone-hover);
+  color: var(--bianco) !important;
+}
+
+.btn-dark {
+  background-color: var(--castagna);
+}
+
+.btn-dark:hover {
+  background-color: #261D17;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--castagna) !important;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid var(--castagna);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--mattone) !important;
+  border-color: var(--mattone);
+}
+
+/* ---------- 6. Header (D-finale: pulito, caldo, riga inferiore sottile) ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--farina-light);
+  border-bottom: 1px solid var(--linea-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px var(--gutter);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.site-header.is-hidden {
+  transform: translateY(-100%);
+}
+
+.brand img {
+  height: 48px;
+  width: auto;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--castagna) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+  padding: 6px 0;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--mattone) !important;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--mattone);
+}
+
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--castagna);
+  color: var(--bianco) !important;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.header-cta-btn:hover {
+  background: #241C16;
+}
+
+.lang-menu {
+  position: relative;
+}
+
+.lang-current {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--castagna);
+}
+
+.lang-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--farina);
+  border: 1px solid var(--linea);
+  padding: 6px 0;
+  min-width: 110px;
+  box-shadow: 0 4px 12px rgba(59, 46, 37, 0.08);
+}
+
+.lang-menu:hover .lang-list, .lang-menu.open .lang-list {
+  display: block;
+}
+
+.lang-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--testo);
+}
+
+.lang-btn:hover, .lang-btn.active {
+  color: var(--mattone);
+  background-color: rgba(156, 83, 64, 0.08);
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--castagna);
+  transition: transform 0.25s ease;
+}
+
+.menu-toggle.open span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menu-toggle.open span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--farina);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + 2rem) var(--gutter) 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.menu-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-overlay nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.menu-overlay nav a {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: var(--castagna);
+  line-height: 1.1;
+  border-bottom: 1px solid var(--linea);
+  padding-bottom: 0.8rem;
+}
+
+.menu-overlay nav a.active, .menu-overlay nav a:hover {
+  color: var(--mattone);
+}
+
+.menu-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--linea);
+}
+
+/* ---------- 7. Home Hero Full (index.html) ---------- */
+.hero-full {
+  position: relative;
+  width: 100%;
+  height: clamp(520px, 75vh, 760px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--castagna);
+}
+
+.hero-full__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-full__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+
+.hero-full__shade {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.hero-full__content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+}
+
+.hero-logo {
+  display: block;
+  filter: brightness(0) invert(1);
+  -webkit-filter: brightness(0) invert(1);
+  width: 26vw;
+  max-width: 400px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.hero-claim {
+  color: var(--bianco);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1.35;
+  margin-top: 1.5rem;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- 8. Sezione Editoriale Home (D-finale esatta) ---------- */
+.home-intro {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  padding: 64px var(--gutter);
+  background: var(--farina-light);
+  border-bottom: 1px solid var(--linea);
+}
+
+.home-intro h2 {
+  font-family: var(--serif);
+  font-size: clamp(34px, 4vw, 50px);
+  line-height: 1.1;
+  color: var(--castagna);
+}
+
+.home-intro h2 span {
+  font-style: italic;
+}
+
+.home-intro-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  justify-content: flex-end;
+}
+
+.home-intro-copy p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--testo);
+}
+
+.home-intro-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ---------- 9. Sezione Persone in Bianco e Nero (D-finale esatta) ---------- */
+.home-people {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  padding: 64px var(--gutter);
+  background: var(--farina);
+  border-bottom: 1px solid var(--linea);
+}
+
+.person-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.person-card img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1);
+  -webkit-filter: grayscale(1);
+}
+
+.person-card h3 {
+  font-family: var(--serif);
+  font-size: 26px;
+  color: var(--castagna);
+}
+
+.person-card p {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--testo);
+}
+
+/* ---------- 10. Sezione Caldo Contrasto #E9E1D4 (D-finale esatta) ---------- */
+.home-ways {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  background: var(--caldo-contrast);
+  border-bottom: 1px solid var(--linea);
+}
+
+.home-ways img {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  object-fit: cover;
+  display: block;
+}
+
+.home-ways-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+  padding: 64px var(--gutter);
+}
+
+.home-ways-copy h3 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.2vw, 36px);
+  color: var(--castagna);
+  line-height: 1.15;
+}
+
+.home-ways-copy ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--testo);
+}
+
+/* ---------- 11. Divisori e Marquee ---------- */
+.chapter-mark {
+  width: 100%;
+  border-top: 1px solid var(--linea);
+}
+
+.cb-rule {
+  display: block;
+  width: 48px;
+  height: 1px;
+  background-color: var(--mattone);
+  margin: 1.25rem 0;
+}
+
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+  padding: 14px 0;
+  background-color: var(--farina);
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 2rem;
+  animation: marqueeScroll 45s linear infinite;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--testo-sub);
+  font-size: 18px;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- 12. Pagine Interne: Hero Spaccato & Spaccati Editoriali 50/50 ---------- */
+.page-hero, .feature-split, .split-row, .split-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 520px;
+  border-bottom: 1px solid var(--linea);
+  background-color: var(--farina);
+  align-items: stretch;
+}
+
+.split-section:nth-child(even) {
+  background-color: var(--farina-light);
+}
+
+.page-hero {
+  background-color: var(--farina-light);
+}
+
+.page-hero .photo, .feature-split .photo, .split-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  overflow: hidden;
+  position: relative;
+}
+
+.page-hero .photo img, .feature-split .photo img, .split-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.page-hero .copy, .feature-split .copy, .split-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(52px, 6.5vw, 92px) var(--gutter);
+}
+
+.page-hero .col, .feature-split .col, .split-copy .col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 580px;
+}
+
+/* Regola di alternanza: sinistra / destra */
+.split-section--left .split-photo, .feature-split--left .photo { order: 1; }
+.split-section--left .split-copy, .feature-split--left .copy { order: 2; }
+
+.split-section--right .split-photo, .feature-split--right .photo { order: 2; }
+.split-section--right .split-copy, .feature-split--right .copy { order: 1; }
+
+/* Prezzi delle esperienze */
+.exp-price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.5vw, 42px);
+  color: var(--castagna);
+  margin: 2px 0 6px;
+}
+
+.exp-price .unit {
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--testo-sub);
+  font-weight: 500;
+}
+
+/* Cronistoria (storia.html) */
+.story-milestones {
+  padding: clamp(64px, 7.5vw, 100px) var(--gutter);
+  background-color: var(--farina-light);
+  border-bottom: 1px solid var(--linea);
+}
+
+.story-milestones-head {
+  max-width: 640px;
+  margin-bottom: 48px;
+}
+
+.milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(32px, 4vw, 56px);
+}
+
+.milestone-item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid var(--linea);
+  padding-top: 28px;
+}
+
+.milestone-year {
+  font-family: var(--serif);
+  font-size: clamp(32px, 3.5vw, 44px);
+  color: var(--castagna);
+  line-height: 1;
+}
+
+.wide-hero {
+  padding: 48px var(--gutter) 32px;
+  background: var(--farina-light);
+  border-bottom: 1px solid var(--linea);
+}
+
+.wide-hero__photo {
+  width: 100%;
+  height: clamp(340px, 45vh, 520px);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.wide-hero__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wide-hero__copy h1 {
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- 13. Sezioni Finali Richieste (Item 7) ---------- */
+.final-split-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 520px;
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+  background-color: var(--farina-light);
+  align-items: stretch;
+}
+
+.final-split-section .final-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  overflow: hidden;
+}
+
+.final-split-section .final-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.final-split-section .final-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(52px, 6.5vw, 92px) var(--gutter);
+}
+
+.final-split-section .final-copy .col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 580px;
+}
+
+.final-split-section .actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* ---------- 14. Pagina Vini (vini.html) ---------- */
+.wines-list {
+  width: 100%;
+}
+
+.wine-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 580px;
+  border-bottom: 1px solid var(--linea);
+  align-items: center;
+}
+
+.wine-row:nth-child(even) {
+  background-color: var(--farina-light);
+}
+
+.wine-row.is-left .wine-bottle { order: 1; }
+.wine-row.is-left .wine-info { order: 2; }
+.wine-row.is-right .wine-bottle { order: 2; }
+.wine-row.is-right .wine-info { order: 1; }
+
+.wine-bottle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 32px;
+  position: relative;
+}
+
+.wine-bottle img {
+  max-height: 500px;
+  width: auto;
+  object-fit: contain;
+  transform-origin: center bottom;
+}
+
+.wine-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 64px var(--gutter);
+  max-width: 580px;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.wine-info .denominazione {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--testo-sub);
+  font-weight: 600;
+}
+
+.wine-info .h2 {
+  font-size: clamp(34px, 4.2vw, 48px);
+}
+
+.wine-info .tipo {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--terra);
+  margin-top: -6px;
+}
+
+.wine-info .text {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--linea-light);
+}
+
+.price-row .price {
+  font-family: var(--serif);
+  font-size: 30px;
+  color: var(--castagna);
+}
+
+.price-row .price::after {
+  content: ' €';
+  font-size: 20px;
+}
+
+.price-row .price-note {
+  font-size: 13px;
+  color: var(--testo-sub);
+}
+
+/* Bottiglia ruotante in index.html */
+.bottle-scroll {
+  width: 100%;
+  border-bottom: 1px solid var(--linea);
+  background-color: var(--farina-light);
+  padding: 80px var(--gutter);
+}
+
+.bottle-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.bottle-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 460px;
+}
+
+.bottle-img {
+  max-height: 500px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 24px rgba(59, 46, 37, 0.12));
+}
+
+.story-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.story-step {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--linea-light);
+}
+
+.story-step:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.story-step .h2 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3vw, 36px);
+  color: var(--castagna);
+  margin-bottom: 10px;
+}
+
+.story-step .text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--testo);
+}
+
+/* Capitoli Agriturismo & Esperienze */
+.agri-chapter, .exp-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 520px;
+  border-bottom: 1px solid var(--linea);
+}
+
+.agri-chapter.is-odd .agri-photo { order: 2; }
+.agri-chapter.is-odd .agri-copy { order: 1; }
+.agri-chapter.is-even .agri-photo { order: 1; }
+.agri-chapter.is-even .agri-copy { order: 2; }
+
+.agri-photo, .exp-item .photo {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+}
+
+.agri-photo img, .exp-item .photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.agri-copy, .exp-item .copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px var(--gutter);
+}
+
+.agri-copy .col, .exp-item .col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 540px;
+}
+
+/* ---------- 15. Sezione Contatti in Fondo (Item 6) ---------- */
+.contact-block {
+  width: 100%;
+  border-top: 1px solid var(--linea);
+  background-color: var(--farina-light);
+  padding: 64px var(--gutter) 48px;
+}
+
+.cb-head {
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+.cb-title {
+  font-size: clamp(34px, 4.5vw, 50px);
+}
+
+.cb-intro {
+  font-size: 18px;
+  color: var(--testo);
+  margin-top: 14px;
+}
+
+.cb-people {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 40px;
+  width: 100%;
+  border-top: 1px solid var(--linea);
+  padding-top: 40px;
+}
+
+.cb-person {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cb-name {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--castagna);
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.cb-phone {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--castagna);
+}
+
+.cb-phone:hover {
+  color: var(--mattone);
+}
+
+.cb-mail {
+  color: var(--testo);
+  font-size: 15px;
+}
+
+.cb-mail:hover {
+  color: var(--mattone);
+}
+
+.cb-person .link {
+  align-self: flex-start;
+  margin-top: 6px;
+}
+
+/* ---------- 16. Footer Minimal su Due Righe (Item 4) ---------- */
+.site-footer {
+  width: 100%;
+  background-color: var(--farina);
+  border-top: 1px solid var(--linea);
+  padding: 24px var(--gutter);
+  color: var(--testo-sub);
+  font-size: 14px;
+}
+
+.fm-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--linea-light);
+}
+
+.fm-logo img {
+  height: 34px;
+  width: auto;
+}
+
+.fm-legal {
+  font-style: normal;
+  line-height: 1.5;
+  color: var(--testo);
+  text-align: center;
+  flex: 1;
+  max-width: 820px;
+}
+
+.fm-social {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fm-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--castagna);
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.fm-social a:hover {
+  color: var(--mattone);
+}
+
+.fm-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  font-size: 13px;
+  color: var(--testo-sub);
+}
+
+.fm-admin {
+  color: var(--testo-sub);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fm-admin:hover {
+  color: var(--mattone);
+}
+
+/* ---------- 17. Modale Ordine ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(59, 46, 37, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: var(--farina-light);
+  border: 1px solid var(--linea);
+  width: 100%;
+  max-width: 520px;
+  padding: 36px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 24px;
+  color: var(--testo-sub);
+}
+
+.modal-close-btn:hover {
+  color: var(--mattone);
+}
+
+.modal-price {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--castagna);
+}
+
+.qty-stepper-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--linea);
+  width: fit-content;
+  margin: 6px 0;
+}
+
+.qty-step-btn {
+  padding: 8px 14px;
+  color: var(--castagna);
+}
+
+.qty-step-btn:hover {
+  background-color: rgba(156, 83, 64, 0.08);
+}
+
+.qty-input-field {
+  width: 60px;
+  text-align: center;
+  border: none;
+  background: none;
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--castagna);
+}
+
+.qty-presets {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.preset-pill {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--linea);
+  color: var(--testo);
+}
+
+.preset-pill.active, .preset-pill:hover {
+  background-color: var(--castagna);
+  border-color: var(--castagna);
+  color: var(--bianco);
+}
+
+.modal-total {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--castagna);
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* ---------- 18. Barra Rapida Mobile (<= 900px) ---------- */
+.mobile-bottom-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: var(--farina);
+  border-top: 1px solid var(--linea);
+  z-index: 900;
+  align-items: stretch;
+}
+
+.bottom-bar-action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--castagna);
+  border-right: 1px solid var(--linea);
+}
+
+.bottom-bar-action:last-child {
+  border-right: none;
+}
+
+.bottom-bar-action.cta {
+  background-color: var(--mattone);
+  color: var(--bianco) !important;
+}
+
+/* ---------- 19. Responsive Desktop vs Mobile ---------- */
+@media (max-width: 900px) {
+  :root {
+    --header-h: 70px;
+    --gutter: 20px;
+  }
+
+  body {
+    padding-bottom: 60px;
+  }
+
+  .main-nav, .header-cta-btn {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .mobile-bottom-bar {
+    display: flex;
+  }
+
+  .hero-logo {
+    width: 58% !important;
+    max-width: none !important;
+  }
+
+  .hero-claim {
+    font-size: 19px;
+    margin-top: 1rem;
+  }
+
+  .home-intro, .home-people, .home-ways, .bottle-story,
+  .final-split-section, .wine-row, .page-hero, .feature-split, .split-section, .agri-chapter {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 32px;
+    padding: 48px var(--gutter);
+  }
+
+  .split-section--right .split-photo, .feature-split--right .photo {
+    order: 1;
+  }
+  .split-section--right .split-copy, .feature-split--right .copy {
+    order: 2;
+  }
+
+  .milestones-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .final-split-section .final-photo,
+  .home-ways img, .agri-photo, .page-hero .photo, .split-photo {
+    min-height: 280px;
+    height: 45vh;
+  }
+
+  .wine-bottle {
+    padding: 32px 16px 16px;
+  }
+
+  .wine-bottle img {
+    max-height: 380px;
+  }
+
+  .wine-info {
+    padding: 0;
+  }
+
+  .fm-main {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .fm-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+.cb-is-hidden {
+  display: none !important;
+}

@@ -40,7 +40,14 @@ try:
 except Exception:
     pass
 
+# Cartella servita: se su macOS o sul sistema esiste /Volumes/T7/Sito ColBel, serve quella cartella
+T7_CANDIDATES = ["/Volumes/T7/Sito ColBel", "/Volumes/T7/Sito col bel"]
 ROOT = os.path.dirname(os.path.abspath(__file__))
+for cand in T7_CANDIDATES:
+    if os.path.isdir(cand):
+        ROOT = cand
+        break
+
 DATA_DIR = os.path.join(ROOT, "data")
 BACKUP_DIR = os.path.join(DATA_DIR, "_backup")
 UPLOAD_DIR = os.path.join(ROOT, "assets", "images", "uploads")
@@ -59,13 +66,11 @@ class ColBelHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=ROOT, **kwargs)
 
-    # I file del sito e le API non devono mai essere memorizzati in cache durante lo sviluppo
+    # Manda l'header Cache-Control: no-store su tutti i file per evitare versioni vecchie
     def end_headers(self):
-        clean_path = self.path.split("?")[0]
-        if clean_path.endswith((".json", ".js", ".css", ".html", "/")) or self.path.startswith("/api/"):
-            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
-            self.send_header("Pragma", "no-cache")
-            self.send_header("Expires", "0")
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
         super().end_headers()
 
     def log_message(self, fmt, *args):
@@ -244,6 +249,7 @@ def main():
     print("")
     print("  =======================================================")
     print("  ColBel - Server Locale Attivo")
+    print(f"  Cartella servita: {ROOT}")
     print(f"  Sito pubblico : {url}")
     print(f"  Dashboard     : {url}admin/")
     print("  (premi Ctrl+C per fermare il server)")
